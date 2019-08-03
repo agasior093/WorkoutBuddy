@@ -26,9 +26,7 @@ class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/public").permitAll()
-                .antMatchers("/private").hasRole("USER")
-                .antMatchers("/admin").hasRole("ADMIN")
+                .antMatchers("/user").hasRole("USER")
                 .and()
                 .addFilter(new JwtAuthorizationFilter(authenticationManager()))
                 .addFilter(new JwtAuthenticationFilter(authenticationManager()))

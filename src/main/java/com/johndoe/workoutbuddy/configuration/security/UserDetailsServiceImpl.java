@@ -1,19 +1,14 @@
 package com.johndoe.workoutbuddy.configuration.security;
 
 import com.johndoe.workoutbuddy.adapter.repository.InMemoryUserRepository;
-import com.johndoe.workoutbuddy.domain.user.UserRepository;
 import com.johndoe.workoutbuddy.domain.user.entity.User;
+import com.johndoe.workoutbuddy.domain.user.port.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 class UserDetailsServiceImpl implements UserDetailsService {
@@ -23,12 +18,11 @@ class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findUser(username).map(this::getUserDetails)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+                .orElseThrow(() -> new UsernameNotFoundException("ApplicationUser not found"));
     }
 
     private UserDetails getUserDetails(User user) {
-        org.springframework.security.core.userdetails.User.UserBuilder builder =
-                org.springframework.security.core.userdetails.User.withUsername(user.getUsername());
+        org.springframework.security.core.userdetails.User.UserBuilder builder = org.springframework.security.core.userdetails.User.withUsername(user.getUsername());
         builder.password(encoder.encode(user.getPassword()));
         builder.roles(user.getRoles());
         builder.build();
