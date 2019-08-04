@@ -1,5 +1,7 @@
 package com.johndoe.workoutbuddy.domain.user;
 
+import com.johndoe.workoutbuddy.domain.DomainError;
+import com.johndoe.workoutbuddy.domain.user.dto.PersonalDetailsDto;
 import com.johndoe.workoutbuddy.domain.user.dto.UserDto;
 import com.johndoe.workoutbuddy.domain.user.dto.UserError;
 import com.johndoe.workoutbuddy.domain.user.dto.RegisterUserDto;
@@ -27,7 +29,7 @@ class User {
         this.personalDetails = personalDetails;
     }
 
-    static Either<UserError, User> createUser(RegisterUserDto dto) {
+    static Either<DomainError, User> createUser(RegisterUserDto dto) {
         return validEmail(dto.getEmail()) ?
             Either.right(User.builder()
                     .username(dto.getUsername())
@@ -40,13 +42,17 @@ class User {
     }
 
     UserDto toDto() {
+        PersonalDetailsDto personalDetailsDto = null;
+        if(this.personalDetails != null) {
+             personalDetailsDto = this.personalDetails.toDto();
+        }
         return UserDto.builder()
                 .username(this.username)
                 .password(this.password)
                 .email(this.email)
                 .roles(this.roles)
                 .active(this.active)
-                .personalDetails(this.personalDetails.toDto())
+                .personalDetails(personalDetailsDto)
                 .build();
     }
 
