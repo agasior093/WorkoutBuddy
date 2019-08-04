@@ -40,4 +40,9 @@ public class InMemoryUserRepository implements UserRepository {
     public Optional<User> findUser(String username) {
         return Optional.ofNullable(users.get(username));
     }
+
+    @Override
+    public void save(User user) {
+        users.putIfAbsent(user.getUsername(), user);
+    }
 }

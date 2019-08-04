@@ -1,4 +1,4 @@
-package com.johndoe.workoutbuddy.domain.user;
+package com.johndoe.workoutbuddy.domain.user.usecase;
 
 import com.johndoe.workoutbuddy.domain.user.dto.PersonalDetailsDto;
 import com.johndoe.workoutbuddy.domain.user.entity.PersonalDetails;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-public class UserReader {
+public class ReadUser {
     private final UserRepository repository;
 
     public Optional<PersonalDetailsDto> readPersonalData(String username) {
