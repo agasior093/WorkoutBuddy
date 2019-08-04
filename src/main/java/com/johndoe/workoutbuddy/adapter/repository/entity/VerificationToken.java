@@ -1,4 +1,4 @@
-package com.johndoe.workoutbuddy.domain.user.entity;
+package com.johndoe.workoutbuddy.adapter.repository.entity;
 
 import lombok.Builder;
 import lombok.Getter;

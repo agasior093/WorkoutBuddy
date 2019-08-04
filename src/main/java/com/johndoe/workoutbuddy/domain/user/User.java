@@ -1,7 +1,8 @@
-package com.johndoe.workoutbuddy.domain.user.entity;
+package com.johndoe.workoutbuddy.domain.user;
 
+import com.johndoe.workoutbuddy.domain.user.dto.UserDto;
 import com.johndoe.workoutbuddy.domain.user.dto.UserError;
-import com.johndoe.workoutbuddy.domain.user.dto.UserRegisterDto;
+import com.johndoe.workoutbuddy.domain.user.dto.RegisterUserDto;
 import io.vavr.control.Either;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,7 +10,7 @@ import org.apache.commons.validator.routines.EmailValidator;
 
 @Getter
 @Builder
-public class User {
+class User {
     private final String username;
     private final String email;
     private final String password;
@@ -26,7 +27,7 @@ public class User {
         this.personalDetails = personalDetails;
     }
 
-    public static Either<UserError, User> createUser(UserRegisterDto dto) {
+    static Either<UserError, User> createUser(RegisterUserDto dto) {
         return validEmail(dto.getEmail()) ?
             Either.right(User.builder()
                     .username(dto.getUsername())
@@ -36,6 +37,28 @@ public class User {
                     .roles(new String[] {"USER"})
                     .build()) :
             Either.left(UserError.INVALID_EMAIL);
+    }
+
+    UserDto toDto() {
+        return UserDto.builder()
+                .username(this.username)
+                .password(this.password)
+                .email(this.email)
+                .roles(this.roles)
+                .active(this.active)
+                .personalDetails(this.personalDetails.toDto())
+                .build();
+    }
+
+    static User fromDto(UserDto dto) {
+        return User.builder()
+                .username(dto.getUsername())
+                .password(dto.getPassword())
+                .email(dto.getEmail())
+                .roles(dto.getRoles())
+                .active(dto.isActive())
+                .personalDetails(PersonalDetails.fromDto(dto.getPersonalDetails()))
+                .build();
     }
 
     private static boolean validEmail(String email) {

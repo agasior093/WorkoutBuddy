@@ -1,7 +1,7 @@
 package com.johndoe.workoutbuddy.configuration.security;
 
 import com.johndoe.workoutbuddy.adapter.repository.InMemoryUserRepository;
-import com.johndoe.workoutbuddy.domain.user.entity.User;
+import com.johndoe.workoutbuddy.domain.user.dto.UserDto;
 import com.johndoe.workoutbuddy.domain.user.port.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ class UserDetailsServiceImpl implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("ApplicationUser not found"));
     }
 
-    private UserDetails getUserDetails(User user) {
+    private UserDetails getUserDetails(UserDto user) {
         org.springframework.security.core.userdetails.User.UserBuilder builder = org.springframework.security.core.userdetails.User.withUsername(user.getUsername());
         builder.password(encoder.encode(user.getPassword()));
         builder.roles(user.getRoles());

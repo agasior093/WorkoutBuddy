@@ -1,10 +1,10 @@
 package com.johndoe.workoutbuddy.domain.user.port;
 
-import com.johndoe.workoutbuddy.domain.user.entity.User;
+import com.johndoe.workoutbuddy.domain.user.dto.UserDto;
 
 import java.util.Optional;
 
 public interface UserRepository {
-    Optional<User> findUser(String username);
-    void save(User user);
+    Optional<UserDto> findUser(String username);
+    void save(UserDto user);
 }

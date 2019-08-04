@@ -1,8 +1,8 @@
 package com.johndoe.workoutbuddy.domain.user.dto;
 
-import com.johndoe.workoutbuddy.domain.Error;
+import com.johndoe.workoutbuddy.domain.DomainError;
 
-public enum UserError implements Error {
+public enum UserError implements DomainError {
     USERNAME_ALREADY_EXISTS("Username already exists"),
     INVALID_EMAIL("Provided email address is invalid");
 

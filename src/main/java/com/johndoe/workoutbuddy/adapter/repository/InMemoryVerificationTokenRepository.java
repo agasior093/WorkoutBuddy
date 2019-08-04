@@ -1,6 +1,6 @@
 package com.johndoe.workoutbuddy.adapter.repository;
 
-import com.johndoe.workoutbuddy.domain.user.entity.VerificationToken;
+import com.johndoe.workoutbuddy.adapter.repository.entity.VerificationToken;
 import com.johndoe.workoutbuddy.domain.user.port.VerificationTokenRepository;
 
 import java.time.LocalDateTime;

@@ -1,6 +1,6 @@
 package com.johndoe.workoutbuddy.adapter.controller;
 
-import com.johndoe.workoutbuddy.domain.user.usecase.ReadUser;
+import com.johndoe.workoutbuddy.domain.user.UserFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -8,16 +8,15 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor
-public class UserController {
+class UserController {
 
     private final ResponseResolver responseResolver;
-    private final ReadUser readUser;
+    private final UserFacade userFacade;
 
     @GetMapping
     ResponseEntity getPersonalUserDetails(@RequestParam String username) {
-        return responseResolver.resolve(readUser.readPersonalData(username));
+        return responseResolver.resolve(userFacade.readUserPersonalDetails(username));
     }
-
     @PostMapping("/register")
     ResponseEntity registerUser() {
         return null;
