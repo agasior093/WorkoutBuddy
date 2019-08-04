@@ -4,10 +4,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class EmailConfiguration {
+class EmailConfiguration {
 
     @Bean
-    public EmailFacade emailFacade() {
+    EmailFacade emailFacade() {
         return new EmailFacade(new SendEmailUseCase(), new CreateEmailUseCase());
     }
 }

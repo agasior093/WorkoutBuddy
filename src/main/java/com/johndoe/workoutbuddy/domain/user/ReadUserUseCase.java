@@ -9,11 +9,11 @@ import java.util.Optional;
 @RequiredArgsConstructor
 class ReadUserUseCase {
     private final UserRepository repository;
+    private final ObjectMapper objectMapper;
 
-    Optional<PersonalDetailsDto> readPersonalData(String username) {
+    Optional<PersonalDetails> readPersonalData(String username) {
         return repository.findUser(username)
-                .map(User::fromDto)
-                .map(User::getPersonalDetails)
-                .map(PersonalDetails::toDto);
+                .map(objectMapper::userToEntity)
+                .map(User::getPersonalDetails);
     }
 }

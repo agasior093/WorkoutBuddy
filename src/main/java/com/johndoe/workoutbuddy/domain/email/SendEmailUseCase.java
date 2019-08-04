@@ -10,7 +10,6 @@ import lombok.extern.java.Log;
 class SendEmailUseCase {
     Either<DomainError, SuccessMessage> send(EmailMessage message) {
         if(message == null) return Either.left(EmailError.EMPTY_MESSAGE);
-        log.info(message.toString());
         return Either.right(new SuccessMessage("Email sent"));
     }
 }

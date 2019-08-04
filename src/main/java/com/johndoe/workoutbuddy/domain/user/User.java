@@ -14,20 +14,11 @@ import org.apache.commons.validator.routines.EmailValidator;
 @Builder
 class User {
     private final String username;
-    private final String email;
-    private final String password;
-    private final String[] roles;
-    private final boolean active;
-    private final PersonalDetails personalDetails;
-
-    private User(String username, String email, String password, String[] roles, boolean active, PersonalDetails personalDetails) {
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.roles = roles;
-        this.active = active;
-        this.personalDetails = personalDetails;
-    }
+    private String email;
+    private String password;
+    private String[] roles;
+    private boolean active;
+    private PersonalDetails personalDetails;
 
     static Either<DomainError, User> createUser(RegisterUserDto dto) {
         return validEmail(dto.getEmail()) ?
@@ -41,30 +32,17 @@ class User {
             Either.left(UserError.INVALID_EMAIL);
     }
 
-    UserDto toDto() {
-        PersonalDetailsDto personalDetailsDto = null;
-        if(this.personalDetails != null) {
-             personalDetailsDto = this.personalDetails.toDto();
-        }
-        return UserDto.builder()
-                .username(this.username)
-                .password(this.password)
-                .email(this.email)
-                .roles(this.roles)
-                .active(this.active)
-                .personalDetails(personalDetailsDto)
-                .build();
+    void activate() {
+        this.active = true;
     }
 
-    static User fromDto(UserDto dto) {
-        return User.builder()
-                .username(dto.getUsername())
-                .password(dto.getPassword())
-                .email(dto.getEmail())
-                .roles(dto.getRoles())
-                .active(dto.isActive())
-                .personalDetails(PersonalDetails.fromDto(dto.getPersonalDetails()))
-                .build();
+    private User(String username, String email, String password, String[] roles, boolean active, PersonalDetails personalDetails) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.roles = roles;
+        this.active = active;
+        this.personalDetails = personalDetails;
     }
 
     private static boolean validEmail(String email) {
