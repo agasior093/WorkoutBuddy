@@ -10,18 +10,19 @@ import io.vavr.control.Try;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 
-@RequiredArgsConstructor
 @Log
+@RequiredArgsConstructor
 class SendEmailUseCase {
     private final EmailSender emailSender;
 
     Either<DomainError, SuccessMessage> send(EmailMessage message) {
-        try {
-            emailSender.sendEmail(message);
-        } catch (Exception e) {
-            log.severe(e.getMessage());
-            return Either.left(EmailError.SENDING_FAILED);
-        }
-        return Either.right(new SuccessMessage("Email sent"));
+        return Try.of(() -> sendEmail(message))
+                .onFailure(e -> log.severe(e.getMessage()))
+                .toEither(EmailError.SENDING_FAILED);
+    }
+
+    private SuccessMessage sendEmail(EmailMessage message) {
+        emailSender.sendEmail(message);
+        return new SuccessMessage("Email successfully sent to " + message.getReceiver());
     }
 }
