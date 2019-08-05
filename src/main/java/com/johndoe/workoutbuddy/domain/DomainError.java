@@ -1,5 +1,5 @@
 package com.johndoe.workoutbuddy.domain;
 
-public interface Error {
+public interface DomainError {
     String getCause();
 }
