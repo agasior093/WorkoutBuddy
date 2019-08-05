@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class EmailMessageDto {
+public class EmailMessage {
     private final String receiver;
     private final String subject;
     private final String body;

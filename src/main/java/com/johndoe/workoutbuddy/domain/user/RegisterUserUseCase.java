@@ -22,9 +22,8 @@ class RegisterUserUseCase {
         if(userRepository.findUser(registerUserDto.getUsername()).isPresent())
             return Either.left(UserError.USERNAME_ALREADY_EXISTS);
         var userCreationResult = User.createUser(registerUserDto);
-        var emailDto = userCreationResult
-                .map(this::saveUser)
-                .map(this::createVerificationEmail);
+        var savedUser = userCreationResult.map(this::saveUser);
+        var emailDto = savedUser.map(this::createVerificationEmail);
         return emailDto.isRight() ? emailFacade.sendUserVerificationEmail(emailDto.get())
                 : Either.left(emailDto.getLeft());
     }
@@ -36,7 +35,11 @@ class RegisterUserUseCase {
 
     private VerificationEmailDto createVerificationEmail(User user) {
         final UUID uuid = userRepository.generateRegistrationToken(user.getUsername());
-        return new VerificationEmailDto(uuid, user.getEmail());
+        return VerificationEmailDto.builder()
+                .uuid(uuid)
+                .username(user.getUsername())
+                .receiver(user.getEmail())
+                .build();
     }
 
 }

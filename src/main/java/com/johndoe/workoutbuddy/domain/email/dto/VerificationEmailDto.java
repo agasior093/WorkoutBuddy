@@ -7,8 +7,9 @@ import lombok.RequiredArgsConstructor;
 import java.util.UUID;
 
 @Getter
-@RequiredArgsConstructor
+@Builder
 public class VerificationEmailDto {
     private final UUID uuid;
+    private final String username;
     private final String receiver;
 }

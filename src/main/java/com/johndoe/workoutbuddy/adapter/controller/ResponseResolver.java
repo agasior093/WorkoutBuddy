@@ -1,7 +1,7 @@
 package com.johndoe.workoutbuddy.adapter.controller;
 
 import com.johndoe.workoutbuddy.domain.DomainError;
-import com.johndoe.workoutbuddy.domain.email.dto.EmailError;
+import com.johndoe.workoutbuddy.domain.email.dto.error.EmailError;
 import com.johndoe.workoutbuddy.domain.user.dto.UserError;
 import io.vavr.control.Either;
 import org.springframework.http.HttpStatus;
@@ -20,7 +20,7 @@ class ResponseResolver {
     ResponseResolver() {
         httpStatusMap.put(UserError.INVALID_EMAIL, HttpStatus.BAD_REQUEST);
         httpStatusMap.put(UserError.USERNAME_ALREADY_EXISTS, HttpStatus.CONFLICT);
-        httpStatusMap.put(EmailError.EMPTY_MESSAGE, HttpStatus.BAD_REQUEST);
+        httpStatusMap.put(EmailError.SENDING_FAILED, HttpStatus.BAD_REQUEST);
     }
 
     <T> ResponseEntity resolve(Optional<T> object) {

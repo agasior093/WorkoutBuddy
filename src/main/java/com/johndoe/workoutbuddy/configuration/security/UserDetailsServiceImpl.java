@@ -12,7 +12,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @RequiredArgsConstructor
-@Log
 class UserDetailsServiceImpl implements UserDetailsService {
     private final PasswordEncoder encoder;
     private UserRepository userRepository;
@@ -24,7 +23,8 @@ class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     private UserDetails getUserDetails(UserDto user) {
-        org.springframework.security.core.userdetails.User.UserBuilder builder = org.springframework.security.core.userdetails.User.withUsername(user.getUsername());
+        org.springframework.security.core.userdetails.User.UserBuilder builder
+                = org.springframework.security.core.userdetails.User.withUsername(user.getUsername());
         builder.password(encoder.encode(user.getPassword()));
         builder.roles(user.getRoles());
         builder.disabled(!user.isActive());
