@@ -3,7 +3,7 @@ package com.johndoe.workoutbuddy.domain.user;
 import com.johndoe.workoutbuddy.domain.DomainError;
 import com.johndoe.workoutbuddy.domain.SuccessMessage;
 import com.johndoe.workoutbuddy.domain.email.EmailFacade;
-import com.johndoe.workoutbuddy.domain.email.dto.VerificationEmailDto;
+import com.johndoe.workoutbuddy.domain.email.dto.VerificationEmail;
 import com.johndoe.workoutbuddy.domain.user.dto.RegisterUserDto;
 import com.johndoe.workoutbuddy.domain.user.dto.UserError;
 import com.johndoe.workoutbuddy.domain.user.port.UserRepository;
@@ -33,10 +33,10 @@ class RegisterUserUseCase {
         return user;
     }
 
-    private VerificationEmailDto createVerificationEmail(User user) {
+    private VerificationEmail createVerificationEmail(User user) {
         final UUID uuid = userRepository.generateRegistrationToken(user.getUsername());
-        return VerificationEmailDto.builder()
-                .uuid(uuid)
+        return VerificationEmail.builder()
+                .token(uuid)
                 .username(user.getUsername())
                 .receiver(user.getEmail())
                 .build();

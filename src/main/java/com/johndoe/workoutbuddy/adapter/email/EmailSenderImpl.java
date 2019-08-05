@@ -1,28 +1,33 @@
 package com.johndoe.workoutbuddy.adapter.email;
 
-import com.johndoe.workoutbuddy.domain.email.port.EmailSender;
 import com.johndoe.workoutbuddy.domain.email.dto.EmailMessage;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
+import com.johndoe.workoutbuddy.domain.email.port.EmailSender;
+import lombok.AllArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-@Service
-public class EmailSenderImpl implements EmailSender {
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 
+@Service
+@AllArgsConstructor
+public class EmailSenderImpl implements EmailSender {
     private JavaMailSender emailSender;
+    private EmailContentBuilder contentBuilder;
 
     @Override
-    public void sendEmail(EmailMessage emailMessage) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(emailMessage.getReceiver());
-        message.setSubject(emailMessage.getSubject());
-        message.setText(emailMessage.getBody());
-        emailSender.send(message);
+    public void sendEmail(EmailMessage emailMessage) throws RuntimeException {
+        MimeMessage email = emailSender.createMimeMessage();
+        try {
+            MimeMessageHelper helper = new MimeMessageHelper(email, true);
+            helper.setTo(emailMessage.getReceiver());
+            helper.setSubject(emailMessage.getSubject());
+            helper.setText(contentBuilder.buildVerificationEmail(emailMessage), true);
+            emailSender.send(email);
+        } catch (MessagingException e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
-    @Autowired
-    public void setEmailSender(JavaMailSender emailSender) {
-        this.emailSender = emailSender;
-    }
 }

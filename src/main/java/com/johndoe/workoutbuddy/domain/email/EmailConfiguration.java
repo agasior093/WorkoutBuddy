@@ -13,6 +13,6 @@ class EmailConfiguration {
 
     @Bean
     EmailFacade emailFacade() {
-        return new EmailFacade(new SendEmailUseCase(emailSender), new CreateEmailUseCase());
+        return new EmailFacade(new SendEmailUseCase(emailSender));
     }
 }

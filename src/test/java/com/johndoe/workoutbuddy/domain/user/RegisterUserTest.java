@@ -5,12 +5,9 @@ package com.johndoe.workoutbuddy.domain.user;
 import com.johndoe.workoutbuddy.adapter.repository.InMemoryUserRepository;
 import com.johndoe.workoutbuddy.domain.email.EmailFacade;
 
-import com.johndoe.workoutbuddy.domain.email.dto.error.EmailError;
-import com.johndoe.workoutbuddy.domain.email.dto.VerificationEmailDto;
 import com.johndoe.workoutbuddy.domain.user.dto.RegisterUserDto;
 import com.johndoe.workoutbuddy.domain.user.dto.UserError;
 import com.johndoe.workoutbuddy.domain.user.port.UserRepository;
-import io.vavr.control.Either;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,14 +16,11 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.UUID;
-
 import static io.jsonwebtoken.lang.Assert.isTrue;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 @SpringBootTest
@@ -86,7 +80,7 @@ public class RegisterUserTest {
 
 //	@Test
 //	public void shouldReturnEmptyMessage() {
-//		VerificationEmailDto dto = new VerificationEmailDto(UUID.randomUUID(), "");
+//		VerificationEmail dto = new VerificationEmail(UUID.randomUUID(), "");
 //		when(emailFacade.sendUserVerificationEmail(dto)).thenReturn(Either.left(EmailError.EMPTY_MESSAGE));
 //		assertThat(userFacade.registerNewUser(RegisterUserDto.builder()
 //				.username(USERNAME_4)
