@@ -26,7 +26,7 @@ public class EmailSenderImpl implements EmailSender {
             helper.setText(contentBuilder.buildVerificationEmail(emailMessage), true);
             emailSender.send(email);
         } catch (MessagingException e) {
-            throw new RuntimeException(e.getMessage());
+            throw new RuntimeException(e);
         }
     }
 

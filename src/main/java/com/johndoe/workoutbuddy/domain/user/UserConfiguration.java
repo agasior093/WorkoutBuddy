@@ -7,17 +7,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@RequiredArgsConstructor
 class UserConfiguration {
-    private final UserRepository userRepository;
-    private final EmailFacade emailFacade;
-
     @Bean
-    UserFacade userFacade() {
-        ObjectMapper mapper = new ObjectMapper();
-        ReadUserUseCase readUser = new ReadUserUseCase(userRepository, mapper);
-        RegisterUserUseCase registerUser = new RegisterUserUseCase(userRepository, emailFacade, mapper);
-        ConfirmRegistrationUseCase confirmRegistration = new ConfirmRegistrationUseCase(userRepository, mapper);
-        return new UserFacade(readUser, registerUser, confirmRegistration, mapper);
+    UserFacade userFacade(UserRepository repository, EmailFacade emailFacade) {
+        return new UserFacade(repository, emailFacade);
     }
 }

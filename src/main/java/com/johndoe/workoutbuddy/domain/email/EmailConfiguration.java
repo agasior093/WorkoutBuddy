@@ -7,12 +7,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@RequiredArgsConstructor
 class EmailConfiguration {
-    private final EmailSender emailSender;
-
     @Bean
-    EmailFacade emailFacade() {
-        return new EmailFacade(new SendEmailUseCase(emailSender));
+    EmailFacade emailFacade(EmailSender emailSender) {
+        return new EmailFacade(emailSender);
     }
 }
