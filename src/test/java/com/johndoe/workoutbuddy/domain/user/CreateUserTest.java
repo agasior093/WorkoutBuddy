@@ -3,8 +3,8 @@ package com.johndoe.workoutbuddy.domain.user;
 
 //import com.johndoe.workoutbuddy.domain.user.RegisterUser;
 
-import com.johndoe.workoutbuddy.adapter.repository.InMemoryUserRepository;
 import com.johndoe.workoutbuddy.adapter.repository.InMemoryActivationTokenRepository;
+import com.johndoe.workoutbuddy.adapter.repository.InMemoryUserRepository;
 import com.johndoe.workoutbuddy.domain.SuccessMessage;
 import com.johndoe.workoutbuddy.domain.email.EmailFacade;
 import com.johndoe.workoutbuddy.domain.email.dto.error.EmailError;
@@ -16,14 +16,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import static com.johndoe.workoutbuddy.domain.user.ObjectFactory.*;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-
-import static com.johndoe.workoutbuddy.domain.user.ObjectFactory.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CreateUserTest {
@@ -39,7 +37,7 @@ public class CreateUserTest {
 
 	@Test
 	public void shouldCreateUser() {
-		Mockito.when(emailFacade.sendUserVerificationEmail(Mockito.any())).thenReturn(Either.right(new SuccessMessage("")));
+		Mockito.when(emailFacade.sendActivationEmail(Mockito.any())).thenReturn(Either.right(new SuccessMessage("")));
 		assertTrue(userFacade.createUser(RegisterUserDto.builder()
 				.username(USERNAME_1)
 				.email(VALID_EMAIL_1)
@@ -56,7 +54,7 @@ public class CreateUserTest {
 
 	@Test
 	public void shouldReturnUserAlreadyExists() {
-		Mockito.when(emailFacade.sendUserVerificationEmail(Mockito.any())).thenReturn(Either.right(new SuccessMessage("")));
+		Mockito.when(emailFacade.sendActivationEmail(Mockito.any())).thenReturn(Either.right(new SuccessMessage("")));
 		assertTrue(userFacade.createUser(RegisterUserDto.builder()
 				.username(USERNAME_1)
 				.email(VALID_EMAIL_1)
@@ -69,7 +67,7 @@ public class CreateUserTest {
 
 	@Test
 	public void shouldReturnEmailAlreadyExists() {
-		Mockito.when(emailFacade.sendUserVerificationEmail(Mockito.any())).thenReturn(Either.right(new SuccessMessage("")));
+		Mockito.when(emailFacade.sendActivationEmail(Mockito.any())).thenReturn(Either.right(new SuccessMessage("")));
 		assertTrue(userFacade.createUser(RegisterUserDto.builder()
 				.username(USERNAME_1)
 				.email(VALID_EMAIL_1)
@@ -82,7 +80,7 @@ public class CreateUserTest {
 
 	@Test
 	public void shouldReturnSendingFailed() {
-		Mockito.when(emailFacade.sendUserVerificationEmail(Mockito.any())).thenReturn(Either.left(EmailError.SENDING_FAILED));
+		Mockito.when(emailFacade.sendActivationEmail(Mockito.any())).thenReturn(Either.left(EmailError.SENDING_FAILED));
 		assertThat(userFacade.createUser(RegisterUserDto.builder()
 				.username(USERNAME_1)
 				.email(VALID_EMAIL_1)

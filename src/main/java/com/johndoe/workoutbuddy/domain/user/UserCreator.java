@@ -27,7 +27,7 @@ class UserCreator {
         var user = User.createUser(registerUserDto);
         var savedUser = user.map(this::saveUser);
         var emailDto = savedUser.map(this::createActivationEmail);
-        return emailDto.isRight() ? emailFacade.sendUserVerificationEmail(emailDto.get())
+        return emailDto.isRight() ? emailFacade.sendActivationEmail(emailDto.get())
                 : Either.left(emailDto.getLeft());
     }
 
