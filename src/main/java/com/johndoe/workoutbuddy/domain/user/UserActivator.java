@@ -6,7 +6,7 @@ import com.johndoe.workoutbuddy.domain.user.dto.UserDto;
 import com.johndoe.workoutbuddy.domain.user.dto.UserError;
 import com.johndoe.workoutbuddy.domain.user.dto.ActivationTokenDto;
 import com.johndoe.workoutbuddy.domain.user.port.UserRepository;
-import com.johndoe.workoutbuddy.domain.user.port.VerificationTokenRepository;
+import com.johndoe.workoutbuddy.domain.user.port.ActivationTokenRepository;
 import io.vavr.control.Either;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
@@ -18,7 +18,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 class UserActivator {
     private final UserRepository userRepository;
-    private final VerificationTokenRepository tokenRepository;
+    private final ActivationTokenRepository tokenRepository;
     private final ObjectMapper objectMapper;
 
     Either<DomainError, SuccessMessage> activate(UUID uuid, String username) {
@@ -37,7 +37,7 @@ class UserActivator {
         } else {
             return Either.left(UserError.INVALID_TOKEN);
         }
-        var user = userRepository.findUser(username);
+        var user = userRepository.findByUsername(username);
 
         if(user.isPresent()) {
             activateUser(user.get());

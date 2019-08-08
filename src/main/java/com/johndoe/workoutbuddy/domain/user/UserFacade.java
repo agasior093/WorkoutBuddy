@@ -6,7 +6,7 @@ import com.johndoe.workoutbuddy.domain.email.EmailFacade;
 import com.johndoe.workoutbuddy.domain.user.dto.PersonalDetailsDto;
 import com.johndoe.workoutbuddy.domain.user.dto.RegisterUserDto;
 import com.johndoe.workoutbuddy.domain.user.port.UserRepository;
-import com.johndoe.workoutbuddy.domain.user.port.VerificationTokenRepository;
+import com.johndoe.workoutbuddy.domain.user.port.ActivationTokenRepository;
 import io.vavr.control.Either;
 
 import java.util.Optional;
@@ -18,7 +18,7 @@ public class UserFacade {
     private final UserActivator activator;
     private final ObjectMapper mapper;
 
-    UserFacade(UserRepository userRepository, VerificationTokenRepository tokenRepository, EmailFacade emailFacade) {
+    UserFacade(UserRepository userRepository, ActivationTokenRepository tokenRepository, EmailFacade emailFacade) {
         this.mapper = new ObjectMapper();
         this.reader = new UserReader(userRepository, mapper);
         this.creator = new UserCreator(userRepository, tokenRepository, emailFacade, mapper);

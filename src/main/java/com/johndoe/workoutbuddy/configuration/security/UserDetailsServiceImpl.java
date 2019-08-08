@@ -4,7 +4,6 @@ import com.johndoe.workoutbuddy.adapter.repository.InMemoryUserRepository;
 import com.johndoe.workoutbuddy.domain.user.dto.UserDto;
 import com.johndoe.workoutbuddy.domain.user.port.UserRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,7 +17,7 @@ class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findUser(username).map(this::getUserDetails)
+        return userRepository.findByUsername(username).map(this::getUserDetails)
                 .orElseThrow(() -> new UsernameNotFoundException("ApplicationUser not found"));
     }
 

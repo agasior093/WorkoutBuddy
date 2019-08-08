@@ -15,7 +15,6 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
 @RunWith(MockitoJUnitRunner.class)
-@SpringBootTest
 public class SendEmailTest {
 
     @Mock

@@ -3,7 +3,10 @@ package com.johndoe.workoutbuddy.domain.user;
 import com.johndoe.workoutbuddy.domain.DomainError;
 import com.johndoe.workoutbuddy.domain.user.dto.RegisterUserDto;
 import com.johndoe.workoutbuddy.domain.user.dto.UserError;
+import io.vavr.collection.CharSeq;
+import io.vavr.collection.Seq;
 import io.vavr.control.Either;
+import io.vavr.control.Validation;
 import lombok.Builder;
 import lombok.Getter;
 import org.apache.commons.validator.routines.EmailValidator;
@@ -46,7 +49,8 @@ class User {
         this.active = true;
     }
 
-    private static boolean validEmail(String email) {
+    private static Boolean validEmail(String email) {
         return EmailValidator.getInstance().isValid(email);
     }
+
 }

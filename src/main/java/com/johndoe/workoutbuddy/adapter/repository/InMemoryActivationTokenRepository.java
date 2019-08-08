@@ -2,7 +2,7 @@ package com.johndoe.workoutbuddy.adapter.repository;
 
 import com.johndoe.workoutbuddy.adapter.repository.entity.ActivationToken;
 import com.johndoe.workoutbuddy.domain.user.dto.ActivationTokenDto;
-import com.johndoe.workoutbuddy.domain.user.port.VerificationTokenRepository;
+import com.johndoe.workoutbuddy.domain.user.port.ActivationTokenRepository;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -12,7 +12,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Component
-public class InMemoryActivationTokenRepository implements VerificationTokenRepository {
+public class InMemoryActivationTokenRepository implements ActivationTokenRepository {
     private final Map<UUID, ActivationToken> tokens = new HashMap<>();
     private final ActivationTokenMapper mapper = new ActivationTokenMapper();
 

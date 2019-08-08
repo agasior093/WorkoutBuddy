@@ -7,24 +7,25 @@ import com.johndoe.workoutbuddy.domain.email.dto.UserActivationEmail;
 import com.johndoe.workoutbuddy.domain.user.dto.RegisterUserDto;
 import com.johndoe.workoutbuddy.domain.user.dto.UserError;
 import com.johndoe.workoutbuddy.domain.user.port.UserRepository;
-import com.johndoe.workoutbuddy.domain.user.port.VerificationTokenRepository;
+import com.johndoe.workoutbuddy.domain.user.port.ActivationTokenRepository;
 import io.vavr.control.Either;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor
 class UserCreator {
     private final UserRepository userRepository;
-    private final VerificationTokenRepository tokenRepository;
+    private final ActivationTokenRepository tokenRepository;
     private final EmailFacade emailFacade;
     private final ObjectMapper objectMapper;
 
     Either<DomainError, SuccessMessage> createUser(RegisterUserDto registerUserDto) {
-        if(userRepository.findUser(registerUserDto.getUsername()).isPresent())
-            return Either.left(UserError.USERNAME_ALREADY_EXISTS);
-        var userCreationResult = User.createUser(registerUserDto);
-        var savedUser = userCreationResult.map(this::saveUser);
+        var validationError = validate(registerUserDto);
+        if(validationError.isPresent()) return Either.left(validationError.get());
+        var user = User.createUser(registerUserDto);
+        var savedUser = user.map(this::saveUser);
         var emailDto = savedUser.map(this::createActivationEmail);
         return emailDto.isRight() ? emailFacade.sendUserVerificationEmail(emailDto.get())
                 : Either.left(emailDto.getLeft());
@@ -42,6 +43,12 @@ class UserCreator {
                 .username(user.getUsername())
                 .receiver(user.getEmail())
                 .build();
+    }
+
+    private Optional<DomainError> validate(RegisterUserDto userDto) {
+        if(userRepository.findByUsername(userDto.getUsername()).isPresent()) return Optional.of(UserError.USERNAME_ALREADY_EXISTS);
+        if(userRepository.findByEmail(userDto.getEmail()).isPresent()) return Optional.of(UserError.EMAIL_ALREADY_EXISTS);
+        return Optional.empty();
     }
 
 }

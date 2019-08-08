@@ -12,7 +12,7 @@ class UserReader {
     private final ObjectMapper objectMapper;
 
     Optional<PersonalDetailsDto> readPersonalData(String username) {
-        return repository.findUser(username)
+        return repository.findByUsername(username)
                 .map(objectMapper::userToEntity)
                 .map(this::getPersonalData);
     }
