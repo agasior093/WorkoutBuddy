@@ -23,7 +23,7 @@ public class EmailSenderImpl implements EmailSender {
             MimeMessageHelper helper = new MimeMessageHelper(email, true);
             helper.setTo(emailMessage.getReceiver());
             helper.setSubject(emailMessage.getSubject());
-            helper.setText(contentBuilder.buildVerificationEmail(emailMessage), true);
+            helper.setText(contentBuilder.buildActivationEmail(emailMessage), true);
             emailSender.send(email);
         } catch (MessagingException e) {
             throw new RuntimeException(e);

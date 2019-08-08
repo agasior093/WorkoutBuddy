@@ -6,33 +6,34 @@ import com.johndoe.workoutbuddy.domain.email.EmailFacade;
 import com.johndoe.workoutbuddy.domain.user.dto.PersonalDetailsDto;
 import com.johndoe.workoutbuddy.domain.user.dto.RegisterUserDto;
 import com.johndoe.workoutbuddy.domain.user.port.UserRepository;
+import com.johndoe.workoutbuddy.domain.user.port.VerificationTokenRepository;
 import io.vavr.control.Either;
 
 import java.util.Optional;
 import java.util.UUID;
 
 public class UserFacade {
-    private final ReadUserUseCase readUser;
-    private final RegisterUserUseCase registerUser;
-    private final ConfirmRegistrationUseCase confirmRegistration;
-    private final ObjectMapper objectMapper;
+    private final UserReader reader;
+    private final UserCreator creator;
+    private final UserActivator activator;
+    private final ObjectMapper mapper;
 
-    UserFacade(UserRepository repository, EmailFacade emailFacade) {
-        this.objectMapper = new ObjectMapper();
-        this.readUser = new ReadUserUseCase(repository, objectMapper);
-        this.registerUser = new RegisterUserUseCase(repository, emailFacade, objectMapper);
-        this.confirmRegistration = new ConfirmRegistrationUseCase(repository, objectMapper);
+    UserFacade(UserRepository userRepository, VerificationTokenRepository tokenRepository, EmailFacade emailFacade) {
+        this.mapper = new ObjectMapper();
+        this.reader = new UserReader(userRepository, mapper);
+        this.creator = new UserCreator(userRepository, tokenRepository, emailFacade, mapper);
+        this.activator = new UserActivator(userRepository, tokenRepository, mapper);
     }
 
-    public Optional<PersonalDetailsDto> readUserPersonalDetails(String username) {
-        return readUser.readPersonalData(username).map(objectMapper::personalDetailsToDto);
+    public Optional<PersonalDetailsDto> readUserPersonalData(String username) {
+        return reader.readPersonalData(username);
     }
 
-    public Either<DomainError, SuccessMessage> registerNewUser(RegisterUserDto dto) {
-        return registerUser.register(dto);
+    public Either<DomainError, SuccessMessage> createUser(RegisterUserDto dto) {
+        return creator.createUser(dto);
     }
 
-    public Either<DomainError, SuccessMessage> confirmRegistration(String uuid, String username) {
-        return confirmRegistration.confirm(UUID.fromString(uuid), username);
+    public Either<DomainError, SuccessMessage> activateUser(String uuid, String username) {
+        return activator.activate(UUID.fromString(uuid), username);
     }
 }

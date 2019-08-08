@@ -7,7 +7,7 @@ import java.util.UUID;
 
 @Getter
 @Builder
-public class VerificationEmail implements EmailMessage {
+public class UserActivationEmail implements EmailMessage {
     private final UUID token;
     private final String username;
     private final String receiver;

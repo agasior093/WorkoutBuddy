@@ -4,8 +4,6 @@ import com.johndoe.workoutbuddy.domain.user.UserFacade;
 import com.johndoe.workoutbuddy.domain.user.dto.RegisterUserDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,16 +16,16 @@ class UserController {
 
     @GetMapping
     ResponseEntity getPersonalUserDetails(@RequestParam String username) {
-        return responseResolver.resolve(userFacade.readUserPersonalDetails(username));
+        return responseResolver.resolve(userFacade.readUserPersonalData(username));
     }
     @PostMapping("/register")
     ResponseEntity registerUser(@RequestBody RegisterUserDto registerUserDto) {
-        return responseResolver.resolve(userFacade.registerNewUser(registerUserDto));
+        return responseResolver.resolve(userFacade.createUser(registerUserDto));
     }
 
-    @GetMapping("/confirm")
+    @GetMapping("/activate")
     ResponseEntity confirmRegistration(@RequestParam String token, @RequestParam String username) {
-        return responseResolver.resolve(userFacade.confirmRegistration(token, username));
+        return responseResolver.resolve(userFacade.activateUser(token, username));
     }
 
 

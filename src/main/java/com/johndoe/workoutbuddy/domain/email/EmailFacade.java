@@ -2,24 +2,20 @@ package com.johndoe.workoutbuddy.domain.email;
 
 import com.johndoe.workoutbuddy.domain.DomainError;
 import com.johndoe.workoutbuddy.domain.SuccessMessage;
-import com.johndoe.workoutbuddy.domain.email.dto.VerificationEmail;
-import com.johndoe.workoutbuddy.domain.email.port.EmailSender;
+import com.johndoe.workoutbuddy.domain.email.dto.UserActivationEmail;
 import io.vavr.control.Either;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 
 @Log
 public class EmailFacade {
-    private final SendEmailUseCase sendEmail;
+    private final EmailService sendEmail;
 
-    public EmailFacade(EmailSender sender){
-        sendEmail = new SendEmailUseCase(sender);
+    EmailFacade(com.johndoe.workoutbuddy.domain.email.port.EmailSender sender){
+        sendEmail = new EmailService(sender);
     }
 
-    public Either<DomainError, SuccessMessage> sendUserVerificationEmail(VerificationEmail verificationEmail) {
-        var result = sendEmail.send(verificationEmail);
-        log.info(result.toString());
-        return result;
+    public Either<DomainError, SuccessMessage> sendUserVerificationEmail(UserActivationEmail userActivationEmail) {
+        return sendEmail.sendEmail(userActivationEmail);
     }
 
 }

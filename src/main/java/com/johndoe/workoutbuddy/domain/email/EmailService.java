@@ -12,17 +12,17 @@ import lombok.extern.java.Log;
 
 @Log
 @RequiredArgsConstructor
-class SendEmailUseCase {
+class EmailService {
     private final EmailSender emailSender;
 
-    Either<DomainError, SuccessMessage> send(EmailMessage message) {
-        return Try.of(() -> sendEmail(message))
+    Either<DomainError, SuccessMessage> sendEmail(EmailMessage email) {
+        return Try.of(() -> tryToSend(email))
                 .onFailure(e -> log.severe(e.getMessage()))
                 .toEither(EmailError.SENDING_FAILED);
     }
 
-    private SuccessMessage sendEmail(EmailMessage message) throws RuntimeException {
-        emailSender.sendEmail(message);
-        return new SuccessMessage("Email successfully sent to " + message.getReceiver());
+    private SuccessMessage tryToSend(EmailMessage email) throws RuntimeException {
+        emailSender.sendEmail(email);
+        return new SuccessMessage("Email successfully sent to " + email.getReceiver());
     }
 }

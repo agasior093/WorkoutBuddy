@@ -40,6 +40,10 @@ class ResponseResolver {
     }
 
     private ResponseEntity<Object> failureResponse(DomainError error) {
-        return new ResponseEntity<>(error, httpStatusMap.get(error));
+        return new ResponseEntity<>(error, getHttpStatus(error));
+    }
+
+    private HttpStatus getHttpStatus(DomainError error) {
+        return error != null && httpStatusMap.get(error) != null ? httpStatusMap.get(error) : HttpStatus.INTERNAL_SERVER_ERROR;
     }
 }

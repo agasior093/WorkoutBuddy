@@ -1,10 +1,13 @@
 package com.johndoe.workoutbuddy.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 public class SuccessMessage {
-    private final String message;
+    private String message;
 }

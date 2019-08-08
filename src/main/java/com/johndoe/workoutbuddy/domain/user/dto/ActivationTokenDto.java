@@ -1,16 +1,14 @@
-package com.johndoe.workoutbuddy.adapter.repository.entity;
+package com.johndoe.workoutbuddy.domain.user.dto;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.ToString;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Builder
 @Getter
-@ToString
-public class VerificationToken {
+@Builder
+public class ActivationTokenDto {
     private final UUID uuid;
     private final String username;
     private final LocalDateTime expirationDateTime;
