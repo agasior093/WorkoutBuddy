@@ -1,7 +1,7 @@
 package com.johndoe.workoutbuddy.domain.user;
 
-import com.johndoe.workoutbuddy.domain.DomainError;
-import com.johndoe.workoutbuddy.domain.SuccessMessage;
+import com.johndoe.workoutbuddy.domain.common.DomainError;
+import com.johndoe.workoutbuddy.domain.common.SuccessMessage;
 import com.johndoe.workoutbuddy.domain.user.dto.UserDto;
 import com.johndoe.workoutbuddy.domain.user.dto.UserError;
 import com.johndoe.workoutbuddy.domain.user.dto.ActivationTokenDto;
@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Log
 @RequiredArgsConstructor
@@ -21,13 +20,12 @@ class UserActivator {
     private final ActivationTokenRepository tokenRepository;
     private final ObjectMapper objectMapper;
 
-    Either<DomainError, SuccessMessage> activate(UUID uuid, String username) {
-        var token = tokenRepository.findToken(uuid);
-        log.info(token.get().toString());
+    Either<DomainError, SuccessMessage> activate(String tokenID, String username) {
+        var token = tokenRepository.findToken(tokenID);
         if(token.isPresent()) {
             if(isValid(token.get())) {
                 tokenRepository.updateToken(ActivationTokenDto.builder()
-                        .uuid(token.get().getUuid())
+                        .tokenID(token.get().getUsername())
                         .username(token.get().getUsername())
                         .activated(true)
                         .expirationDateTime(LocalDateTime.now())

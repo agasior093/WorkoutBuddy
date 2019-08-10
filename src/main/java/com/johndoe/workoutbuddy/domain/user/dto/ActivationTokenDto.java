@@ -11,7 +11,7 @@ import java.util.UUID;
 @Builder
 @ToString
 public class ActivationTokenDto {
-    private final UUID uuid;
+    private final String tokenID;
     private final String username;
     private final LocalDateTime expirationDateTime;
     private final boolean activated;

@@ -12,6 +12,7 @@ import java.util.Set;
 @Getter
 @ToString
 public class UserDto {
+    private final String id;
     private final String username;
     private final String email;
     private final String password;
@@ -21,6 +22,6 @@ public class UserDto {
     private final String lastName;
     private final GenderDto gender;
     private final LocalDate birthDate;
-    private Double weight;
-    private Double height;
+    private final Double weight;
+    private final Double height;
 }

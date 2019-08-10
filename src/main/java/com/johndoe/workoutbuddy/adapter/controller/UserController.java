@@ -1,9 +1,8 @@
 package com.johndoe.workoutbuddy.adapter.controller;
 
 import com.johndoe.workoutbuddy.domain.user.UserFacade;
-import com.johndoe.workoutbuddy.domain.user.dto.RegisterUserDto;
+import com.johndoe.workoutbuddy.domain.user.dto.CreateUserDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,8 +25,8 @@ class UserController {
     }
     
     @PostMapping("/register")
-    ResponseEntity registerUser(@RequestBody RegisterUserDto registerUserDto) {
-        return responseResolver.resolve(userFacade.createUser(registerUserDto));
+    ResponseEntity registerUser(@RequestBody CreateUserDto createUserDto) {
+        return responseResolver.resolve(userFacade.createUser(createUserDto));
     }
 
     @GetMapping("/activate")

@@ -23,17 +23,17 @@ public class SendEmailTest {
 
     @Test
     public void shouldSendEmail() {
-        assertTrue(emailFacade.sendActivationEmail(validMessage()).isRight());
+        assertTrue(emailFacade.sendActivationEmail("", "", "").isRight());
     }
 
     @Test
     public void shouldCatchExceptionAndReturnSendingFail() {
         var email = validMessage();
         doThrow(new RuntimeException("Email exception")).when(emailSender).sendEmail(email);
-        assertThat(emailFacade.sendActivationEmail(email).getLeft(), is(EmailError.SENDING_FAILED));
+        assertThat(emailFacade.sendActivationEmail(validMessage().getUsername(), validMessage().getReceiver(), validMessage().getToken()).getLeft(), is(EmailError.SENDING_FAILED));
     }
 
     private UserActivationEmail validMessage() {
-        return UserActivationEmail.builder().token(UUID.randomUUID()).receiver("mail@gmail.com").username("abc").build();
+        return UserActivationEmail.builder().token("token").receiver("mail@gmail.com").username("username").build();
     }
 }

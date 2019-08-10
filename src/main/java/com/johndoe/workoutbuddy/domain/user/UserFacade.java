@@ -1,17 +1,16 @@
 package com.johndoe.workoutbuddy.domain.user;
 
-import com.johndoe.workoutbuddy.domain.DomainError;
-import com.johndoe.workoutbuddy.domain.SuccessMessage;
+import com.johndoe.workoutbuddy.domain.common.DomainError;
+import com.johndoe.workoutbuddy.domain.common.SuccessMessage;
 import com.johndoe.workoutbuddy.domain.email.EmailFacade;
+import com.johndoe.workoutbuddy.domain.user.dto.CreateUserDto;
 import com.johndoe.workoutbuddy.domain.user.dto.PersonalDetailsDto;
-import com.johndoe.workoutbuddy.domain.user.dto.RegisterUserDto;
 import com.johndoe.workoutbuddy.domain.user.dto.UserDto;
 import com.johndoe.workoutbuddy.domain.user.port.UserRepository;
 import com.johndoe.workoutbuddy.domain.user.port.ActivationTokenRepository;
 import io.vavr.control.Either;
 
 import java.util.Optional;
-import java.util.UUID;
 
 public class UserFacade {
     private final UserReader reader;
@@ -34,11 +33,11 @@ public class UserFacade {
         return reader.readUser(username);
     }
 
-    public Either<DomainError, SuccessMessage> createUser(RegisterUserDto dto) {
+    public Either<DomainError, SuccessMessage> createUser(CreateUserDto dto) {
         return creator.createUser(dto);
     }
 
-    public Either<DomainError, SuccessMessage> activateUser(String uuid, String username) {
-        return activator.activate(UUID.fromString(uuid), username);
+    public Either<DomainError, SuccessMessage> activateUser(String tokenID, String username) {
+        return activator.activate(tokenID, username);
     }
 }

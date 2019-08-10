@@ -1,6 +1,6 @@
 package com.johndoe.workoutbuddy.domain.user.dto;
 
-import com.johndoe.workoutbuddy.domain.DomainError;
+import com.johndoe.workoutbuddy.domain.common.DomainError;
 
 public enum UserError implements DomainError {
     USERNAME_ALREADY_EXISTS("Username already exists"),
@@ -8,7 +8,9 @@ public enum UserError implements DomainError {
     INVALID_EMAIL("Provided email address is invalid"),
     EXPIRED_REGISTRATION_TOKEN("Registration token has expired or has already been used"),
     INVALID_TOKEN("Registration token is invalid"),
-    ACTIVATION_FAILED("Activation of user failed");
+    ACTIVATION_FAILED("Activation of user failed"),
+    PERSISTENCE_FAILED("");
+
 
 
     private final String cause;

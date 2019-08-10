@@ -1,6 +1,6 @@
 package com.johndoe.workoutbuddy.domain.email.dto.error;
 
-import com.johndoe.workoutbuddy.domain.DomainError;
+import com.johndoe.workoutbuddy.domain.common.DomainError;
 
 public enum EmailError implements DomainError {
     SENDING_FAILED("Failed to send email message.");

@@ -1,12 +1,9 @@
 package com.johndoe.workoutbuddy.domain.user;
 
-import com.johndoe.workoutbuddy.domain.DomainError;
-import com.johndoe.workoutbuddy.domain.user.dto.RegisterUserDto;
+import com.johndoe.workoutbuddy.domain.common.DomainError;
+import com.johndoe.workoutbuddy.domain.user.dto.CreateUserDto;
 import com.johndoe.workoutbuddy.domain.user.dto.UserError;
-import io.vavr.collection.CharSeq;
-import io.vavr.collection.Seq;
 import io.vavr.control.Either;
-import io.vavr.control.Validation;
 import lombok.Builder;
 import lombok.Getter;
 import org.apache.commons.validator.routines.EmailValidator;
@@ -21,6 +18,7 @@ enum Gender {
 @Getter
 @Builder
 class User {
+    private final String id;
     private final String username;
     private String email;
     private String password;
@@ -33,7 +31,7 @@ class User {
     private Double weight;
     private Double height;
 
-    static Either<DomainError, User> createUser(RegisterUserDto dto) {
+    static Either<DomainError, User> createUser(CreateUserDto dto) {
         return validEmail(dto.getEmail()) ?
             Either.right(User.builder()
                     .username(dto.getUsername())

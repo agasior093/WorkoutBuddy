@@ -7,6 +7,7 @@ class ObjectMapper {
     User userToEntity(UserDto user) {
         if(user == null) return null;
         return User.builder()
+                .id(user.getId())
                 .username(user.getUsername())
                 .password(user.getPassword())
                 .email(user.getEmail())
@@ -25,6 +26,7 @@ class ObjectMapper {
     UserDto userToDto(User user) {
         if(user == null) return null;
         return UserDto.builder()
+                .id(user.getId())
                 .username(user.getUsername())
                 .password(user.getPassword())
                 .email(user.getEmail())

@@ -44,7 +44,7 @@ public class ActivateUserTest {
           field.setAccessible(true);
           Map<UUID, ActivationTokenEntity> tokens = (Map<UUID, ActivationTokenEntity>)field.get(tokenRepository);
           var iterator = tokens.values().iterator();
-          return iterator.next().getUuid().toString();
+          return iterator.next().getTokenID();
       } catch (Exception e) {
           return null;
       }

@@ -1,6 +1,6 @@
 package com.johndoe.workoutbuddy.domain.user;
 
-import com.johndoe.workoutbuddy.domain.user.dto.RegisterUserDto;
+import com.johndoe.workoutbuddy.domain.user.dto.CreateUserDto;
 import com.johndoe.workoutbuddy.domain.user.dto.UserDto;
 
 class ObjectFactory {
@@ -11,8 +11,8 @@ class ObjectFactory {
     static final String VALID_EMAIL_2 = "email2@gmail.com";
     static final String INVALID_EMAIL = "mailgmail.com";
 
-    static RegisterUserDto validRegisterDto() {
-        return RegisterUserDto.builder().username(USERNAME_1).email(VALID_EMAIL_1).password(VALID_PASSWORD).build();
+    static CreateUserDto validRegisterDto() {
+        return CreateUserDto.builder().username(USERNAME_1).email(VALID_EMAIL_1).password(VALID_PASSWORD).build();
     }
 
     static UserDto validUser() {

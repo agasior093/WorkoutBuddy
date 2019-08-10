@@ -1,7 +1,8 @@
 package com.johndoe.workoutbuddy.domain.email;
 
-import com.johndoe.workoutbuddy.domain.DomainError;
-import com.johndoe.workoutbuddy.domain.SuccessMessage;
+import com.johndoe.workoutbuddy.domain.common.DomainError;
+import com.johndoe.workoutbuddy.domain.common.SuccessMessage;
+import com.johndoe.workoutbuddy.domain.email.dto.UserActivationEmail;
 import com.johndoe.workoutbuddy.domain.email.dto.error.EmailError;
 import com.johndoe.workoutbuddy.domain.email.dto.EmailMessage;
 import com.johndoe.workoutbuddy.domain.email.port.EmailSender;
@@ -15,7 +16,8 @@ import lombok.extern.java.Log;
 class EmailService {
     private final EmailSender emailSender;
 
-    Either<DomainError, SuccessMessage> sendEmail(EmailMessage email) {
+    Either<DomainError, SuccessMessage> sendEmail(String username, String receiver, String token) {
+        var email = prepareEmail(username, receiver, token);
         return Try.of(() -> tryToSend(email))
                 .onFailure(e -> log.severe(e.getMessage()))
                 .toEither(EmailError.SENDING_FAILED);
@@ -23,6 +25,14 @@ class EmailService {
 
     private SuccessMessage tryToSend(EmailMessage email) throws RuntimeException {
         emailSender.sendEmail(email);
-        return new SuccessMessage("Email successfully sent to " + email.getReceiver());
+        return new SuccessMessage("Activation email successfully sent to " + email.getReceiver());
+    }
+
+    private UserActivationEmail prepareEmail(String username, String receiver, String token) {
+        return UserActivationEmail.builder()
+                .token(token)
+                .username(username)
+                .receiver(receiver)
+                .build();
     }
 }
