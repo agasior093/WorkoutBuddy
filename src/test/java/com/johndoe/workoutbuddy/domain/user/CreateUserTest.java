@@ -1,7 +1,7 @@
 package com.johndoe.workoutbuddy.domain.user;
 import com.johndoe.workoutbuddy.adapter.repository.inmemory.InMemoryActivationTokenRepository;
 import com.johndoe.workoutbuddy.adapter.repository.inmemory.InMemoryUserRepository;
-import com.johndoe.workoutbuddy.domain.common.SuccessMessage;
+import com.johndoe.workoutbuddy.domain.common.Success;
 import com.johndoe.workoutbuddy.domain.email.EmailFacade;
 import com.johndoe.workoutbuddy.domain.email.dto.error.EmailError;
 import com.johndoe.workoutbuddy.domain.user.dto.CreateUserDto;
@@ -11,7 +11,6 @@ import io.vavr.control.Either;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.hamcrest.Matchers.is;
@@ -34,7 +33,7 @@ public class CreateUserTest {
 
 	@Test
 	public void shouldCreateInactiveUser() {
-		when(emailFacade.sendActivationEmail(anyString(), anyString(), anyString())).thenReturn(Either.right(new SuccessMessage("")));
+		when(emailFacade.sendActivationEmail(anyString(), anyString(), anyString())).thenReturn(Either.right(new Success("")));
 		assertTrue(userFacade.createUser(CreateUserDto.builder()
 				.username(USERNAME_1)
 				.email(VALID_EMAIL_1)
@@ -54,7 +53,7 @@ public class CreateUserTest {
 
 	@Test
 	public void shouldReturnUserAlreadyExists() {
-		when(emailFacade.sendActivationEmail(anyString(), anyString(), anyString())).thenReturn(Either.right(new SuccessMessage("")));
+		when(emailFacade.sendActivationEmail(anyString(), anyString(), anyString())).thenReturn(Either.right(new Success("")));
 		assertTrue(userFacade.createUser(CreateUserDto.builder()
 				.username(USERNAME_1)
 				.email(VALID_EMAIL_1)
@@ -67,7 +66,7 @@ public class CreateUserTest {
 
 	@Test
 	public void shouldReturnEmailAlreadyExists() {
-		when(emailFacade.sendActivationEmail(anyString(), anyString(), anyString())).thenReturn(Either.right(new SuccessMessage("")));
+		when(emailFacade.sendActivationEmail(anyString(), anyString(), anyString())).thenReturn(Either.right(new Success("")));
 		assertTrue(userFacade.createUser(CreateUserDto.builder()
 				.username(USERNAME_1)
 				.email(VALID_EMAIL_1)

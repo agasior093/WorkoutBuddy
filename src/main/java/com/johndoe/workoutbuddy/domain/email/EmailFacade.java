@@ -1,7 +1,7 @@
 package com.johndoe.workoutbuddy.domain.email;
 
-import com.johndoe.workoutbuddy.domain.common.DomainError;
-import com.johndoe.workoutbuddy.domain.common.SuccessMessage;
+import com.johndoe.workoutbuddy.domain.common.Error;
+import com.johndoe.workoutbuddy.domain.common.Success;
 import com.johndoe.workoutbuddy.domain.email.port.EmailSender;
 import io.vavr.control.Either;
 import lombok.extern.java.Log;
@@ -14,7 +14,7 @@ public class EmailFacade {
         emailService = new EmailService(sender);
     }
 
-    public Either<DomainError, SuccessMessage> sendActivationEmail(String username, String receiver, String token) {
+    public Either<Error, Success> sendActivationEmail(String username, String receiver, String token) {
         return emailService.sendEmail(username, receiver, token);
     }
 }

@@ -1,6 +1,6 @@
 package com.johndoe.workoutbuddy.domain.user;
 
-import com.johndoe.workoutbuddy.domain.common.DomainError;
+import com.johndoe.workoutbuddy.domain.common.Error;
 import com.johndoe.workoutbuddy.domain.user.dto.CreateUserDto;
 import com.johndoe.workoutbuddy.domain.user.dto.UserError;
 import io.vavr.control.Either;
@@ -31,7 +31,7 @@ class User {
     private Double weight;
     private Double height;
 
-    static Either<DomainError, User> createUser(CreateUserDto dto) {
+    static Either<Error, User> createUser(CreateUserDto dto) {
         return validEmail(dto.getEmail()) ?
             Either.right(User.builder()
                     .username(dto.getUsername())

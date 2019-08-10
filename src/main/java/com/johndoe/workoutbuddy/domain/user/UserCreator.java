@@ -1,7 +1,7 @@
 package com.johndoe.workoutbuddy.domain.user;
 
-import com.johndoe.workoutbuddy.domain.common.DomainError;
-import com.johndoe.workoutbuddy.domain.common.SuccessMessage;
+import com.johndoe.workoutbuddy.domain.common.Error;
+import com.johndoe.workoutbuddy.domain.common.Success;
 import com.johndoe.workoutbuddy.domain.email.EmailFacade;
 import com.johndoe.workoutbuddy.domain.user.dto.CreateUserDto;
 import com.johndoe.workoutbuddy.domain.user.dto.UserError;
@@ -22,12 +22,12 @@ class UserCreator {
     private final EmailFacade emailFacade;
     private final ObjectMapper objectMapper;
 
-    Either<DomainError, SuccessMessage> createUser(CreateUserDto userDto) {
+    Either<Error, Success> createUser(CreateUserDto userDto) {
         var validationErrors = hasValidationErrors(userDto);
         return validationErrors.isPresent() ? Either.left(validationErrors.get()) : create(userDto);
     }
 
-    private Either<DomainError, SuccessMessage> create(CreateUserDto userDto) {
+    private Either<Error, Success> create(CreateUserDto userDto) {
 
         return User.createUser(userDto)
                 .flatMap(this::saveUser)
@@ -35,17 +35,17 @@ class UserCreator {
                 .flatMap(token -> sendEmail(userDto, token));
     }
 
-    private Either<DomainError, SuccessMessage> sendEmail(CreateUserDto userDto, String tokenID) {
+    private Either<Error, Success> sendEmail(CreateUserDto userDto, String tokenID) {
         return emailFacade.sendActivationEmail(userDto.getUsername(), userDto.getEmail(), tokenID);
     }
 
-    private Either<DomainError, String> generateToken(User user) {
+    private Either<Error, String> generateToken(User user) {
         return Try.of(() -> tokenRepository.generateToken(user.getUsername()))
                 .onFailure(e -> log.severe(e.getMessage()))
                 .toEither(UserError.PERSISTENCE_FAILED);
     }
 
-    private Either<DomainError, User> saveUser(User user) {
+    private Either<Error, User> saveUser(User user) {
         return Try.of(() -> save(user))
                 .onFailure(e -> log.severe(e.getMessage()))
                 .toEither(UserError.PERSISTENCE_FAILED);
@@ -56,7 +56,7 @@ class UserCreator {
         return user;
     }
 
-    private Optional<DomainError> hasValidationErrors(CreateUserDto userDto) {
+    private Optional<Error> hasValidationErrors(CreateUserDto userDto) {
         if(userRepository.findByUsername(userDto.getUsername()).isPresent()) return Optional.of(UserError.USERNAME_ALREADY_EXISTS);
         if(userRepository.findByEmail(userDto.getEmail()).isPresent()) return Optional.of(UserError.EMAIL_ALREADY_EXISTS);
         return Optional.empty();

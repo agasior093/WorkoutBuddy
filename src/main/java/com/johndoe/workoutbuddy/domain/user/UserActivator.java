@@ -1,13 +1,15 @@
 package com.johndoe.workoutbuddy.domain.user;
 
-import com.johndoe.workoutbuddy.domain.common.DomainError;
-import com.johndoe.workoutbuddy.domain.common.SuccessMessage;
+import com.johndoe.workoutbuddy.domain.common.Error;
+import com.johndoe.workoutbuddy.domain.common.Success;
 import com.johndoe.workoutbuddy.domain.user.dto.UserDto;
-import com.johndoe.workoutbuddy.domain.user.dto.UserError;
 import com.johndoe.workoutbuddy.domain.user.dto.ActivationTokenDto;
+import com.johndoe.workoutbuddy.domain.user.dto.UserError;
 import com.johndoe.workoutbuddy.domain.user.port.UserRepository;
 import com.johndoe.workoutbuddy.domain.user.port.ActivationTokenRepository;
 import io.vavr.control.Either;
+import io.vavr.control.Option;
+import io.vavr.control.Try;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 
@@ -18,63 +20,66 @@ import java.time.LocalDateTime;
 class UserActivator {
     private final UserRepository userRepository;
     private final ActivationTokenRepository tokenRepository;
-    private final ObjectMapper objectMapper;
+    private final ObjectMapper mapper;
 
-    Either<DomainError, SuccessMessage> activate(String tokenID, String username) {
-        var token = tokenRepository.findToken(tokenID);
-        if(token.isPresent()) {
-            if(isValid(token.get())) {
-                tokenRepository.updateToken(ActivationTokenDto.builder()
-                        .tokenID(token.get().getUsername())
-                        .username(token.get().getUsername())
-                        .activated(true)
-                        .expirationDateTime(LocalDateTime.now())
-                        .build());
-            } else {
-                log.info("not vaalid");
-            }
-        } else {
-            return Either.left(UserError.INVALID_TOKEN);
-        }
-        var user = userRepository.findByUsername(username);
-
-        if(user.isPresent()) {
-            activateUser(user.get());
-            return Either.right(new SuccessMessage("Account activated"));
-        } else {
-            return Either.left(UserError.ACTIVATION_FAILED);
-        }
-
+    Either<Error, Success> activateUser(String tokenID, String username) {
+       return handleToken(tokenID).orElse(handleUser(username));
     }
 
-    private void activateUser(UserDto userDto) {
-        var user = objectMapper.userToEntity(userDto);
-        user.activate();
-        userRepository.saveUser(objectMapper.userToDto(user));
+    private Either<Error, Success> handleToken(String tokenID) {
+        return findToken(tokenID)
+                .flatMap(this::validateToken)
+                .flatMap(this::deactivateToken);
     }
-//
-//    private Either<DomainError, SuccessMessage> handleToken(UUID uuid) {
-//       return tokenRepository.findToken(uuid).map(this::deactivateToken).orElse(Either.left(UserError.INVALID_TOKEN));
-//    }
-//
-//    private Either<DomainError, SuccessMessage> deactivateToken(ActivationTokenDto token) {
-//        return isValid(token) ? deactivate(token) : Either.left(UserError.ACTIVATION_FAILED);
-//    }
-//
+
+    private Either<Error, Success> handleUser(String username) {
+        return findUser(username)
+                .flatMap(this::activateUser);
+    }
+
+    private Either<Error, ActivationTokenDto> findToken(String tokenID) {
+        return Option.ofOptional(tokenRepository.findToken(tokenID)).toEither(UserError.ACTIVATION_TOKEN_NOT_FOUND);
+    }
+
+    private Either<Error, ActivationTokenDto> validateToken(ActivationTokenDto tokenDto) {
+        return isValid(tokenDto) ? Either.right(tokenDto) : Either.left(UserError.EXPIRED_ACTIVATION_TOKEN);
+    }
+
+    private Either<Error, Success> deactivateToken(ActivationTokenDto tokenDto) {
+        return Try.of(() -> deactivate(tokenDto))
+                .onFailure(e -> log.severe(e.getMessage()))
+                .toEither(UserError.PERSISTENCE_FAILED);
+    }
+
     private boolean isValid(ActivationTokenDto token) {
         return !token.isActivated() && token.getExpirationDateTime().isBefore(LocalDateTime.now());
     }
-//
-//    private Either<DomainError, SuccessMessage> deactivate(ActivationTokenDto token) {
-//        tokenRepository.updateToken(ActivationTokenDto.builder()
-//                .uuid(token.getUuid())
-//                .username(token.getUsername())
-//                .activated(true)
-//                .expirationDateTime(LocalDateTime.now())
-//                .build());
-//        return Either.right(new SuccessMessage());
-//    }
 
+    private Success deactivate(ActivationTokenDto tokenDto) throws RuntimeException {
+        var deactivatedToken = ActivationTokenDto.builder()
+                .tokenID(tokenDto.getTokenID())
+                .username(tokenDto.getUsername())
+                .activated(true)
+                .expirationDateTime(LocalDateTime.now())
+                .build();
+        tokenRepository.updateToken(deactivatedToken);
+        return new Success();
+    }
 
+   private Either<Error, UserDto> findUser(String username) {
+        return Option.ofOptional(userRepository.findByUsername(username)).toEither(UserError.USER_NOT_FOUND);
+   }
 
+    private Either<Error, Success> activateUser(UserDto userDto) {
+        var user = mapper.userToEntity(userDto);
+        user.activate();
+        return Try.of(() -> activate(mapper.userToDto(user)))
+                .onFailure(e -> log.severe(e.getMessage()))
+                .toEither(UserError.PERSISTENCE_FAILED);
+    }
+
+    private Success activate(UserDto userDto) {
+        userRepository.saveUser(userDto);
+        return new Success(userDto.getUsername() + " successfully activated");
+    }
 }

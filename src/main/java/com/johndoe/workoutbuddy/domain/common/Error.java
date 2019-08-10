@@ -4,9 +4,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import io.vavr.control.Either;
 
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
-public interface DomainError {
+public interface Error {
     String getCause();
-    default Either<DomainError, SuccessMessage> toEitherLeft() {
+    default Either<Error, Success> toEitherLeft() {
         return Either.left(this);
     }
 }
