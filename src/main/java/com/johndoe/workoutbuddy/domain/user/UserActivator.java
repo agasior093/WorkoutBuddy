@@ -23,6 +23,7 @@ class UserActivator {
 
     Either<DomainError, SuccessMessage> activate(UUID uuid, String username) {
         var token = tokenRepository.findToken(uuid);
+        log.info(token.get().toString());
         if(token.isPresent()) {
             if(isValid(token.get())) {
                 tokenRepository.updateToken(ActivationTokenDto.builder()

@@ -28,7 +28,7 @@ class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/user/register").permitAll()
                 .antMatchers("/user/confirm").permitAll()
-                .antMatchers("/user").hasRole("USER")
+                .antMatchers("/user").permitAll()
                 .and()
                 .addFilter(new JwtAuthorizationFilter(authenticationManager()))
                 .addFilter(new JwtAuthenticationFilter(authenticationManager()))

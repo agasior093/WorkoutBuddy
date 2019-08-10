@@ -1,4 +1,4 @@
-package com.johndoe.workoutbuddy.adapter.repository;
+package com.johndoe.workoutbuddy.adapter.repository.inmemory;
 
 import com.johndoe.workoutbuddy.domain.user.dto.GenderDto;
 import com.johndoe.workoutbuddy.domain.user.dto.UserDto;
@@ -11,7 +11,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-@Component
 @Log
 public class InMemoryUserRepository implements UserRepository {
     private final Map<String, UserDto> users = new HashMap<>();

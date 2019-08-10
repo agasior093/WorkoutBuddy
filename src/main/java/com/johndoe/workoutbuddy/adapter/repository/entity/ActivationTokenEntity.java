@@ -9,8 +9,7 @@ import java.util.UUID;
 
 @Builder
 @Getter
-@ToString
-public class ActivationToken {
+public class ActivationTokenEntity {
     private final UUID uuid;
     private final String username;
     private final LocalDateTime expirationDateTime;

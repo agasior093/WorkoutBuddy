@@ -5,6 +5,7 @@ import com.johndoe.workoutbuddy.domain.SuccessMessage;
 import com.johndoe.workoutbuddy.domain.email.EmailFacade;
 import com.johndoe.workoutbuddy.domain.user.dto.PersonalDetailsDto;
 import com.johndoe.workoutbuddy.domain.user.dto.RegisterUserDto;
+import com.johndoe.workoutbuddy.domain.user.dto.UserDto;
 import com.johndoe.workoutbuddy.domain.user.port.UserRepository;
 import com.johndoe.workoutbuddy.domain.user.port.ActivationTokenRepository;
 import io.vavr.control.Either;
@@ -27,6 +28,10 @@ public class UserFacade {
 
     public Optional<PersonalDetailsDto> readUserPersonalData(String username) {
         return reader.readPersonalData(username);
+    }
+
+    public Optional<UserDto> readUser(String username) {
+        return reader.readUser(username);
     }
 
     public Either<DomainError, SuccessMessage> createUser(RegisterUserDto dto) {

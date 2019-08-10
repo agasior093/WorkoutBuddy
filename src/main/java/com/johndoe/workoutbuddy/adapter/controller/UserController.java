@@ -14,10 +14,16 @@ class UserController {
     private final ResponseResolver responseResolver;
     private final UserFacade userFacade;
 
-    @GetMapping
+    @GetMapping()
+    ResponseEntity getUser(@RequestParam String username) {
+        return responseResolver.resolve(userFacade.readUser(username));
+    }
+
+    @GetMapping("/personal")
     ResponseEntity getPersonalUserDetails(@RequestParam String username) {
         return responseResolver.resolve(userFacade.readUserPersonalData(username));
     }
+    
     @PostMapping("/register")
     ResponseEntity registerUser(@RequestBody RegisterUserDto registerUserDto) {
         return responseResolver.resolve(userFacade.createUser(registerUserDto));

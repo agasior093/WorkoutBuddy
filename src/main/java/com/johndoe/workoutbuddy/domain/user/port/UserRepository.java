@@ -7,6 +7,6 @@ import java.util.Optional;
 public interface UserRepository {
     Optional<UserDto> findByUsername(String username);
     Optional<UserDto> findByEmail(String email);
-    String saveUser(UserDto user);
+    String saveUser(UserDto user) throws RuntimeException;
 
 }

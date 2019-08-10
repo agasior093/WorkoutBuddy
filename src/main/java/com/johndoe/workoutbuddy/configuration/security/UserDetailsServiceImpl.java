@@ -1,6 +1,5 @@
 package com.johndoe.workoutbuddy.configuration.security;
 
-import com.johndoe.workoutbuddy.adapter.repository.InMemoryUserRepository;
 import com.johndoe.workoutbuddy.domain.user.dto.UserDto;
 import com.johndoe.workoutbuddy.domain.user.port.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +31,7 @@ class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     @Autowired
-    public void setUserRepository(InMemoryUserRepository userRepository) {
+    public void setUserRepository(UserRepository userRepository) {
          this.userRepository = userRepository;
     }
 }

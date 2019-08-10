@@ -1,6 +1,7 @@
 package com.johndoe.workoutbuddy.domain.user;
 
 import com.johndoe.workoutbuddy.domain.user.dto.PersonalDetailsDto;
+import com.johndoe.workoutbuddy.domain.user.dto.UserDto;
 import com.johndoe.workoutbuddy.domain.user.port.UserRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -15,6 +16,10 @@ class UserReader {
         return repository.findByUsername(username)
                 .map(objectMapper::userToEntity)
                 .map(this::getPersonalData);
+    }
+
+    Optional<UserDto> readUser(String username) {
+        return repository.findByUsername(username);
     }
 
     private PersonalDetailsDto getPersonalData(User user) {

@@ -20,7 +20,11 @@ class ResponseResolver {
     ResponseResolver() {
         httpStatusMap.put(UserError.INVALID_EMAIL, HttpStatus.BAD_REQUEST);
         httpStatusMap.put(UserError.USERNAME_ALREADY_EXISTS, HttpStatus.CONFLICT);
-        httpStatusMap.put(EmailError.SENDING_FAILED, HttpStatus.BAD_REQUEST);
+        httpStatusMap.put(UserError.EMAIL_ALREADY_EXISTS, HttpStatus.CONFLICT);
+        httpStatusMap.put(UserError.INVALID_TOKEN, HttpStatus.CONFLICT);
+        httpStatusMap.put(UserError.EXPIRED_REGISTRATION_TOKEN, HttpStatus.CONFLICT);
+        httpStatusMap.put(UserError.ACTIVATION_FAILED, HttpStatus.INTERNAL_SERVER_ERROR);
+        httpStatusMap.put(EmailError.SENDING_FAILED, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     <T> ResponseEntity resolve(Optional<T> object) {
@@ -40,7 +44,7 @@ class ResponseResolver {
     }
 
     private ResponseEntity<Object> failureResponse(DomainError error) {
-        return new ResponseEntity<>(error, getHttpStatus(error));
+        return new ResponseEntity<>(error.getCause(), getHttpStatus(error));
     }
 
     private HttpStatus getHttpStatus(DomainError error) {

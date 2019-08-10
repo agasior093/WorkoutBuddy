@@ -1,11 +1,11 @@
-package com.johndoe.workoutbuddy.adapter.repository;
+package com.johndoe.workoutbuddy.adapter.repository.mapper;
 
-import com.johndoe.workoutbuddy.adapter.repository.entity.ActivationToken;
+import com.johndoe.workoutbuddy.adapter.repository.entity.ActivationTokenEntity;
 import com.johndoe.workoutbuddy.domain.user.dto.ActivationTokenDto;
 
-class ActivationTokenMapper {
+public class ActivationTokenMapper {
 
-    ActivationTokenDto tokenToDto(ActivationToken token) {
+    public ActivationTokenDto tokenToDto(ActivationTokenEntity token) {
         return ActivationTokenDto.builder()
                 .uuid(token.getUuid())
                 .username(token.getUsername())
@@ -14,8 +14,8 @@ class ActivationTokenMapper {
                 .build();
     }
 
-    ActivationToken tokenToEntity(ActivationTokenDto dto) {
-        return ActivationToken.builder()
+    public ActivationTokenEntity tokenToEntity(ActivationTokenDto dto) {
+        return ActivationTokenEntity.builder()
                 .uuid(dto.getUuid())
                 .username(dto.getUsername())
                 .activated(dto.isActivated())

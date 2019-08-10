@@ -1,6 +1,7 @@
-package com.johndoe.workoutbuddy.adapter.repository;
+package com.johndoe.workoutbuddy.adapter.repository.inmemory;
 
-import com.johndoe.workoutbuddy.adapter.repository.entity.ActivationToken;
+import com.johndoe.workoutbuddy.adapter.repository.mapper.ActivationTokenMapper;
+import com.johndoe.workoutbuddy.adapter.repository.entity.ActivationTokenEntity;
 import com.johndoe.workoutbuddy.domain.user.dto.ActivationTokenDto;
 import com.johndoe.workoutbuddy.domain.user.port.ActivationTokenRepository;
 import org.springframework.stereotype.Component;
@@ -13,13 +14,13 @@ import java.util.UUID;
 
 @Component
 public class InMemoryActivationTokenRepository implements ActivationTokenRepository {
-    private final Map<UUID, ActivationToken> tokens = new HashMap<>();
+    private final Map<UUID, ActivationTokenEntity> tokens = new HashMap<>();
     private final ActivationTokenMapper mapper = new ActivationTokenMapper();
 
     @Override
     public UUID generateToken(String username) {
         UUID uuid = UUID.randomUUID();
-        tokens.put(uuid, ActivationToken.builder()
+        tokens.put(uuid, ActivationTokenEntity.builder()
                 .uuid(uuid)
                 .username(username)
                 .expirationDateTime(LocalDateTime.now().plusHours(1))
