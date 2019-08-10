@@ -17,6 +17,6 @@ public enum UserError implements DomainError {
     }
     @Override
     public String getCause() {
-        return null;
+        return cause;
     }
 }

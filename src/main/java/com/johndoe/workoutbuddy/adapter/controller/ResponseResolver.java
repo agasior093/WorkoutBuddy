@@ -4,6 +4,7 @@ import com.johndoe.workoutbuddy.domain.DomainError;
 import com.johndoe.workoutbuddy.domain.email.dto.error.EmailError;
 import com.johndoe.workoutbuddy.domain.user.dto.UserError;
 import io.vavr.control.Either;
+import lombok.extern.java.Log;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -44,7 +45,7 @@ class ResponseResolver {
     }
 
     private ResponseEntity<Object> failureResponse(DomainError error) {
-        return new ResponseEntity<>(error.getCause(), getHttpStatus(error));
+        return new ResponseEntity<>(error, getHttpStatus(error));
     }
 
     private HttpStatus getHttpStatus(DomainError error) {

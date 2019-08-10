@@ -3,6 +3,7 @@ package com.johndoe.workoutbuddy.adapter.controller;
 import com.johndoe.workoutbuddy.domain.user.UserFacade;
 import com.johndoe.workoutbuddy.domain.user.dto.RegisterUserDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
