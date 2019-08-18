@@ -33,6 +33,7 @@ class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/user/confirm").permitAll()
                 .antMatchers("/user").permitAll()
                 .antMatchers("/user/personal").hasRole("USER")
+                .antMatchers("/product/all").permitAll()
                 .and()
                 .addFilter(new JwtAuthorizationFilter(authenticationManager()))
                 .addFilter(new JwtAuthenticationFilter(authenticationManager()))

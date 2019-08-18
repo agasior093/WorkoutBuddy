@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -37,6 +38,10 @@ class ResponseResolver {
         return either
                 .map(this::successResponse)
                 .getOrElseGet(this::failureResponse);
+    }
+
+    <T> ResponseEntity resolve(List<T> objectList) {
+        return objectList.isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(objectList, HttpStatus.OK);
     }
 
     private ResponseEntity<Object> successResponse(Object obj) {

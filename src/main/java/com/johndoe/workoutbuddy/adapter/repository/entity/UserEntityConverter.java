@@ -5,7 +5,7 @@ import com.johndoe.workoutbuddy.adapter.repository.entity.UserEntity;
 import com.johndoe.workoutbuddy.domain.user.dto.GenderDto;
 import com.johndoe.workoutbuddy.domain.user.dto.UserDto;
 
-public class UserMapper {
+public class UserEntityConverter {
 
     public UserEntity toEntity(UserDto userDto) {
         return UserEntity.builder()
@@ -32,8 +32,8 @@ public class UserMapper {
                 .email(userEntity.getEmail())
                 .roles(userEntity.getRoles())
                 .active(userEntity.isActive())
-                .firstName(userEntity.getFirstName())
-                .lastName(userEntity.getLastName())
+                .firstName("John")
+                .lastName("Doe")
                 .gender(genderToDto(userEntity.getGender()))
                 .birthDate(userEntity.getBirthDate())
                 .weight(userEntity.getWeight())
