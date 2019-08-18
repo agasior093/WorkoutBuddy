@@ -18,6 +18,8 @@
 	<properties>
 		<java.version>11</java.version>
 		<maven.compiler.release>11</maven.compiler.release>
+		<release>11</release>
+		<forceJavacCompilerUse>true</forceJavacCompilerUse>
 	</properties>
 
 	<dependencies>
