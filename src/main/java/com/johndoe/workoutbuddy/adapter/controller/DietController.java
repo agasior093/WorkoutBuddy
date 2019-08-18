@@ -1,15 +1,15 @@
 package com.johndoe.workoutbuddy.adapter.controller;
 
 import com.johndoe.workoutbuddy.domain.diet.DietFacade;
-import com.johndoe.workoutbuddy.domain.diet.dto.ConsumedProductsDto;
+import com.johndoe.workoutbuddy.domain.diet.dto.DailyConsumptionDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @RestController
 @RequestMapping("/diet")
@@ -20,9 +20,16 @@ class DietController {
     private final ResponseResolver responseResolver;
 
     @PostMapping("/updateDaily")
-    ResponseEntity updateDailyConsumption(@RequestBody ConsumedProductsDto productsDto) {
+    ResponseEntity updateDailyConsumption(@RequestBody DailyConsumptionDto productsDto) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         return responseResolver.resolve(dietFacade.updateDailyConsumption(username, productsDto));
+    }
+
+    @GetMapping("/getDaily")
+    ResponseEntity getDailyConsumption(@RequestParam String date) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        return responseResolver.resolve(dietFacade.getDailyConsumption(username, LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"))));
     }
 }

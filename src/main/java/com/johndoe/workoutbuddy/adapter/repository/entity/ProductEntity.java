@@ -14,4 +14,5 @@ public class ProductEntity {
     private final Double protein;
     private final Double fat;
     private final Double carbohydrates;
+    private final Double weight;
 }

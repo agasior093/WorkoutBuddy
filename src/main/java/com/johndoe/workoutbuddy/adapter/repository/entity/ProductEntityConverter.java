@@ -12,7 +12,7 @@ public class ProductEntityConverter {
                 .protein(entity.getProtein())
                 .fat(entity.getFat())
                 .carbohydrates(entity.getCarbohydrates())
-                .weight(100d)
+                .weight(entity.getWeight())
                 .build();
     }
 

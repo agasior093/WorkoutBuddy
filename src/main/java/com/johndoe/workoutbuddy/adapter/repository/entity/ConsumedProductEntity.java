@@ -1,13 +1,11 @@
-package com.johndoe.workoutbuddy.domain.diet.dto;
+package com.johndoe.workoutbuddy.adapter.repository.entity;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.ToString;
 
 @Getter
 @Builder
-@ToString
-public class ProductDto {
+public class ConsumedProductEntity {
     private final String productID;
     private final Double weight;
 }

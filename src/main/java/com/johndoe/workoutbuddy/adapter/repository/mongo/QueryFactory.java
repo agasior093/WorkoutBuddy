@@ -3,6 +3,8 @@ package com.johndoe.workoutbuddy.adapter.repository.mongo;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
+import java.time.LocalDate;
+
 import static com.johndoe.workoutbuddy.adapter.repository.mongo.QueryConstants.*;
 
 class QueryFactory {
@@ -17,5 +19,9 @@ class QueryFactory {
 
     Query tokenIDQuery(String id) {
         return new Query(Criteria.where(TOKEN_ID).is(id));
+    }
+
+    Query usernameDateQuery(String username, LocalDate date) {
+        return new Query(Criteria.where(USERNAME).is(username).and(DATE).is(date));
     }
 }
