@@ -14,8 +14,10 @@
 	<name>workout-buddy</name>
 	<description>WorkoutBuddy Application</description>
 
+
 	<properties>
 		<java.version>11</java.version>
+		<maven.compiler.release>11</maven.compiler.release>
 	</properties>
 
 	<dependencies>
@@ -104,6 +106,7 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+
 			</plugin>
 		</plugins>
 	</build>
