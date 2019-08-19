@@ -18,6 +18,8 @@
 	<properties>
 		<java.version>11</java.version>
 		<maven.compiler.release>11</maven.compiler.release>
+		<java.target>11</java.target>
+		<java.source>11</java.source>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
