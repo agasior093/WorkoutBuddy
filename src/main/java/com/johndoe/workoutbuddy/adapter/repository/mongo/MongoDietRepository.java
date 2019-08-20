@@ -26,7 +26,7 @@ public class MongoDietRepository implements DietRepository {
 
     @Override
     public Optional<DailyConsumptionDto> getDailyConsumption(String username, LocalDate date) {
-        var result = mongoTemplate.findOne(queryFactory.usernameDateQuery(username, date), DailyConsumptionEntity.class);
-        return result != null ? Optional.ofNullable(converter.toDto(result, username)) : Optional.empty();
+        return Optional.ofNullable(mongoTemplate.findOne(queryFactory.usernameDateQuery(username, date), DailyConsumptionEntity.class))
+                .map(result -> converter.toDto(result, username));
     }
 }
