@@ -22,7 +22,7 @@ class QueryFactory {
     }
 
     Query usernameDateQuery(String username, LocalDate date) {
-        var query = new Query(Criteria.where(USERNAME).is(username));
+        var query = new Query(Criteria.where(USERNAME).is(username).and(DATE).is(date));
         System.out.println(query);
         return query;
     }
