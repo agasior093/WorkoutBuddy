@@ -1,7 +1,7 @@
 package com.johndoe.workoutbuddy.domain.user;
 
-import com.johndoe.workoutbuddy.domain.common.Error;
-import com.johndoe.workoutbuddy.domain.common.Success;
+import com.johndoe.workoutbuddy.domain.Error;
+import com.johndoe.workoutbuddy.domain.Success;
 import com.johndoe.workoutbuddy.domain.email.EmailFacade;
 import com.johndoe.workoutbuddy.domain.user.dto.CreateUserDto;
 import com.johndoe.workoutbuddy.domain.user.dto.UserError;

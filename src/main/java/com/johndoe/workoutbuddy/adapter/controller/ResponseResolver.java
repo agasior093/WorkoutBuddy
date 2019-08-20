@@ -1,6 +1,6 @@
 package com.johndoe.workoutbuddy.adapter.controller;
 
-import com.johndoe.workoutbuddy.domain.common.Error;
+import com.johndoe.workoutbuddy.domain.Error;
 import com.johndoe.workoutbuddy.domain.email.dto.error.EmailError;
 import com.johndoe.workoutbuddy.domain.user.dto.UserError;
 import io.vavr.control.Either;

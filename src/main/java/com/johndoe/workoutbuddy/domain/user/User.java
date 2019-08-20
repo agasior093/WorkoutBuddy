@@ -1,6 +1,6 @@
 package com.johndoe.workoutbuddy.domain.user;
 
-import com.johndoe.workoutbuddy.domain.common.Error;
+import com.johndoe.workoutbuddy.domain.Error;
 import com.johndoe.workoutbuddy.domain.user.dto.CreateUserDto;
 import com.johndoe.workoutbuddy.domain.user.dto.UserError;
 import io.vavr.control.Either;

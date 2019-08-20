@@ -1,6 +1,6 @@
 package com.johndoe.workoutbuddy.domain.user.dto;
 
-import com.johndoe.workoutbuddy.domain.common.Error;
+import com.johndoe.workoutbuddy.domain.Error;
 
 public enum UserError implements Error {
     USERNAME_ALREADY_EXISTS("Username already exists"),

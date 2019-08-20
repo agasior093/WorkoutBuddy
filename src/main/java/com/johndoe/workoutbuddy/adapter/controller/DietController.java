@@ -28,8 +28,10 @@ class DietController {
 
     @GetMapping("/getDaily")
     ResponseEntity getDailyConsumption(@RequestParam String date) {
+        System.out.println("GetDaily Started");
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
+        System.out.println("Username " + username + ", date " + date);
         return responseResolver.resolve(dietFacade.getDailyConsumption(username, LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"))));
     }
 }

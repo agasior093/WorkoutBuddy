@@ -1,8 +1,7 @@
 package com.johndoe.workoutbuddy.domain.diet;
 
-import com.johndoe.workoutbuddy.adapter.repository.entity.DailyConsumptionEntity;
-import com.johndoe.workoutbuddy.domain.common.Error;
-import com.johndoe.workoutbuddy.domain.common.Success;
+import com.johndoe.workoutbuddy.domain.Error;
+import com.johndoe.workoutbuddy.domain.Success;
 import com.johndoe.workoutbuddy.domain.diet.dto.DailyConsumptionDto;
 import com.johndoe.workoutbuddy.domain.diet.port.DietRepository;
 import io.vavr.control.Either;
@@ -21,10 +20,14 @@ class DailyConsumptionCreator {
     Either<Error, Success> updateDailyConsumption(String username, DailyConsumptionDto productsDto) {
         var date = LocalDate.parse(productsDto.getDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         repository.getDailyConsumption(username, date).ifPresentOrElse(d -> {
+            System.out.println("Updating daily consumption record " + username + " on date " + productsDto.getDate());
+            //TODO - parameters passed to this method
            repository.updateDailyConsumption(username, update(d.getId(), username, productsDto));
         }, () -> {
+            System.out.println("Creating new daily consumption record " + username + " on date " + productsDto.getDate());
             repository.updateDailyConsumption(username, save(username, productsDto));
         });
+        //TODO - error handling
         return Either.right(new Success());
     }
 

@@ -1,12 +1,8 @@
 package com.johndoe.workoutbuddy.domain.diet;
 
-import com.johndoe.workoutbuddy.domain.common.Error;
-import com.johndoe.workoutbuddy.domain.common.Success;
 import com.johndoe.workoutbuddy.domain.diet.port.DietRepository;
 import com.johndoe.workoutbuddy.domain.product.ProductFacade;
 import com.johndoe.workoutbuddy.domain.product.dto.ProductDto;
-import com.johndoe.workoutbuddy.domain.product.port.ProductRepository;
-import io.vavr.control.Either;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 
@@ -24,9 +20,10 @@ class DailyConsumptionReader {
     List<ProductDto> getDailyConsumption(String username, LocalDate date) {
         final List<ProductDto> result = new ArrayList<>();
         repository.getDailyConsumption(username, date).ifPresentOrElse(d -> {
+            System.out.println("found results");
             result.addAll(productFacade.getProducts().stream().filter(d.getProducts()::contains).collect(Collectors.toList()));
         }, () -> {
-            log.info("nothing to show");
+            System.out.println(username + " has no daily consumption record for " + date);
         });
 
         return result;

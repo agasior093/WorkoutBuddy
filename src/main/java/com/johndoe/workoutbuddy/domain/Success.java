@@ -1,4 +1,4 @@
-package com.johndoe.workoutbuddy.domain.common;
+package com.johndoe.workoutbuddy.domain;
 
 import io.vavr.control.Either;
 import lombok.AllArgsConstructor;
