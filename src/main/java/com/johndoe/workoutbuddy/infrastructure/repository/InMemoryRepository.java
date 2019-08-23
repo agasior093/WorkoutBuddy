@@ -1,6 +1,6 @@
-package com.johndoe.workoutbuddy.infrastructure.repository.inmemory;
+package com.johndoe.workoutbuddy.infrastructure.repository;
 
-import com.johndoe.workoutbuddy.infrastructure.repository.entity.BaseEntity;
+import com.johndoe.workoutbuddy.infrastructure.repository.BaseEntity;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -12,28 +12,30 @@ public abstract class InMemoryRepository<T, U extends BaseEntity> {
 
     protected abstract T generateID();
 
-    public void save(U object) {
-        repository.put(generateID(), object);
+    protected T save(U object) {
+        final var id = generateID();
+        object.setId(id);
+        repository.put(id, object);
+        return id;
     }
 
-    public void update(U object) {
+    protected void update(U object) {
         repository.put((T)object.getId(), object);
     }
 
-    public Optional<U> findByID(T ID) {
+    protected Optional<U> findByID(T ID) {
         return Optional.ofNullable(repository.get(ID));
     }
 
-    public Collection<U> findAll() {
+    protected Collection<U> findAll() {
         return repository.values();
     }
 
-    public void remove(U object) {
+    protected void remove(U object) {
         repository.remove(object.getId());
     }
 
-    public void remove(T ID) {
+    protected void remove(T ID) {
         repository.remove(ID);
     }
-
 }

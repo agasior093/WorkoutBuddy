@@ -1,11 +1,13 @@
 package com.johndoe.workoutbuddy.domain.user;
 
-import com.johndoe.workoutbuddy.infrastructure.repository.inmemory.InMemoryActivationTokenRepository;
-import com.johndoe.workoutbuddy.infrastructure.repository.inmemory.InMemoryUserRepository;
-import com.johndoe.workoutbuddy.infrastructure.repository.entity.ActivationTokenEntity;
+import com.johndoe.workoutbuddy.infrastructure.repository.InMemoryRepository;
+import com.johndoe.workoutbuddy.infrastructure.repository.user.InMemoryActivationTokenRepository;
+import com.johndoe.workoutbuddy.infrastructure.repository.user.InMemoryUserRepository;
+import com.johndoe.workoutbuddy.infrastructure.repository.user.ActivationTokenEntity;
 import com.johndoe.workoutbuddy.domain.email.EmailFacade;
 import com.johndoe.workoutbuddy.domain.user.port.ActivationTokenRepository;
 import com.johndoe.workoutbuddy.domain.user.port.UserRepository;
+import lombok.extern.java.Log;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -19,6 +21,7 @@ import static com.johndoe.workoutbuddy.domain.user.ObjectFactory.validRegisterDt
 import static org.junit.Assert.*;
 
 @RunWith(MockitoJUnitRunner.class)
+@Log
 public class ActivateUserTest {
 
     private EmailFacade emailFacade = Mockito.mock(EmailFacade.class);
@@ -31,20 +34,25 @@ public class ActivateUserTest {
         String username = validRegisterDto().getUsername();
         userFacade.createUser(validRegisterDto());
         var user = userFacade.readUser(username);
+        var tokenID = extractToken();
+        log.info(tokenRepository.findToken(tokenID).get().toString());
         assertTrue(user.isPresent() && !user.get().isActive());
-        assertTrue(userFacade.activateUser(extractToken(), username).isRight());
+        assertTrue(userFacade.activateUser(tokenID, username).isRight());
         user = userFacade.readUser(username);
         assertTrue(user.isPresent() && user.get().isActive());
+        var token = tokenRepository.findToken(tokenID);
+        log.info(tokenRepository.findToken(tokenID).get().toString());
+        assertTrue(token.isPresent() && token.get().isActivated());
     }
 
     //Token is sent via email, and at that point the only way to get it is via reflection
     private String extractToken()  {
       try {
-          Field field = InMemoryActivationTokenRepository.class.getDeclaredField("tokens");
+          Field field = InMemoryRepository.class.getDeclaredField("repository");
           field.setAccessible(true);
-          Map<UUID, ActivationTokenEntity> tokens = (Map<UUID, ActivationTokenEntity>)field.get(tokenRepository);
+          Map<String, ActivationTokenEntity> tokens = (Map<String, ActivationTokenEntity>)field.get(tokenRepository);
           var iterator = tokens.values().iterator();
-          return iterator.next().getTokenID();
+          return iterator.next().getId();
       } catch (Exception e) {
           return null;
       }

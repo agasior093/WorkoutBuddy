@@ -1,9 +1,9 @@
-package com.johndoe.workoutbuddy.infrastructure.repository.mongo;
+package com.johndoe.workoutbuddy.infrastructure.repository.user;
 
-import com.johndoe.workoutbuddy.infrastructure.repository.entity.UserEntity;
-import com.johndoe.workoutbuddy.infrastructure.repository.entity.UserEntityConverter;
+import com.johndoe.workoutbuddy.infrastructure.repository.MongoQueryFactory;
 import com.johndoe.workoutbuddy.domain.user.dto.UserDto;
 import com.johndoe.workoutbuddy.domain.user.port.UserRepository;
+
 import lombok.AllArgsConstructor;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Repository;
@@ -15,7 +15,7 @@ import java.util.Optional;
 public class MongoUserRepository implements UserRepository {
     private final MongoTemplate mongoTemplate;
     private final UserEntityConverter converter = new UserEntityConverter();
-    private final QueryFactory queryFactory = new QueryFactory();
+    private final MongoQueryFactory queryFactory = new MongoQueryFactory();
 
     @Override
     public Optional<UserDto> findByUsername(String username) {

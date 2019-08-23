@@ -1,5 +1,6 @@
-package com.johndoe.workoutbuddy.infrastructure.repository.entity;
+package com.johndoe.workoutbuddy.infrastructure.repository.user;
 
+import com.johndoe.workoutbuddy.infrastructure.repository.BaseEntity;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
@@ -8,16 +9,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDate;
 import java.util.Set;
 
-enum GenderEntity {
-    MALE, FEMALE
-}
-
 @Getter
 @Builder
 @Document(collection = "user")
-public class UserEntity {
-    @Id
-    private String id;
+class UserEntity extends BaseEntity<String> {
     private final String username;
     private final String email;
     private final String password;

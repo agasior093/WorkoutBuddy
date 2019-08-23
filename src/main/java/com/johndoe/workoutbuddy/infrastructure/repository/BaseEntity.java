@@ -1,4 +1,4 @@
-package com.johndoe.workoutbuddy.infrastructure.repository.entity;
+package com.johndoe.workoutbuddy.infrastructure.repository;
 
 import org.springframework.data.annotation.Id;
 

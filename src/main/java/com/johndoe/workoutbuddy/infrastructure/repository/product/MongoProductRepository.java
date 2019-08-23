@@ -1,7 +1,5 @@
-package com.johndoe.workoutbuddy.infrastructure.repository.mongo;
+package com.johndoe.workoutbuddy.infrastructure.repository.product;
 
-import com.johndoe.workoutbuddy.infrastructure.repository.entity.ProductEntity;
-import com.johndoe.workoutbuddy.infrastructure.repository.entity.ProductEntityConverter;
 import com.johndoe.workoutbuddy.domain.product.dto.ProductDto;
 import com.johndoe.workoutbuddy.domain.product.port.ProductRepository;
 import lombok.RequiredArgsConstructor;

@@ -1,18 +1,21 @@
-package com.johndoe.workoutbuddy.infrastructure.repository.entity;
+package com.johndoe.workoutbuddy.infrastructure.repository.user;
 
+import com.johndoe.workoutbuddy.infrastructure.repository.BaseEntity;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 
+
+//TODO - find a way to test this without making this class public
 @Builder
 @Getter
 @Document(collection = "activationToken")
-public class ActivationTokenEntity {
-    @Id
-    private String tokenID;
+@ToString
+public class ActivationTokenEntity extends BaseEntity<String> {
     private final String username;
     private final LocalDateTime expirationDateTime;
     private final boolean activated;

@@ -1,7 +1,6 @@
-package com.johndoe.workoutbuddy.infrastructure.repository.inmemory;
+package com.johndoe.workoutbuddy.infrastructure.repository.diet;
 
-import com.johndoe.workoutbuddy.infrastructure.repository.entity.DailyConsumptionEntity;
-import com.johndoe.workoutbuddy.infrastructure.repository.entity.DietEntityConverter;
+import com.johndoe.workoutbuddy.infrastructure.repository.InMemoryRepository;
 import com.johndoe.workoutbuddy.domain.diet.dto.DailyConsumptionDto;
 import com.johndoe.workoutbuddy.domain.diet.port.DietRepository;
 
@@ -12,6 +11,7 @@ import java.util.UUID;
 public class InMemoryDietRepository extends InMemoryRepository<String, DailyConsumptionEntity> implements DietRepository {
 
     private final DietEntityConverter converter = new DietEntityConverter();
+
     @Override
     protected String generateID() {
         return UUID.randomUUID().toString();

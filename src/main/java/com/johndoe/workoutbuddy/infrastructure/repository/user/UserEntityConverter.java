@@ -1,13 +1,12 @@
-package com.johndoe.workoutbuddy.infrastructure.repository.entity;
+package com.johndoe.workoutbuddy.infrastructure.repository.user;
 
 import com.johndoe.workoutbuddy.domain.user.dto.GenderDto;
 import com.johndoe.workoutbuddy.domain.user.dto.UserDto;
 
-public class UserEntityConverter {
+class UserEntityConverter {
 
-    public UserEntity toEntity(UserDto userDto) {
-        return UserEntity.builder()
-                .id(userDto.getId())
+    UserEntity toEntity(UserDto userDto) {
+        var entity = UserEntity.builder()
                 .username(userDto.getUsername())
                 .password(userDto.getPassword())
                 .email(userDto.getEmail())
@@ -20,9 +19,11 @@ public class UserEntityConverter {
                 .weight(userDto.getWeight())
                 .height(userDto.getHeight())
                 .build();
+        entity.setId(userDto.getId());
+        return entity;
     }
 
-    public UserDto toDto(UserEntity userEntity) {
+    UserDto toDto(UserEntity userEntity) {
         return UserDto.builder()
                 .id(userEntity.getId())
                 .username(userEntity.getUsername())

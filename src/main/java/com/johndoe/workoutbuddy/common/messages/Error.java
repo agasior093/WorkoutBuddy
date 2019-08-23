@@ -6,7 +6,7 @@ import io.vavr.control.Either;
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public interface Error {
     String getCause();
-    default Either<Error, Success> toEitherLeft() {
+    default Either toEitherLeft() {
         return Either.left(this);
     }
 }

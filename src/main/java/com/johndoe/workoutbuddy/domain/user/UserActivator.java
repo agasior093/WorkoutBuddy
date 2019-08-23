@@ -2,6 +2,7 @@ package com.johndoe.workoutbuddy.domain.user;
 
 import com.johndoe.workoutbuddy.common.messages.Error;
 import com.johndoe.workoutbuddy.common.messages.Success;
+import com.johndoe.workoutbuddy.common.utils.DateUtils;
 import com.johndoe.workoutbuddy.domain.user.dto.UserDto;
 import com.johndoe.workoutbuddy.domain.user.dto.ActivationTokenDto;
 import com.johndoe.workoutbuddy.domain.user.dto.error.UserError;
@@ -13,6 +14,7 @@ import io.vavr.control.Try;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 
+
 import java.time.LocalDateTime;
 
 @Log
@@ -20,10 +22,10 @@ import java.time.LocalDateTime;
 class UserActivator {
     private final UserRepository userRepository;
     private final ActivationTokenRepository tokenRepository;
-    private final UserConverter mapper;
+    private final UserConverter converter;
 
     Either<Error, Success> activateUser(String tokenID, String username) {
-       return handleToken(tokenID).orElse(handleUser(username));
+       return handleToken(tokenID).isRight() ? handleUser(username) : UserError.ACTIVATION_FAILED.toEitherLeft();
     }
 
     private Either<Error, Success> handleToken(String tokenID) {
@@ -38,7 +40,7 @@ class UserActivator {
     }
 
     private Either<Error, ActivationTokenDto> findToken(String tokenID) {
-        return Option.ofOptional(tokenRepository.findToken(tokenID)).toEither(UserError.ACTIVATION_TOKEN_NOT_FOUND);
+        return tokenRepository.findToken(tokenID).map(Either::right).orElse((Either)(UserError.ACTIVATION_TOKEN_NOT_FOUND.toEitherLeft()));
     }
 
     private Either<Error, ActivationTokenDto> validateToken(ActivationTokenDto tokenDto) {
@@ -52,7 +54,7 @@ class UserActivator {
     }
 
     private boolean isValid(ActivationTokenDto token) {
-        return !token.isActivated() && token.getExpirationDateTime().isBefore(LocalDateTime.now());
+        return !token.isActivated() && DateUtils.now().isBefore(token.getExpirationDateTime());
     }
 
     private Success deactivate(ActivationTokenDto tokenDto) throws RuntimeException {
@@ -71,9 +73,9 @@ class UserActivator {
    }
 
     private Either<Error, Success> activateUser(UserDto userDto) {
-        var user = mapper.userToEntity(userDto);
+        var user = converter.userToEntity(userDto);
         user.activate();
-        return Try.of(() -> activate(mapper.userToDto(user)))
+        return Try.of(() -> activate(converter.userToDto(user)))
                 .onFailure(e -> log.severe(e.getMessage()))
                 .toEither(UserError.PERSISTENCE_FAILED);
     }

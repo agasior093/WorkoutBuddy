@@ -1,6 +1,6 @@
 package com.johndoe.workoutbuddy.domain.user;
-import com.johndoe.workoutbuddy.infrastructure.repository.inmemory.InMemoryActivationTokenRepository;
-import com.johndoe.workoutbuddy.infrastructure.repository.inmemory.InMemoryUserRepository;
+import com.johndoe.workoutbuddy.infrastructure.repository.user.InMemoryActivationTokenRepository;
+import com.johndoe.workoutbuddy.infrastructure.repository.user.InMemoryUserRepository;
 import com.johndoe.workoutbuddy.common.messages.Success;
 import com.johndoe.workoutbuddy.domain.email.EmailFacade;
 import com.johndoe.workoutbuddy.domain.email.dto.error.EmailError;
