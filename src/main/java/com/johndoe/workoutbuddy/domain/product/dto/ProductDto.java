@@ -16,13 +16,4 @@ public class ProductDto {
     private final Double fat;
     private final Double carbohydrates;
     private final Double weight;
-
-    @Override
-    public boolean equals(Object obj) {
-        ConsumedProductDto other = (ConsumedProductDto) obj;
-        return other != null && other.getProductID().equals(this.getId());
-    }
-
-
-
 }

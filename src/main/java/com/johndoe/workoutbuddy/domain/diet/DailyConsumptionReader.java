@@ -1,5 +1,7 @@
 package com.johndoe.workoutbuddy.domain.diet;
 
+import com.johndoe.workoutbuddy.domain.diet.dto.ConsumedProductDto;
+import com.johndoe.workoutbuddy.domain.diet.dto.DailyConsumptionDto;
 import com.johndoe.workoutbuddy.domain.diet.port.DietRepository;
 import com.johndoe.workoutbuddy.domain.product.ProductFacade;
 import com.johndoe.workoutbuddy.domain.product.dto.ProductDto;
@@ -18,15 +20,16 @@ class DailyConsumptionReader {
     private final ProductFacade productFacade;
 
     List<ProductDto> getDailyConsumption(String username, LocalDate date) {
-        final List<ProductDto> result = new ArrayList<>();
-        repository.getDailyConsumption(username, date).ifPresentOrElse(daily -> {
-            System.out.println(username + " has daily consumption record for " + date);
-            //TODO - refactor this contains
-            result.addAll(productFacade.getProducts().stream().filter(daily.getConsumedProducts()::contains).collect(Collectors.toList()));
-        }, () -> {
-            System.out.println(username + " has no daily consumption record for " + date);
-        });
+        return repository.getDailyConsumption(username, date).map(daily ->
+            matchingProducts(productFacade.getProducts(), daily.getConsumedProducts())
+        ).orElse(new ArrayList<>());
+    }
 
-        return result;
+    private List<ProductDto> matchingProducts(List<ProductDto> products, List<ConsumedProductDto> consumedProducts) {
+        return products.stream().filter(product ->
+                consumedProducts.stream()
+                .anyMatch(consumedProduct ->
+                        product.getId().equals(consumedProduct.getProductID())))
+                .collect(Collectors.toList());
     }
 }

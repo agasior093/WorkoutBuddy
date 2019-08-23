@@ -9,7 +9,7 @@ import java.util.List;
 
 @Builder
 @Getter
-public class DailyConsumption {
+class DailyConsumption {
     private final String id;
     private final String username;
     private final LocalDate date;

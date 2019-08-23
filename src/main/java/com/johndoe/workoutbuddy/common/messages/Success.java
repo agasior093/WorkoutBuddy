@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Getter
 public class Success {
     private String message;
-    public Either<Error, Success> toEitherRight() {
+    public Either toEitherRight() {
         return Either.right(this);
     }
 }
