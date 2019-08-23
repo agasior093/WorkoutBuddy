@@ -1,4 +1,4 @@
-package com.johndoe.workoutbuddy.infrastructure.repository.user;
+package com.johndoe.workoutbuddy.infrastructure.database.user;
 
 import com.johndoe.workoutbuddy.domain.user.dto.GenderDto;
 import com.johndoe.workoutbuddy.domain.user.dto.UserDto;

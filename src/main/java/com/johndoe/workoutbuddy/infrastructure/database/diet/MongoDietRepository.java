@@ -1,6 +1,6 @@
-package com.johndoe.workoutbuddy.infrastructure.repository.diet;
+package com.johndoe.workoutbuddy.infrastructure.database.diet;
 
-import com.johndoe.workoutbuddy.infrastructure.repository.MongoQueryFactory;
+import com.johndoe.workoutbuddy.infrastructure.database.MongoQueryFactory;
 import com.johndoe.workoutbuddy.domain.diet.dto.DailyConsumptionDto;
 import com.johndoe.workoutbuddy.domain.diet.port.DietRepository;
 import lombok.AllArgsConstructor;

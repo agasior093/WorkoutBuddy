@@ -1,6 +1,4 @@
-package com.johndoe.workoutbuddy.infrastructure.repository;
-
-import com.johndoe.workoutbuddy.infrastructure.repository.BaseEntity;
+package com.johndoe.workoutbuddy.infrastructure.database;
 
 import java.util.Collection;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package com.johndoe.workoutbuddy.infrastructure.repository;
+package com.johndoe.workoutbuddy.infrastructure.database;
 
 interface MongoQueryConstants {
     String USERNAME = "username";

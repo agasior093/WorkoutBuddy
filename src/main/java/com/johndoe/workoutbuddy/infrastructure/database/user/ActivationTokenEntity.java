@@ -1,10 +1,9 @@
-package com.johndoe.workoutbuddy.infrastructure.repository.user;
+package com.johndoe.workoutbuddy.infrastructure.database.user;
 
-import com.johndoe.workoutbuddy.infrastructure.repository.BaseEntity;
+import com.johndoe.workoutbuddy.infrastructure.database.BaseEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;

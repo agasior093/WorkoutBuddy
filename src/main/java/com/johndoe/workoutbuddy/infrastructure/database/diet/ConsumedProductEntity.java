@@ -1,4 +1,4 @@
-package com.johndoe.workoutbuddy.infrastructure.repository.diet;
+package com.johndoe.workoutbuddy.infrastructure.database.diet;
 
 import lombok.Builder;
 import lombok.Getter;

@@ -3,6 +3,7 @@ package com.johndoe.workoutbuddy.domain.user;
 import com.johndoe.workoutbuddy.common.messages.Error;
 import com.johndoe.workoutbuddy.common.messages.Success;
 import com.johndoe.workoutbuddy.common.utils.DateUtils;
+import com.johndoe.workoutbuddy.common.utils.EitherUtils;
 import com.johndoe.workoutbuddy.domain.user.dto.UserDto;
 import com.johndoe.workoutbuddy.domain.user.dto.ActivationTokenDto;
 import com.johndoe.workoutbuddy.domain.user.dto.error.UserError;
@@ -17,6 +18,8 @@ import lombok.extern.java.Log;
 
 import java.time.LocalDateTime;
 
+import static com.johndoe.workoutbuddy.common.utils.EitherUtils.*;
+
 @Log
 @RequiredArgsConstructor
 class UserActivator {
@@ -25,7 +28,7 @@ class UserActivator {
     private final UserConverter converter;
 
     Either<Error, Success> activateUser(String tokenID, String username) {
-       return handleToken(tokenID).isRight() ? handleUser(username) : UserError.ACTIVATION_FAILED.toEitherLeft();
+        return chain(handleToken(tokenID), handleUser(username), UserError.ACTIVATION_FAILED);
     }
 
     private Either<Error, Success> handleToken(String tokenID) {

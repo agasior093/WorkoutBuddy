@@ -1,14 +1,13 @@
-package com.johndoe.workoutbuddy.infrastructure.repository.user;
+package com.johndoe.workoutbuddy.infrastructure.database.user;
 
 import com.johndoe.workoutbuddy.common.utils.DateUtils;
-import com.johndoe.workoutbuddy.infrastructure.repository.MongoQueryFactory;
+import com.johndoe.workoutbuddy.infrastructure.database.MongoQueryFactory;
 import com.johndoe.workoutbuddy.domain.user.dto.ActivationTokenDto;
 import com.johndoe.workoutbuddy.domain.user.port.ActivationTokenRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Repository

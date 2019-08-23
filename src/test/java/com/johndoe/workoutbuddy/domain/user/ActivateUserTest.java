@@ -1,9 +1,9 @@
 package com.johndoe.workoutbuddy.domain.user;
 
-import com.johndoe.workoutbuddy.infrastructure.repository.InMemoryRepository;
-import com.johndoe.workoutbuddy.infrastructure.repository.user.InMemoryActivationTokenRepository;
-import com.johndoe.workoutbuddy.infrastructure.repository.user.InMemoryUserRepository;
-import com.johndoe.workoutbuddy.infrastructure.repository.user.ActivationTokenEntity;
+import com.johndoe.workoutbuddy.infrastructure.database.InMemoryRepository;
+import com.johndoe.workoutbuddy.infrastructure.database.user.InMemoryActivationTokenRepository;
+import com.johndoe.workoutbuddy.infrastructure.database.user.InMemoryUserRepository;
+import com.johndoe.workoutbuddy.infrastructure.database.user.ActivationTokenEntity;
 import com.johndoe.workoutbuddy.domain.email.EmailFacade;
 import com.johndoe.workoutbuddy.domain.user.port.ActivationTokenRepository;
 import com.johndoe.workoutbuddy.domain.user.port.UserRepository;
@@ -15,7 +15,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.lang.reflect.Field;
 import java.util.Map;
-import java.util.UUID;
 
 import static com.johndoe.workoutbuddy.domain.user.ObjectFactory.validRegisterDto;
 import static org.junit.Assert.*;

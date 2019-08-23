@@ -1,4 +1,4 @@
-package com.johndoe.workoutbuddy.infrastructure.repository.product;
+package com.johndoe.workoutbuddy.infrastructure.database.product;
 
 import com.johndoe.workoutbuddy.domain.product.dto.ProductDto;
 

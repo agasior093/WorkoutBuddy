@@ -1,6 +1,6 @@
 package com.johndoe.workoutbuddy.domain.diet;
 
-import com.johndoe.workoutbuddy.infrastructure.repository.diet.InMemoryDietRepository;
+import com.johndoe.workoutbuddy.infrastructure.database.diet.InMemoryDietRepository;
 import com.johndoe.workoutbuddy.domain.product.ProductFacade;
 import org.junit.Test;
 import org.junit.runner.RunWith;

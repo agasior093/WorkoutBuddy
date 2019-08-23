@@ -1,7 +1,6 @@
-package com.johndoe.workoutbuddy.infrastructure.repository.user;
+package com.johndoe.workoutbuddy.infrastructure.database.user;
 
 import com.johndoe.workoutbuddy.domain.user.dto.ActivationTokenDto;
-import lombok.extern.java.Log;
 
 class ActivationTokenConverter {
     ActivationTokenDto toDto(ActivationTokenEntity token) {

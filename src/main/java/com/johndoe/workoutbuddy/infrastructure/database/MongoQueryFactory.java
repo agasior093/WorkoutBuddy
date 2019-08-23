@@ -1,11 +1,11 @@
-package com.johndoe.workoutbuddy.infrastructure.repository;
+package com.johndoe.workoutbuddy.infrastructure.database;
 
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
 import java.time.LocalDate;
 
-import static com.johndoe.workoutbuddy.infrastructure.repository.MongoQueryConstants.*;
+import static com.johndoe.workoutbuddy.infrastructure.database.MongoQueryConstants.*;
 
 public class MongoQueryFactory {
 

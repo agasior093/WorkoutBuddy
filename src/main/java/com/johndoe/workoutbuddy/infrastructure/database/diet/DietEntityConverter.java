@@ -1,4 +1,4 @@
-package com.johndoe.workoutbuddy.infrastructure.repository.diet;
+package com.johndoe.workoutbuddy.infrastructure.database.diet;
 
 import com.johndoe.workoutbuddy.common.converters.ListConverter;
 import com.johndoe.workoutbuddy.common.utils.DateUtils;

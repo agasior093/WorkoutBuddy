@@ -1,11 +1,10 @@
-package com.johndoe.workoutbuddy.infrastructure.repository.user;
+package com.johndoe.workoutbuddy.infrastructure.database.user;
 
 import com.johndoe.workoutbuddy.common.utils.DateUtils;
 import com.johndoe.workoutbuddy.domain.user.dto.ActivationTokenDto;
 import com.johndoe.workoutbuddy.domain.user.port.ActivationTokenRepository;
-import com.johndoe.workoutbuddy.infrastructure.repository.InMemoryRepository;
+import com.johndoe.workoutbuddy.infrastructure.database.InMemoryRepository;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 

@@ -1,6 +1,6 @@
-package com.johndoe.workoutbuddy.infrastructure.repository.product;
+package com.johndoe.workoutbuddy.infrastructure.database.product;
 
-import com.johndoe.workoutbuddy.infrastructure.repository.BaseEntity;
+import com.johndoe.workoutbuddy.infrastructure.database.BaseEntity;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.data.mongodb.core.mapping.Document;
