@@ -3,12 +3,16 @@ package com.johndoe.workoutbuddy.infrastructure.database.user;
 import com.johndoe.workoutbuddy.domain.user.dto.GenderDto;
 import com.johndoe.workoutbuddy.domain.user.dto.UserDto;
 import com.johndoe.workoutbuddy.domain.user.port.UserRepository;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
+@Repository
+@Profile("inmemory")
 public class InMemoryUserRepository implements UserRepository {
     private final Map<String, UserDto> users = new HashMap<>();
 

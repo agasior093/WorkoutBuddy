@@ -2,8 +2,8 @@ package com.johndoe.workoutbuddy.infrastructure.database.product;
 
 import com.johndoe.workoutbuddy.domain.product.dto.ProductDto;
 
-class ProductEntityConverter {
 
+class ProductEntityConverter {
     ProductDto toDto(ProductEntity entity) {
         return ProductDto.builder()
                 .id(entity.getId())

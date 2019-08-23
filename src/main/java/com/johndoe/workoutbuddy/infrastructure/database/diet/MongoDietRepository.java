@@ -4,6 +4,7 @@ import com.johndoe.workoutbuddy.infrastructure.database.MongoQueryFactory;
 import com.johndoe.workoutbuddy.domain.diet.dto.DailyConsumptionDto;
 import com.johndoe.workoutbuddy.domain.diet.port.DietRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -12,6 +13,7 @@ import java.util.Optional;
 
 @Repository
 @AllArgsConstructor
+@Profile("mongo")
 public class MongoDietRepository implements DietRepository {
 
     private final MongoTemplate mongoTemplate;

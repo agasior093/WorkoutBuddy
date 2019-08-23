@@ -14,7 +14,6 @@
 	<name>workout-buddy</name>
 	<description>WorkoutBuddy Application</description>
 
-
 	<properties>
 		<java.version>11</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -91,10 +90,6 @@
 			<artifactId>vavr</artifactId>
 			<version>0.10.2</version>
 		</dependency>
-		<!--<dependency>-->
-			<!--<groupId>org.mongodb</groupId>-->
-			<!--<artifactId>mongo-java-driver</artifactId>-->
-		<!--</dependency>-->
 		<dependency>
 			<groupId>commons-validator</groupId>
 			<artifactId>commons-validator</artifactId>
@@ -102,8 +97,13 @@
 		</dependency>
 
 	</dependencies>
-
 	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

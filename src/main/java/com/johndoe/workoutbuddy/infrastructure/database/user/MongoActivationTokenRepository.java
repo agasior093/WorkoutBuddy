@@ -5,6 +5,7 @@ import com.johndoe.workoutbuddy.infrastructure.database.MongoQueryFactory;
 import com.johndoe.workoutbuddy.domain.user.dto.ActivationTokenDto;
 import com.johndoe.workoutbuddy.domain.user.port.ActivationTokenRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -12,6 +13,7 @@ import java.util.Optional;
 
 @Repository
 @AllArgsConstructor
+@Profile("mongo")
 public class MongoActivationTokenRepository implements ActivationTokenRepository {
     private final MongoTemplate mongoTemplate;
     private final MongoQueryFactory queryFactory = new MongoQueryFactory();

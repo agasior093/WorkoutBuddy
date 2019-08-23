@@ -4,10 +4,14 @@ import com.johndoe.workoutbuddy.common.utils.DateUtils;
 import com.johndoe.workoutbuddy.domain.user.dto.ActivationTokenDto;
 import com.johndoe.workoutbuddy.domain.user.port.ActivationTokenRepository;
 import com.johndoe.workoutbuddy.infrastructure.database.InMemoryRepository;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 import java.util.UUID;
 
+@Repository
+@Profile("inmemory")
 public class InMemoryActivationTokenRepository extends InMemoryRepository<String, ActivationTokenEntity> implements ActivationTokenRepository {
     private final ActivationTokenConverter converter = new ActivationTokenConverter();
 

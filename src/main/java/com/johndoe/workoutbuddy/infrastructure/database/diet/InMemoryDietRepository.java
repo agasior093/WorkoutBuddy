@@ -3,11 +3,15 @@ package com.johndoe.workoutbuddy.infrastructure.database.diet;
 import com.johndoe.workoutbuddy.infrastructure.database.InMemoryRepository;
 import com.johndoe.workoutbuddy.domain.diet.dto.DailyConsumptionDto;
 import com.johndoe.workoutbuddy.domain.diet.port.DietRepository;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.Optional;
 import java.util.UUID;
 
+@Repository
+@Profile("inmemory")
 public class InMemoryDietRepository extends InMemoryRepository<String, DailyConsumptionEntity> implements DietRepository {
 
     private final DietEntityConverter converter = new DietEntityConverter();
