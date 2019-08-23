@@ -13,5 +13,5 @@ public class DailyConsumptionDto {
     private final String id;
     private final String username;
     private final String date;
-    private final List<ConsumedProductDto> products;
+    private final List<ConsumedProductDto> consumedProducts;
 }

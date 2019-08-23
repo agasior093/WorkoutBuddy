@@ -1,10 +1,10 @@
 package com.johndoe.workoutbuddy.domain.user;
 
-import com.johndoe.workoutbuddy.domain.Error;
-import com.johndoe.workoutbuddy.domain.Success;
+import com.johndoe.workoutbuddy.common.messages.Error;
+import com.johndoe.workoutbuddy.common.messages.Success;
 import com.johndoe.workoutbuddy.domain.email.EmailFacade;
 import com.johndoe.workoutbuddy.domain.user.dto.CreateUserDto;
-import com.johndoe.workoutbuddy.domain.user.dto.UserError;
+import com.johndoe.workoutbuddy.domain.user.dto.error.UserError;
 import com.johndoe.workoutbuddy.domain.user.port.UserRepository;
 import com.johndoe.workoutbuddy.domain.user.port.ActivationTokenRepository;
 import io.vavr.control.Either;
@@ -20,7 +20,7 @@ class UserCreator {
     private final UserRepository userRepository;
     private final ActivationTokenRepository tokenRepository;
     private final EmailFacade emailFacade;
-    private final ObjectMapper objectMapper;
+    private final UserConverter userConverter;
 
     Either<Error, Success> createUser(CreateUserDto userDto) {
         var validationErrors = hasValidationErrors(userDto);
@@ -52,7 +52,7 @@ class UserCreator {
     }
 
     private User save(User user) {
-        userRepository.saveUser(objectMapper.userToDto(user));
+        userRepository.saveUser(userConverter.userToDto(user));
         return user;
     }
 

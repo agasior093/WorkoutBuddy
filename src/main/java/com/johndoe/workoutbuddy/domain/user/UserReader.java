@@ -10,11 +10,11 @@ import java.util.Optional;
 @RequiredArgsConstructor
 class UserReader {
     private final UserRepository repository;
-    private final ObjectMapper objectMapper;
+    private final UserConverter userConverter;
 
     Optional<PersonalDetailsDto> readPersonalData(String username) {
         return repository.findByUsername(username)
-                .map(objectMapper::userToEntity)
+                .map(userConverter::userToEntity)
                 .map(this::getPersonalData);
     }
 
@@ -26,7 +26,7 @@ class UserReader {
         return PersonalDetailsDto.builder()
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
-                .gender(objectMapper.genderToDto(user.getGender()))
+                .gender(userConverter.genderToDto(user.getGender()))
                 .birthDate(user.getBirthDate())
                 .weight(user.getWeight())
                 .height(user.getHeight())

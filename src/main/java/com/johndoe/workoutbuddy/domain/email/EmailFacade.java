@@ -1,7 +1,7 @@
 package com.johndoe.workoutbuddy.domain.email;
 
-import com.johndoe.workoutbuddy.domain.Error;
-import com.johndoe.workoutbuddy.domain.Success;
+import com.johndoe.workoutbuddy.common.messages.Error;
+import com.johndoe.workoutbuddy.common.messages.Success;
 import com.johndoe.workoutbuddy.domain.email.port.EmailSender;
 import io.vavr.control.Either;
 import lombok.extern.java.Log;

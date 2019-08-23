@@ -1,10 +1,10 @@
 package com.johndoe.workoutbuddy.domain.user;
 
-import com.johndoe.workoutbuddy.domain.Error;
-import com.johndoe.workoutbuddy.domain.Success;
+import com.johndoe.workoutbuddy.common.messages.Error;
+import com.johndoe.workoutbuddy.common.messages.Success;
 import com.johndoe.workoutbuddy.domain.user.dto.UserDto;
 import com.johndoe.workoutbuddy.domain.user.dto.ActivationTokenDto;
-import com.johndoe.workoutbuddy.domain.user.dto.UserError;
+import com.johndoe.workoutbuddy.domain.user.dto.error.UserError;
 import com.johndoe.workoutbuddy.domain.user.port.UserRepository;
 import com.johndoe.workoutbuddy.domain.user.port.ActivationTokenRepository;
 import io.vavr.control.Either;
@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 class UserActivator {
     private final UserRepository userRepository;
     private final ActivationTokenRepository tokenRepository;
-    private final ObjectMapper mapper;
+    private final UserConverter mapper;
 
     Either<Error, Success> activateUser(String tokenID, String username) {
        return handleToken(tokenID).orElse(handleUser(username));

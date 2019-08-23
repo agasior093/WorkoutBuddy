@@ -1,7 +1,7 @@
 package com.johndoe.workoutbuddy.domain.user;
 
-import com.johndoe.workoutbuddy.domain.Error;
-import com.johndoe.workoutbuddy.domain.Success;
+import com.johndoe.workoutbuddy.common.messages.Error;
+import com.johndoe.workoutbuddy.common.messages.Success;
 import com.johndoe.workoutbuddy.domain.email.EmailFacade;
 import com.johndoe.workoutbuddy.domain.user.dto.CreateUserDto;
 import com.johndoe.workoutbuddy.domain.user.dto.PersonalDetailsDto;
@@ -16,10 +16,10 @@ public class UserFacade {
     private final UserReader reader;
     private final UserCreator creator;
     private final UserActivator activator;
-    private final ObjectMapper mapper;
+    private final UserConverter mapper;
 
     UserFacade(UserRepository userRepository, ActivationTokenRepository tokenRepository, EmailFacade emailFacade) {
-        this.mapper = new ObjectMapper();
+        this.mapper = new UserConverter();
         this.reader = new UserReader(userRepository, mapper);
         this.creator = new UserCreator(userRepository, tokenRepository, emailFacade, mapper);
         this.activator = new UserActivator(userRepository, tokenRepository, mapper);

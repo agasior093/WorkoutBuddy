@@ -1,11 +1,11 @@
 package com.johndoe.workoutbuddy.domain.user;
-import com.johndoe.workoutbuddy.adapter.repository.inmemory.InMemoryActivationTokenRepository;
-import com.johndoe.workoutbuddy.adapter.repository.inmemory.InMemoryUserRepository;
-import com.johndoe.workoutbuddy.domain.Success;
+import com.johndoe.workoutbuddy.infrastructure.repository.inmemory.InMemoryActivationTokenRepository;
+import com.johndoe.workoutbuddy.infrastructure.repository.inmemory.InMemoryUserRepository;
+import com.johndoe.workoutbuddy.common.messages.Success;
 import com.johndoe.workoutbuddy.domain.email.EmailFacade;
 import com.johndoe.workoutbuddy.domain.email.dto.error.EmailError;
 import com.johndoe.workoutbuddy.domain.user.dto.CreateUserDto;
-import com.johndoe.workoutbuddy.domain.user.dto.UserError;
+import com.johndoe.workoutbuddy.domain.user.dto.error.UserError;
 import com.johndoe.workoutbuddy.domain.user.port.UserRepository;
 import io.vavr.control.Either;
 import org.junit.Before;

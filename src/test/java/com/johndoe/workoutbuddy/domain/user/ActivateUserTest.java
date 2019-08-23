@@ -1,8 +1,8 @@
 package com.johndoe.workoutbuddy.domain.user;
 
-import com.johndoe.workoutbuddy.adapter.repository.inmemory.InMemoryActivationTokenRepository;
-import com.johndoe.workoutbuddy.adapter.repository.inmemory.InMemoryUserRepository;
-import com.johndoe.workoutbuddy.adapter.repository.entity.ActivationTokenEntity;
+import com.johndoe.workoutbuddy.infrastructure.repository.inmemory.InMemoryActivationTokenRepository;
+import com.johndoe.workoutbuddy.infrastructure.repository.inmemory.InMemoryUserRepository;
+import com.johndoe.workoutbuddy.infrastructure.repository.entity.ActivationTokenEntity;
 import com.johndoe.workoutbuddy.domain.email.EmailFacade;
 import com.johndoe.workoutbuddy.domain.user.port.ActivationTokenRepository;
 import com.johndoe.workoutbuddy.domain.user.port.UserRepository;

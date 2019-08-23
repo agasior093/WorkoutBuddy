@@ -19,7 +19,7 @@ public class ProductDto {
 
     @Override
     public boolean equals(Object obj) {
-        ConsumedProductDto other = (ConsumedProductDto)obj;
+        ConsumedProductDto other = (ConsumedProductDto) obj;
         return other != null && other.getProductID().equals(this.getId());
     }
 

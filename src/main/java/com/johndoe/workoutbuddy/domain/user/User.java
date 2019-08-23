@@ -1,8 +1,8 @@
 package com.johndoe.workoutbuddy.domain.user;
 
-import com.johndoe.workoutbuddy.domain.Error;
+import com.johndoe.workoutbuddy.common.messages.Error;
 import com.johndoe.workoutbuddy.domain.user.dto.CreateUserDto;
-import com.johndoe.workoutbuddy.domain.user.dto.UserError;
+import com.johndoe.workoutbuddy.domain.user.dto.error.UserError;
 import io.vavr.control.Either;
 import lombok.Builder;
 import lombok.Getter;
