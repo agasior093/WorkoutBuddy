@@ -15,11 +15,11 @@ class DailyConsumption {
     private final LocalDate date;
     private final List<ConsumedProduct> consumedProducts;
 
-    public void addProduct(ConsumedProduct product) {
+    public void addProduct(final ConsumedProduct product) {
         this.consumedProducts.add(product);
     }
 
-    public void removeProduct(ConsumedProduct product) {
+    public void removeProduct(final ConsumedProduct product) {
         this.consumedProducts.remove(product);
     }
 }

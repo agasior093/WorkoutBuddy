@@ -1,6 +1,5 @@
 package com.johndoe.workoutbuddy.domain.diet;
 
-
 import com.johndoe.workoutbuddy.domain.diet.port.DietRepository;
 import com.johndoe.workoutbuddy.domain.product.ProductFacade;
 import org.springframework.context.annotation.Bean;

@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-@Log
 class DailyConsumptionReader {
     private final DietRepository repository;
     private final ProductFacade productFacade;
