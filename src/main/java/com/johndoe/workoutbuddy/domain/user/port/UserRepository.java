@@ -1,12 +1,11 @@
 package com.johndoe.workoutbuddy.domain.user.port;
 
-import com.johndoe.workoutbuddy.domain.user.dto.UserDto;
+import com.johndoe.workoutbuddy.domain.user.model.User;
 
 import java.util.Optional;
 
 public interface UserRepository {
-    Optional<UserDto> findByUsername(String username);
-    Optional<UserDto> findByEmail(String email);
-    String saveUser(UserDto user) throws RuntimeException;
-
+    Optional<User> findByUsername(String username);
+    Optional<User> findByEmail(String email);
+    User saveUser(User user) throws RuntimeException;
 }

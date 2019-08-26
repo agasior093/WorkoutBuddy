@@ -1,11 +1,11 @@
 package com.johndoe.workoutbuddy.domain.diet.port;
 
-import com.johndoe.workoutbuddy.domain.diet.dto.DailyConsumptionDto;
+import com.johndoe.workoutbuddy.domain.diet.model.DailyConsumption;
 
 import java.time.LocalDate;
 import java.util.Optional;
 
 public interface DietRepository {
-    DailyConsumptionDto updateDailyConsumption(DailyConsumptionDto dailyConsumption);
-    Optional<DailyConsumptionDto> getDailyConsumption(String username, LocalDate date);
+    DailyConsumption updateDailyConsumption(DailyConsumption dailyConsumption);
+    Optional<DailyConsumption> getDailyConsumption(String username, LocalDate date);
 }

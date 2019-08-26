@@ -1,9 +1,9 @@
 package com.johndoe.workoutbuddy.domain.product.port;
 
-import com.johndoe.workoutbuddy.domain.product.dto.ProductDto;
+import com.johndoe.workoutbuddy.domain.product.model.Product;
 
 import java.util.List;
 
 public interface ProductRepository {
-    List<ProductDto> getProducts();
+    List<Product> getProducts();
 }

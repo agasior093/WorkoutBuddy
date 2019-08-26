@@ -1,7 +1,7 @@
 package com.johndoe.workoutbuddy.infrastructure.database.diet;
 
 import com.johndoe.workoutbuddy.infrastructure.database.InMemoryRepository;
-import com.johndoe.workoutbuddy.domain.diet.dto.DailyConsumptionDto;
+import com.johndoe.workoutbuddy.domain.diet.model.DailyConsumption;
 import com.johndoe.workoutbuddy.domain.diet.port.DietRepository;
 import lombok.extern.java.Log;
 import org.springframework.context.annotation.Profile;
@@ -24,8 +24,7 @@ public class InMemoryDietRepository extends InMemoryRepository<String, DailyCons
     }
 
     @Override
-    public DailyConsumptionDto updateDailyConsumption(DailyConsumptionDto dailyConsumption) {
-        log.info(dailyConsumption.toString());
+    public DailyConsumption updateDailyConsumption(DailyConsumption dailyConsumption) {
         if(dailyConsumption.getId() != null) {
             return converter.toDto(update(converter.toEntity(dailyConsumption)));
         } else {
@@ -34,7 +33,7 @@ public class InMemoryDietRepository extends InMemoryRepository<String, DailyCons
     }
 
     @Override
-    public Optional<DailyConsumptionDto> getDailyConsumption(String username, LocalDate date) {
+    public Optional<DailyConsumption> getDailyConsumption(String username, LocalDate date) {
         return findAll().stream().filter(elem -> elem.getUsername().equals(username) && elem.getDate().equals(date))
                 .findFirst().map(converter::toDto);
     }

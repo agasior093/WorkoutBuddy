@@ -1,9 +1,7 @@
-package com.johndoe.workoutbuddy.domain.email.dto;
+package com.johndoe.workoutbuddy.domain.email.model;
 
 import lombok.Builder;
 import lombok.Getter;
-
-import java.util.UUID;
 
 @Getter
 @Builder

@@ -1,8 +1,7 @@
-package com.johndoe.workoutbuddy.domain.user.dto;
+package com.johndoe.workoutbuddy.domain.user.model;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.ToString;
 
 import java.time.LocalDate;
 import java.util.Set;
@@ -10,8 +9,7 @@ import java.util.Set;
 
 @Builder
 @Getter
-@ToString
-public class UserDto {
+public class User {
     private final String id;
     private final String username;
     private final String email;
@@ -20,7 +18,7 @@ public class UserDto {
     private final boolean active;
     private final String firstName;
     private final String lastName;
-    private final GenderDto gender;
+    private final Gender gender;
     private final LocalDate birthDate;
     private final Double weight;
     private final Double height;

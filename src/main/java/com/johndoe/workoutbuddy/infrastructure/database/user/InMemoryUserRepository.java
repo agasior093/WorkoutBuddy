@@ -1,7 +1,7 @@
 package com.johndoe.workoutbuddy.infrastructure.database.user;
 
-import com.johndoe.workoutbuddy.domain.user.dto.GenderDto;
-import com.johndoe.workoutbuddy.domain.user.dto.UserDto;
+import com.johndoe.workoutbuddy.domain.user.model.Gender;
+import com.johndoe.workoutbuddy.domain.user.model.User;
 import com.johndoe.workoutbuddy.domain.user.port.UserRepository;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
@@ -14,41 +14,41 @@ import java.util.Set;
 @Repository
 @Profile("inmemory")
 public class InMemoryUserRepository implements UserRepository {
-    private final Map<String, UserDto> users = new HashMap<>();
+    private final Map<String, User> users = new HashMap<>();
 
     public InMemoryUserRepository() {
-        users.put("admin", UserDto.builder()
+        users.put("admin", User.builder()
                 .username("admin")
                 .password("pass")
                 .active(true)
                 .roles(Set.of("ADMIN")).build());
 
-        users.put("user", UserDto.builder()
+        users.put("user", User.builder()
                 .username("user")
                 .password("pass")
                 .active(false)
                 .roles(Set.of("USER"))
                 .firstName("John")
                 .lastName("Doe")
-                .gender(GenderDto.MALE)
+                .gender(Gender.MALE)
                 .weight(90d)
                 .height(183d)
                 .build());
     }
 
     @Override
-    public Optional<UserDto> findByUsername(String username) {
+    public Optional<User> findByUsername(String username) {
         return Optional.ofNullable(users.get(username));
     }
 
     @Override
-    public Optional<UserDto> findByEmail(String email) {
+    public Optional<User> findByEmail(String email) {
         return users.values().stream().filter(user -> email.equals(user.getEmail())).findFirst();
     }
 
     @Override
-    public String saveUser(UserDto user) {
+    public User saveUser(User user) {
         users.put(user.getUsername(), user);
-        return user.getUsername();
+        return user;
     }
 }

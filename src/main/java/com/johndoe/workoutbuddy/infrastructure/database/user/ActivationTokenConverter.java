@@ -1,10 +1,10 @@
 package com.johndoe.workoutbuddy.infrastructure.database.user;
 
-import com.johndoe.workoutbuddy.domain.user.dto.ActivationTokenDto;
+import com.johndoe.workoutbuddy.domain.user.model.ActivationToken;
 
 class ActivationTokenConverter {
-    ActivationTokenDto toDto(ActivationTokenEntity token) {
-        return ActivationTokenDto.builder()
+    ActivationToken toDto(ActivationTokenEntity token) {
+        return ActivationToken.builder()
                 .tokenID(token.getId())
                 .username(token.getUsername())
                 .activated(token.isActivated())
@@ -12,7 +12,7 @@ class ActivationTokenConverter {
                 .build();
     }
 
-    ActivationTokenEntity toEntity(ActivationTokenDto dto) {
+    ActivationTokenEntity toEntity(ActivationToken dto) {
         var entity = ActivationTokenEntity.builder()
                 .username(dto.getUsername())
                 .activated(dto.isActivated())

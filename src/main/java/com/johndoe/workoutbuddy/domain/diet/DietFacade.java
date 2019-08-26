@@ -1,12 +1,12 @@
 package com.johndoe.workoutbuddy.domain.diet;
 
 import com.johndoe.workoutbuddy.common.messages.Error;
-import com.johndoe.workoutbuddy.common.messages.Success;
-import com.johndoe.workoutbuddy.domain.diet.dto.ConsumedProductDto;
-import com.johndoe.workoutbuddy.domain.diet.dto.DailyConsumptionDto;
+import com.johndoe.workoutbuddy.domain.diet.dto.UpdateDailyConsumptionDto;
+import com.johndoe.workoutbuddy.domain.diet.model.ConsumedProduct;
+import com.johndoe.workoutbuddy.domain.diet.model.DailyConsumption;
 import com.johndoe.workoutbuddy.domain.diet.port.DietRepository;
 import com.johndoe.workoutbuddy.domain.product.ProductFacade;
-import com.johndoe.workoutbuddy.domain.product.dto.ProductDto;
+import com.johndoe.workoutbuddy.domain.product.model.Product;
 import io.vavr.control.Either;
 
 import java.time.LocalDate;
@@ -17,25 +17,23 @@ public class DietFacade {
     private final DietRepository repository;
     private final DailyConsumptionUpdater dailyConsumptionUpdater;
     private final DailyConsumptionReader dailyConsumptionReader;
-    private final DietConverter converter;
 
     DietFacade(DietRepository repository, ProductFacade productFacade) {
         this.repository = repository;
-        this.converter = new DietConverter();
-        this.dailyConsumptionUpdater = new DailyConsumptionUpdater(repository, converter);
+        this.dailyConsumptionUpdater = new DailyConsumptionUpdater(repository);
         this.dailyConsumptionReader = new DailyConsumptionReader(repository, productFacade);
     }
 
-    public List<ProductDto> getDailyConsumption(String username, LocalDate date) {
+    public List<Product> getDailyConsumption(String username, LocalDate date) {
         return dailyConsumptionReader.getDailyConsumption(username, date);
     }
 
-    public Either<Error, DailyConsumptionDto> addProductToDailyConsumption(ConsumedProductDto consumedProduct) {
-        return dailyConsumptionUpdater.addProductToDailyConsumption(consumedProduct);
+    public Either<Error, DailyConsumption> addProductToDailyConsumption(UpdateDailyConsumptionDto updateDailyConsumption) {
+        return dailyConsumptionUpdater.addProductToDailyConsumption(updateDailyConsumption);
     }
 
-    public Either<Error, DailyConsumptionDto> removeProductFromDailyConsumption(ConsumedProductDto consumedProduct) {
-        return dailyConsumptionUpdater.removeProductFromDailyConsumption(consumedProduct);
+    public Either<Error, DailyConsumption> removeProductFromDailyConsumption(UpdateDailyConsumptionDto updateDailyConsumption) {
+        return dailyConsumptionUpdater.removeProductFromDailyConsumption(null);
     }
 
 }

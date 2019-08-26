@@ -2,7 +2,7 @@ package com.johndoe.workoutbuddy.infrastructure.database.user;
 
 import com.johndoe.workoutbuddy.common.utils.DateUtils;
 import com.johndoe.workoutbuddy.infrastructure.database.MongoQueryFactory;
-import com.johndoe.workoutbuddy.domain.user.dto.ActivationTokenDto;
+import com.johndoe.workoutbuddy.domain.user.model.ActivationToken;
 import com.johndoe.workoutbuddy.domain.user.port.ActivationTokenRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Profile;
@@ -30,13 +30,13 @@ public class MongoActivationTokenRepository implements ActivationTokenRepository
     }
 
     @Override
-    public Optional<ActivationTokenDto> findToken(String tokenID) {
+    public Optional<ActivationToken> findToken(String tokenID) {
        return Optional.ofNullable(mongoTemplate.findOne(queryFactory.tokenIDQuery(tokenID), ActivationTokenEntity.class))
                .map(mapper::toDto);
     }
 
     @Override
-    public void updateToken(ActivationTokenDto token) {
+    public void updateToken(ActivationToken token) {
         mongoTemplate.save(mapper.toEntity(token));
     }
 }

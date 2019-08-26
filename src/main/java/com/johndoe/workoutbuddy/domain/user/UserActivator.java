@@ -3,9 +3,8 @@ package com.johndoe.workoutbuddy.domain.user;
 import com.johndoe.workoutbuddy.common.messages.Error;
 import com.johndoe.workoutbuddy.common.messages.Success;
 import com.johndoe.workoutbuddy.common.utils.DateUtils;
-import com.johndoe.workoutbuddy.common.utils.EitherUtils;
-import com.johndoe.workoutbuddy.domain.user.dto.UserDto;
-import com.johndoe.workoutbuddy.domain.user.dto.ActivationTokenDto;
+import com.johndoe.workoutbuddy.domain.user.model.User;
+import com.johndoe.workoutbuddy.domain.user.model.ActivationToken;
 import com.johndoe.workoutbuddy.domain.user.dto.error.UserError;
 import com.johndoe.workoutbuddy.domain.user.port.UserRepository;
 import com.johndoe.workoutbuddy.domain.user.port.ActivationTokenRepository;
@@ -25,7 +24,6 @@ import static com.johndoe.workoutbuddy.common.utils.EitherUtils.*;
 class UserActivator {
     private final UserRepository userRepository;
     private final ActivationTokenRepository tokenRepository;
-    private final UserConverter converter;
 
     Either<Error, Success> activateUser(String tokenID, String username) {
         return chain(handleToken(tokenID), handleUser(username), UserError.ACTIVATION_FAILED);
@@ -42,26 +40,26 @@ class UserActivator {
                 .flatMap(this::activateUser);
     }
 
-    private Either<Error, ActivationTokenDto> findToken(String tokenID) {
+    private Either<Error, ActivationToken> findToken(String tokenID) {
         return tokenRepository.findToken(tokenID).map(Either::right).orElse((Either)(UserError.ACTIVATION_TOKEN_NOT_FOUND.toEitherLeft()));
     }
 
-    private Either<Error, ActivationTokenDto> validateToken(ActivationTokenDto tokenDto) {
+    private Either<Error, ActivationToken> validateToken(ActivationToken tokenDto) {
         return isValid(tokenDto) ? Either.right(tokenDto) : Either.left(UserError.EXPIRED_ACTIVATION_TOKEN);
     }
 
-    private Either<Error, Success> deactivateToken(ActivationTokenDto tokenDto) {
+    private Either<Error, Success> deactivateToken(ActivationToken tokenDto) {
         return Try.of(() -> deactivate(tokenDto))
                 .onFailure(e -> log.severe(e.getMessage()))
                 .toEither(UserError.PERSISTENCE_FAILED);
     }
 
-    private boolean isValid(ActivationTokenDto token) {
+    private boolean isValid(ActivationToken token) {
         return !token.isActivated() && DateUtils.now().isBefore(token.getExpirationDateTime());
     }
 
-    private Success deactivate(ActivationTokenDto tokenDto) throws RuntimeException {
-        var deactivatedToken = ActivationTokenDto.builder()
+    private Success deactivate(ActivationToken tokenDto) throws RuntimeException {
+        var deactivatedToken = ActivationToken.builder()
                 .tokenID(tokenDto.getTokenID())
                 .username(tokenDto.getUsername())
                 .activated(true)
@@ -71,20 +69,37 @@ class UserActivator {
         return new Success();
     }
 
-   private Either<Error, UserDto> findUser(String username) {
+   private Either<Error, User> findUser(String username) {
         return Option.ofOptional(userRepository.findByUsername(username)).toEither(UserError.USER_NOT_FOUND);
    }
 
-    private Either<Error, Success> activateUser(UserDto userDto) {
-        var user = converter.userToEntity(userDto);
-        user.activate();
-        return Try.of(() -> activate(converter.userToDto(user)))
+    private Either<Error, Success> activateUser(User user) {
+
+        return Try.of(() -> activate(user))
                 .onFailure(e -> log.severe(e.getMessage()))
                 .toEither(UserError.PERSISTENCE_FAILED);
     }
 
-    private Success activate(UserDto userDto) {
-        userRepository.saveUser(userDto);
-        return new Success(userDto.getUsername() + " successfully activated");
+    private Success activate(User user) {
+        var activatedUser = buildActivatedUser(user);
+        userRepository.saveUser(activatedUser);
+        return new Success(activatedUser.getUsername() + " successfully activated");
+    }
+
+    private User buildActivatedUser(User user) {
+        return User.builder()
+                .id(user.getId())
+                .username(user.getUsername())
+                .password(user.getPassword())
+                .roles(user.getRoles())
+                .email(user.getEmail())
+                .gender(user.getGender())
+                .active(true)
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .birthDate(user.getBirthDate())
+                .weight(user.getWeight())
+                .height(user.getHeight())
+                .build();
     }
 }

@@ -1,16 +1,15 @@
 package com.johndoe.workoutbuddy.domain.diet.dto;
 
+import com.johndoe.workoutbuddy.domain.diet.model.ConsumedProduct;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.ToString;
 
 import java.time.LocalDate;
 
-@Getter
 @Builder
-public class ConsumedProductDto {
+@Getter
+public class UpdateDailyConsumptionDto {
     private final String username;
     private final LocalDate date;
-    private final String productID;
-    private final Double weight;
+    private final ConsumedProduct product;
 }

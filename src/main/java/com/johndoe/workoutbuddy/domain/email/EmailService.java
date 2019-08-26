@@ -2,9 +2,9 @@ package com.johndoe.workoutbuddy.domain.email;
 
 import com.johndoe.workoutbuddy.common.messages.Error;
 import com.johndoe.workoutbuddy.common.messages.Success;
-import com.johndoe.workoutbuddy.domain.email.dto.UserActivationEmail;
+import com.johndoe.workoutbuddy.domain.email.model.UserActivationEmail;
 import com.johndoe.workoutbuddy.domain.email.dto.error.EmailError;
-import com.johndoe.workoutbuddy.domain.email.dto.EmailMessage;
+import com.johndoe.workoutbuddy.domain.email.model.EmailMessage;
 import com.johndoe.workoutbuddy.domain.email.port.EmailSender;
 import io.vavr.control.Either;
 import io.vavr.control.Try;

@@ -1,6 +1,6 @@
 package com.johndoe.workoutbuddy.domain.product;
 
-import com.johndoe.workoutbuddy.domain.product.dto.ProductDto;
+import com.johndoe.workoutbuddy.domain.product.model.Product;
 import com.johndoe.workoutbuddy.domain.product.port.ProductRepository;
 
 import java.util.List;
@@ -15,7 +15,7 @@ public class ProductFacade {
         this.productReader = new ProductReader(this.repository);
     }
 
-    public List<ProductDto> getProducts() {
+    public List<Product> getProducts() {
         return productReader.getProducts();
     }
 

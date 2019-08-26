@@ -1,4 +1,4 @@
-package com.johndoe.workoutbuddy.domain.user.dto;
+package com.johndoe.workoutbuddy.domain.user.model;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -9,8 +9,7 @@ import java.util.UUID;
 
 @Getter
 @Builder
-@ToString
-public class ActivationTokenDto {
+public class ActivationToken {
     private final String tokenID;
     private final String username;
     private final LocalDateTime expirationDateTime;

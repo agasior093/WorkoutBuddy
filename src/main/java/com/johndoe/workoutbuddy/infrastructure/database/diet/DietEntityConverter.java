@@ -1,45 +1,41 @@
 package com.johndoe.workoutbuddy.infrastructure.database.diet;
 
 import com.johndoe.workoutbuddy.common.converters.ListConverter;
-import com.johndoe.workoutbuddy.common.utils.DateUtils;
-import com.johndoe.workoutbuddy.domain.diet.dto.ConsumedProductDto;
-import com.johndoe.workoutbuddy.domain.diet.dto.DailyConsumptionDto;
+import com.johndoe.workoutbuddy.domain.diet.model.ConsumedProduct;
+import com.johndoe.workoutbuddy.domain.diet.model.DailyConsumption;
 
 class DietEntityConverter {
 
-   DailyConsumptionEntity toEntity(DailyConsumptionDto dto) {
+    DailyConsumptionEntity toEntity(DailyConsumption dto) {
 
-       var entity = DailyConsumptionEntity.builder()
-               .username(dto.getUsername())
-               .date(DateUtils.fromString(dto.getDate()))
-               .consumedProducts(new ListConverter<ConsumedProductEntity, ConsumedProductDto>
-                       (this::productToEntity).apply(dto.getConsumedProducts()))
-               .build();
+        var entity = DailyConsumptionEntity.builder()
+                .username(dto.getUsername())
+                .date(dto.getDate())
+                .consumedProducts(new ListConverter<ConsumedProductEntity, ConsumedProduct>
+                        (this::productToEntity).apply(dto.getConsumedProducts()))
+                .build();
         entity.setId(dto.getId());
         return entity;
     }
 
-    ConsumedProductEntity productToEntity(ConsumedProductDto dto) {
+    ConsumedProductEntity productToEntity(ConsumedProduct dto) {
         return ConsumedProductEntity.builder()
-                .productID(dto.getProductID())
+                .productID(dto.getId())
                 .weight(dto.getWeight())
                 .build();
     }
 
-    DailyConsumptionDto toDto(DailyConsumptionEntity entity) {
-        return DailyConsumptionDto.builder()
+    DailyConsumption toDto(DailyConsumptionEntity entity) {
+        return DailyConsumption.builder()
                 .id(entity.getId())
                 .username(entity.getUsername())
-                .date(entity.getDate().toString())
-                .consumedProducts(new ListConverter<ConsumedProductDto, ConsumedProductEntity>
+                .date(entity.getDate())
+                .consumedProducts(new ListConverter<ConsumedProduct, ConsumedProductEntity>
                         (this::productToDto).apply(entity.getConsumedProducts()))
                 .build();
     }
 
-    ConsumedProductDto productToDto(ConsumedProductEntity entity) {
-        return ConsumedProductDto.builder()
-                .productID(entity.getProductID())
-                .weight(entity.getWeight())
-                .build();
+    ConsumedProduct productToDto(ConsumedProductEntity entity) {
+        return new ConsumedProduct(entity.getProductID(), entity.getWeight());
     }
 }

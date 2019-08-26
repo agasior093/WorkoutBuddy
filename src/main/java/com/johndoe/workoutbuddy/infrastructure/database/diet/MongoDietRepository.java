@@ -1,7 +1,7 @@
 package com.johndoe.workoutbuddy.infrastructure.database.diet;
 
 import com.johndoe.workoutbuddy.infrastructure.database.MongoQueryFactory;
-import com.johndoe.workoutbuddy.domain.diet.dto.DailyConsumptionDto;
+import com.johndoe.workoutbuddy.domain.diet.model.DailyConsumption;
 import com.johndoe.workoutbuddy.domain.diet.port.DietRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Profile;
@@ -21,12 +21,12 @@ public class MongoDietRepository implements DietRepository {
     private final MongoQueryFactory queryFactory = new MongoQueryFactory();
 
     @Override
-    public DailyConsumptionDto updateDailyConsumption(DailyConsumptionDto productsDto) {
+    public DailyConsumption updateDailyConsumption(DailyConsumption productsDto) {
         return converter.toDto(mongoTemplate.save(converter.toEntity(productsDto)));
     }
 
     @Override
-    public Optional<DailyConsumptionDto> getDailyConsumption(String username, LocalDate date) {
+    public Optional<DailyConsumption> getDailyConsumption(String username, LocalDate date) {
         return Optional.ofNullable(mongoTemplate.findOne(queryFactory.usernameDateQuery(username, date), DailyConsumptionEntity.class))
                 .map(converter::toDto);
     }

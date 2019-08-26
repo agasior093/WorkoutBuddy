@@ -1,7 +1,7 @@
 package com.johndoe.workoutbuddy.infrastructure.database.user;
 
 import com.johndoe.workoutbuddy.common.utils.DateUtils;
-import com.johndoe.workoutbuddy.domain.user.dto.ActivationTokenDto;
+import com.johndoe.workoutbuddy.domain.user.model.ActivationToken;
 import com.johndoe.workoutbuddy.domain.user.port.ActivationTokenRepository;
 import com.johndoe.workoutbuddy.infrastructure.database.InMemoryRepository;
 import org.springframework.context.annotation.Profile;
@@ -31,12 +31,12 @@ public class InMemoryActivationTokenRepository extends InMemoryRepository<String
     }
 
     @Override
-    public Optional<ActivationTokenDto> findToken(String id) {
+    public Optional<ActivationToken> findToken(String id) {
         return findByID(id).map(converter::toDto);
     }
 
     @Override
-    public void updateToken(ActivationTokenDto tokenDto) {
+    public void updateToken(ActivationToken tokenDto) {
         update(converter.toEntity(tokenDto));
     }
 }

@@ -1,11 +1,11 @@
 package com.johndoe.workoutbuddy.infrastructure.database.product;
 
-import com.johndoe.workoutbuddy.domain.product.dto.ProductDto;
+import com.johndoe.workoutbuddy.domain.product.model.Product;
 
 
 class ProductEntityConverter {
-    ProductDto toDto(ProductEntity entity) {
-        return ProductDto.builder()
+    Product toDto(ProductEntity entity) {
+        return Product.builder()
                 .id(entity.getId())
                 .productName(entity.getProductName())
                 .calories(entity.getCalories())
@@ -16,7 +16,7 @@ class ProductEntityConverter {
                 .build();
     }
 
-    ProductEntity toEntity(ProductDto dto) {
+    ProductEntity toEntity(Product dto) {
         var product = ProductEntity.builder()
                 .productName(dto.getProductName())
                 .calories(dto.getCalories())

@@ -1,6 +1,6 @@
 package com.johndoe.workoutbuddy.infrastructure.email;
 
-import com.johndoe.workoutbuddy.domain.email.dto.EmailMessage;
+import com.johndoe.workoutbuddy.domain.email.model.EmailMessage;
 import com.johndoe.workoutbuddy.domain.email.port.EmailSender;
 import lombok.AllArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;

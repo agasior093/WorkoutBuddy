@@ -1,7 +1,7 @@
 package com.johndoe.workoutbuddy.infrastructure.database.user;
 
 import com.johndoe.workoutbuddy.infrastructure.database.MongoQueryFactory;
-import com.johndoe.workoutbuddy.domain.user.dto.UserDto;
+import com.johndoe.workoutbuddy.domain.user.model.User;
 import com.johndoe.workoutbuddy.domain.user.port.UserRepository;
 
 import lombok.AllArgsConstructor;
@@ -20,18 +20,18 @@ public class MongoUserRepository implements UserRepository {
     private final MongoQueryFactory queryFactory = new MongoQueryFactory();
 
     @Override
-    public Optional<UserDto> findByUsername(String username) {
+    public Optional<User> findByUsername(String username) {
         return Optional.ofNullable(mongoTemplate.findOne(queryFactory.usernameQuery(username), UserEntity.class)).map(converter::toDto);
     }
 
     @Override
-    public Optional<UserDto> findByEmail(String email) {
+    public Optional<User> findByEmail(String email) {
         return Optional.ofNullable(mongoTemplate.findOne(queryFactory.emailQuery(email), UserEntity.class)).map(converter::toDto);
     }
 
     @Override
-    public String saveUser(UserDto user) throws RuntimeException {
+    public User saveUser(User user) throws RuntimeException {
         UserEntity userEntity = mongoTemplate.save(converter.toEntity(user));
-        return userEntity.getId();
+        return converter.toDto(userEntity);
     }
 }

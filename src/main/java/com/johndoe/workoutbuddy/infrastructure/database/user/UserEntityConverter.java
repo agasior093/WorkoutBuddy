@@ -1,30 +1,30 @@
 package com.johndoe.workoutbuddy.infrastructure.database.user;
 
-import com.johndoe.workoutbuddy.domain.user.dto.GenderDto;
-import com.johndoe.workoutbuddy.domain.user.dto.UserDto;
+import com.johndoe.workoutbuddy.domain.user.model.Gender;
+import com.johndoe.workoutbuddy.domain.user.model.User;
 
 class UserEntityConverter {
 
-    UserEntity toEntity(UserDto userDto) {
+    UserEntity toEntity(User user) {
         var entity = UserEntity.builder()
-                .username(userDto.getUsername())
-                .password(userDto.getPassword())
-                .email(userDto.getEmail())
-                .roles(userDto.getRoles())
-                .active(userDto.isActive())
-                .firstName(userDto.getFirstName())
-                .lastName(userDto.getLastName())
-                .gender(genderToEntity(userDto.getGender()))
-                .birthDate(userDto.getBirthDate())
-                .weight(userDto.getWeight())
-                .height(userDto.getHeight())
+                .username(user.getUsername())
+                .password(user.getPassword())
+                .email(user.getEmail())
+                .roles(user.getRoles())
+                .active(user.isActive())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .gender(genderToEntity(user.getGender()))
+                .birthDate(user.getBirthDate())
+                .weight(user.getWeight())
+                .height(user.getHeight())
                 .build();
-        entity.setId(userDto.getId());
+        entity.setId(user.getId());
         return entity;
     }
 
-    UserDto toDto(UserEntity userEntity) {
-        return UserDto.builder()
+    User toDto(UserEntity userEntity) {
+        return User.builder()
                 .id(userEntity.getId())
                 .username(userEntity.getUsername())
                 .password(userEntity.getPassword())
@@ -40,11 +40,11 @@ class UserEntityConverter {
                 .build();
     }
 
-    GenderDto genderToDto(GenderEntity genderEntity) {
-        return genderEntity == GenderEntity.MALE ? GenderDto.MALE : GenderDto.FEMALE;
+    Gender genderToDto(GenderEntity genderEntity) {
+        return genderEntity == GenderEntity.MALE ? Gender.MALE : Gender.FEMALE;
     }
 
-    GenderEntity genderToEntity(GenderDto genderDto) {
-        return genderDto == GenderDto.MALE ? GenderEntity.MALE : GenderEntity.FEMALE;
+    GenderEntity genderToEntity(Gender gender) {
+        return gender == Gender.MALE ? GenderEntity.MALE : GenderEntity.FEMALE;
     }
 }

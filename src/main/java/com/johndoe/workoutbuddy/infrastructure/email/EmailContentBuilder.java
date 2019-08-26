@@ -1,7 +1,7 @@
 package com.johndoe.workoutbuddy.infrastructure.email;
 
-import com.johndoe.workoutbuddy.domain.email.dto.UserActivationEmail;
-import com.johndoe.workoutbuddy.domain.email.dto.EmailMessage;
+import com.johndoe.workoutbuddy.domain.email.model.UserActivationEmail;
+import com.johndoe.workoutbuddy.domain.email.model.EmailMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
