@@ -10,6 +10,8 @@ import lombok.extern.java.Log;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 class DailyConsumptionReader {
@@ -23,12 +25,11 @@ class DailyConsumptionReader {
     }
 
     private List<Product> matchingProducts(List<Product> products, List<ConsumedProduct> consumedProducts) {
-        final List<Product> matchedProducts = new ArrayList<>();
-        consumedProducts.forEach(consumedProduct -> {
-            products.forEach(product -> {
-                if(product.getId().equals(consumedProduct.getId())) matchedProducts.add(product);
-            });
-        });
-        return matchedProducts;
+        return consumedProducts.stream()
+                .map(consumedProductDto -> products.stream()
+                        .filter(productDto -> productDto.getId().equals(consumedProductDto.getId()))
+                        .findAny().orElse(null))
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
     }
 }
