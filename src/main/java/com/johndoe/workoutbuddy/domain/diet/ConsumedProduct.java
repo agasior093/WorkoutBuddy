@@ -2,6 +2,7 @@ package com.johndoe.workoutbuddy.domain.diet;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 
 @Getter
 @RequiredArgsConstructor

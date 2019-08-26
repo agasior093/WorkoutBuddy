@@ -26,7 +26,8 @@ public class InMemoryActivationTokenRepository extends InMemoryRepository<String
                 .username(username)
                 .expirationDateTime(DateUtils.now().plusHours(1))
                 .activated(false)
-                .build());
+                .build())
+                .getId();
     }
 
     @Override

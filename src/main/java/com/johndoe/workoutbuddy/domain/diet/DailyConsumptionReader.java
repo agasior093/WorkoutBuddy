@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
+@Log
 class DailyConsumptionReader {
     private final DietRepository repository;
     private final ProductFacade productFacade;
@@ -25,10 +26,12 @@ class DailyConsumptionReader {
     }
 
     private List<ProductDto> matchingProducts(List<ProductDto> products, List<ConsumedProductDto> consumedProducts) {
-        return products.stream().filter(product ->
-                consumedProducts.stream()
-                .anyMatch(consumedProduct ->
-                        product.getId().equals(consumedProduct.getProductID())))
-                .collect(Collectors.toList());
+        final List<ProductDto> matchedProducts = new ArrayList<>();
+        consumedProducts.forEach(consumedProduct -> {
+            products.forEach(product -> {
+                if(product.getId().equals(consumedProduct.getProductID())) matchedProducts.add(product);
+            });
+        });
+        return matchedProducts;
     }
 }

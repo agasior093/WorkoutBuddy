@@ -26,10 +26,10 @@ class DietEntityConverter {
                 .build();
     }
 
-    DailyConsumptionDto toDto(DailyConsumptionEntity entity, String username) {
+    DailyConsumptionDto toDto(DailyConsumptionEntity entity) {
         return DailyConsumptionDto.builder()
                 .id(entity.getId())
-                .username(username)
+                .username(entity.getUsername())
                 .date(entity.getDate().toString())
                 .consumedProducts(new ListConverter<ConsumedProductDto, ConsumedProductEntity>
                         (this::productToDto).apply(entity.getConsumedProducts()))

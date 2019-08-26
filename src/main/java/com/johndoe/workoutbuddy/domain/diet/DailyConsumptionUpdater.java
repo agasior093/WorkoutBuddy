@@ -1,7 +1,6 @@
 package com.johndoe.workoutbuddy.domain.diet;
 
 import com.johndoe.workoutbuddy.common.messages.Error;
-import com.johndoe.workoutbuddy.common.messages.Success;
 import com.johndoe.workoutbuddy.domain.diet.dto.ConsumedProductDto;
 import com.johndoe.workoutbuddy.domain.diet.dto.DailyConsumptionDto;
 import com.johndoe.workoutbuddy.domain.diet.dto.error.DietError;
@@ -16,41 +15,45 @@ import java.util.List;
 @Log
 @RequiredArgsConstructor
 class DailyConsumptionUpdater {
-
     private final DietRepository repository;
     private final DietConverter converter;
 
-    Either<Error, Success> addProductToDailyConsumption(ConsumedProductDto consumedProductDto) {
-        return Try.of(() -> saveOrUpdate(consumedProductDto))
+    Either<Error, DailyConsumptionDto> addProductToDailyConsumption(ConsumedProductDto consumedProduct) {
+        return repository.getDailyConsumption(consumedProduct.getUsername(), consumedProduct.getDate())
+                .map(daily -> addToExistingDaily(daily, consumedProduct))
+                .orElse(createNewDaily(consumedProduct));
+    }
+
+    Either<Error, DailyConsumptionDto> removeProductFromDailyConsumption(ConsumedProductDto consumedProduct) {
+        return null;
+    }
+
+    private Either<Error, DailyConsumptionDto> createNewDaily(ConsumedProductDto consumedProduct) {
+        return Try.of(() -> create(consumedProduct))
                 .onFailure(e -> log.severe(e.getMessage()))
                 .toEither(DietError.PERSISTENCE_FAILED);
     }
 
-    Success saveOrUpdate(ConsumedProductDto consumedProduct) {
-        repository.getDailyConsumption(consumedProduct.getUsername(), consumedProduct.getDate())
-                .ifPresentOrElse(daily -> updateDaily(converter.toEntity(daily), consumedProduct),
-                                () -> createDaily(consumedProduct));
-        return new Success();
+    private Either<Error, DailyConsumptionDto> addToExistingDaily(DailyConsumptionDto daily, ConsumedProductDto consumedProduct) {
+        return Try.of(() -> add(daily, consumedProduct))
+                .onFailure(e -> log.severe(e.getMessage()))
+                .toEither(DietError.PERSISTENCE_FAILED);
     }
 
-    private void createDaily(ConsumedProductDto consumedProduct) {
-        var newDaily = DailyConsumption.builder()
+    private DailyConsumptionDto create(ConsumedProductDto consumedProduct) {
+        var daily = DailyConsumption.builder()
                 .username(consumedProduct.getUsername())
                 .date(consumedProduct.getDate())
                 .consumedProducts(List.of(converter.toConsumedProductEntity(consumedProduct)))
                 .build();
-        repository.updateDailyConsumption(converter.toDto(newDaily));
+        return repository.updateDailyConsumption(converter.toDto(daily));
     }
 
-    private void updateDaily(DailyConsumption daily, ConsumedProductDto consumedProduct) {
-        var products = daily.getConsumedProducts();
-        products.add(converter.toConsumedProductEntity(consumedProduct));
-        var newDaily = DailyConsumption.builder()
-                .id(daily.getId())
-                .username(consumedProduct.getUsername())
-                .date(consumedProduct.getDate())
-                .consumedProducts(products)
-                .build();
-        repository.updateDailyConsumption(converter.toDto(newDaily));
+    private DailyConsumptionDto add(DailyConsumptionDto daily, ConsumedProductDto consumedProduct) {
+        var dailyEntity = converter.toEntity(daily);
+        dailyEntity.addProduct(converter.toConsumedProductEntity(consumedProduct));
+        return repository.updateDailyConsumption(converter.toDto(dailyEntity));
     }
+
+
 }

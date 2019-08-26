@@ -21,10 +21,14 @@ public final class DateUtils {
     }
 
     public static String toString(LocalDate date) {
-        return date.format(DEFAULT_FORMATTER);
+        return date != null ? date.format(DEFAULT_FORMATTER) : null;
     }
 
     public static LocalDateTime now() {
         return LocalDateTime.now(ZONE_ID);
+    }
+
+    public static LocalDate today() {
+        return LocalDate.now(ZONE_ID);
     }
 }

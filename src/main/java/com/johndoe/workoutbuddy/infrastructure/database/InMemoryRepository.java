@@ -1,24 +1,28 @@
 package com.johndoe.workoutbuddy.infrastructure.database;
 
+import lombok.extern.java.Log;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+@Log
 public abstract class InMemoryRepository<T, U extends BaseEntity> {
     private final Map<T, U> repository = new HashMap<>();
 
     protected abstract T generateID();
 
-    protected T save(U object) {
+    protected U save(U object) {
         final var id = generateID();
         object.setId(id);
         repository.put(id, object);
-        return id;
+        return repository.get(id);
     }
 
-    protected void update(U object) {
+    protected U update(U object) {
         repository.put((T)object.getId(), object);
+        return repository.get(object.getId());
     }
 
     protected Optional<U> findByID(T ID) {

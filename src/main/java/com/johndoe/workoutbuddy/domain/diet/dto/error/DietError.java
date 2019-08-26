@@ -4,7 +4,8 @@ import com.johndoe.workoutbuddy.common.messages.Error;
 
 public enum DietError implements Error {
 
-    PERSISTENCE_FAILED;
+    PERSISTENCE_FAILED,
+    DAILY_RECORD_NOT_FOUND;
 
     @Override
     public String getCause() {

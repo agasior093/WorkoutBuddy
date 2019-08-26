@@ -21,14 +21,14 @@ public class MongoDietRepository implements DietRepository {
     private final MongoQueryFactory queryFactory = new MongoQueryFactory();
 
     @Override
-    public void updateDailyConsumption(DailyConsumptionDto productsDto) {
-        mongoTemplate.save(converter.toEntity(productsDto));
+    public DailyConsumptionDto updateDailyConsumption(DailyConsumptionDto productsDto) {
+        return converter.toDto(mongoTemplate.save(converter.toEntity(productsDto)));
     }
 
     @Override
     public Optional<DailyConsumptionDto> getDailyConsumption(String username, LocalDate date) {
         return Optional.ofNullable(mongoTemplate.findOne(queryFactory.usernameDateQuery(username, date), DailyConsumptionEntity.class))
-                .map(result -> converter.toDto(result, username));
+                .map(converter::toDto);
     }
 
 }
