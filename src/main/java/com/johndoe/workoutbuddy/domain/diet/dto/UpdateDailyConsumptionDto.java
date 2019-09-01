@@ -13,3 +13,4 @@ public class UpdateDailyConsumptionDto {
     private final LocalDate date;
     private final ConsumedProduct product;
 }
+

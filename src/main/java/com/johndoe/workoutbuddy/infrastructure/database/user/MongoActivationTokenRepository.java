@@ -36,7 +36,7 @@ public class MongoActivationTokenRepository implements ActivationTokenRepository
     }
 
     @Override
-    public void updateToken(ActivationToken token) {
+    public void updateToken(ActivationToken token) throws Exception {
         mongoTemplate.save(mapper.toEntity(token));
     }
 }

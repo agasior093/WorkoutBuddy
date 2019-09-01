@@ -11,13 +11,10 @@ import java.util.List;
 
 @Getter
 @Builder
+@ToString
 @Document(collection = "dailyConsumption")
 class DailyConsumptionEntity extends BaseEntity<String> {
     private final String username;
     private final LocalDate date;
     private final List<ConsumedProductEntity> consumedProducts;
-    private final Double calories;
-    private final Double protein;
-    private final Double fat;
-    private final Double carbohydrates;
 }

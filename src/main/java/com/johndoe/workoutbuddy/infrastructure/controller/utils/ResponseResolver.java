@@ -1,4 +1,4 @@
-package com.johndoe.workoutbuddy.infrastructure.controller;
+package com.johndoe.workoutbuddy.infrastructure.controller.utils;
 
 import com.johndoe.workoutbuddy.common.messages.Error;
 import com.johndoe.workoutbuddy.domain.email.dto.error.EmailError;
@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Component
-class ResponseResolver {
+public class ResponseResolver {
 
     private final Map<Error, HttpStatus> httpStatusMap = new HashMap();
 
@@ -28,19 +28,19 @@ class ResponseResolver {
         httpStatusMap.put(EmailError.SENDING_FAILED, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    <T> ResponseEntity resolve(Optional<T> object) {
+    public <T> ResponseEntity resolve(Optional<T> object) {
         return object
                 .map(val -> new ResponseEntity<>(object, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    <T> ResponseEntity resolve(Either<Error, T> either) {
+    public <T> ResponseEntity resolve(Either<Error, T> either) {
         return either
                 .map(this::successResponse)
                 .getOrElseGet(this::failureResponse);
     }
 
-    <T> ResponseEntity resolve(List<T> objectList) {
+    public <T> ResponseEntity resolve(List<T> objectList) {
         return objectList.isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(objectList, HttpStatus.OK);
     }
 

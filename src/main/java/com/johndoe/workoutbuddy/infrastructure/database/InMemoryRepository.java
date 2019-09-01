@@ -6,10 +6,11 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Log
 public abstract class InMemoryRepository<T, U extends BaseEntity> {
-    private final Map<T, U> repository = new HashMap<>();
+    protected final Map<T, U> repository = new ConcurrentHashMap<>();
 
     protected abstract T generateID();
 

@@ -58,7 +58,7 @@ class UserActivator {
         return !token.isActivated() && DateUtils.now().isBefore(token.getExpirationDateTime());
     }
 
-    private Success deactivate(ActivationToken tokenDto) throws RuntimeException {
+    private Success deactivate(ActivationToken tokenDto) throws Exception {
         var deactivatedToken = ActivationToken.builder()
                 .tokenID(tokenDto.getTokenID())
                 .username(tokenDto.getUsername())
@@ -80,7 +80,7 @@ class UserActivator {
                 .toEither(UserError.PERSISTENCE_FAILED);
     }
 
-    private Success activate(User user) {
+    private Success activate(User user) throws Exception {
         var activatedUser = buildActivatedUser(user);
         userRepository.saveUser(activatedUser);
         return new Success(activatedUser.getUsername() + " successfully activated");

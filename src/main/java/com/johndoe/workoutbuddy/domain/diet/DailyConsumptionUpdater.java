@@ -20,13 +20,16 @@ class DailyConsumptionUpdater {
 
     Either<Error, DailyConsumption> addProductToDailyConsumption(UpdateDailyConsumptionDto dailyDto) {
         return repository.getDailyConsumption(dailyDto.getUsername(), dailyDto.getDate())
-                .map(daily -> addToExistingDaily(daily, dailyDto.getProduct()))
-                .orElse(createNewDaily(dailyDto));
+                .map(daily -> addToDaily(daily, dailyDto.getProduct()))
+                .orElseGet(() -> createNewDaily(dailyDto));
     }
 
     Either<Error, DailyConsumption> removeProductFromDailyConsumption(UpdateDailyConsumptionDto dailyDto) {
-        return null;
+        return repository.getDailyConsumption(dailyDto.getUsername(), dailyDto.getDate())
+                .map(daily -> removeFromDaily(daily, dailyDto.getProduct()))
+                .orElseGet(()  -> Either.left(DietError.DAILY_RECORD_NOT_FOUND));
     }
+
 
     private Either<Error, DailyConsumption> createNewDaily(UpdateDailyConsumptionDto dailyDto) {
         return Try.of(() -> create(dailyDto))
@@ -34,8 +37,14 @@ class DailyConsumptionUpdater {
                 .toEither(DietError.PERSISTENCE_FAILED);
     }
 
-    private Either<Error, DailyConsumption> addToExistingDaily(DailyConsumption daily, ConsumedProduct consumedProduct) {
-        return Try.of(() -> add(daily, consumedProduct))
+    private Either<Error, DailyConsumption> addToDaily(DailyConsumption daily, ConsumedProduct product) {
+        return Try.of(() -> add(daily, product))
+                .onFailure(e -> log.severe(e.getMessage()))
+                .toEither(DietError.PERSISTENCE_FAILED);
+    }
+
+    private Either<Error, DailyConsumption> removeFromDaily(DailyConsumption daily, ConsumedProduct product) {
+        return Try.of(() -> remove(daily, product))
                 .onFailure(e -> log.severe(e.getMessage()))
                 .toEither(DietError.PERSISTENCE_FAILED);
     }
@@ -51,6 +60,11 @@ class DailyConsumptionUpdater {
 
     private DailyConsumption add(DailyConsumption daily, ConsumedProduct consumedProduct) {
         daily.getConsumedProducts().add(consumedProduct);
+        return repository.updateDailyConsumption(daily);
+    }
+
+    private DailyConsumption remove(DailyConsumption daily, ConsumedProduct product) {
+        daily.getConsumedProducts().remove(product);
         return repository.updateDailyConsumption(daily);
     }
 }

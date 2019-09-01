@@ -19,5 +19,9 @@ public class ProductFacade {
         return productReader.getProducts();
     }
 
+    public List<Product> getProductsByIDs(String... IDs) {
+        return productReader.getProducts(IDs);
+    }
+
 
 }

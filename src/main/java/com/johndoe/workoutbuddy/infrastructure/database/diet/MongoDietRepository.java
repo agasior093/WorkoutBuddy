@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -31,4 +32,8 @@ public class MongoDietRepository implements DietRepository {
                 .map(converter::toDto);
     }
 
+    @Override
+    public List<DailyConsumption> getConsumptionFromDate(String username, LocalDate date) {
+        return null;
+    }
 }

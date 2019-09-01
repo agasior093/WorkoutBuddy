@@ -1,6 +1,7 @@
 package com.johndoe.workoutbuddy.infrastructure.controller;
 
 import com.johndoe.workoutbuddy.domain.product.ProductFacade;
+import com.johndoe.workoutbuddy.infrastructure.controller.utils.ResponseResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

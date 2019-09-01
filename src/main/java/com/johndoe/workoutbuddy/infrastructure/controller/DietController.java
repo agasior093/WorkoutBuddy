@@ -1,15 +1,15 @@
 package com.johndoe.workoutbuddy.infrastructure.controller;
 
+import com.johndoe.workoutbuddy.common.utils.DateUtils;
 import com.johndoe.workoutbuddy.domain.diet.DietFacade;
+import com.johndoe.workoutbuddy.domain.diet.dto.UpdateDailyConsumptionDto;
+import com.johndoe.workoutbuddy.infrastructure.controller.utils.AuthenticationHelper;
+import com.johndoe.workoutbuddy.infrastructure.controller.utils.ResponseResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Locale;
 
 @RestController
 @RequestMapping("/diet")
@@ -18,19 +18,24 @@ class DietController {
 
     private final DietFacade dietFacade;
     private final ResponseResolver responseResolver;
+    private final AuthenticationHelper authHelper;
 
-//    @PostMapping("/updateDaily")
-//    ResponseEntity updateDailyConsumption(@RequestBody DailyConsumptionDto productsDto) {
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        String username = authentication.getName();
-//        return responseResolver.resolve(dietFacade.updateDailyConsumption(username, productsDto));
-//    }
+    @PostMapping("/addToDaily")
+    ResponseEntity updateDailyConsumption(@RequestBody UpdateDailyConsumptionDto updateDailyConsumption) {
+        var request = buildWithUsername(updateDailyConsumption);
+        return responseResolver.resolve(dietFacade.addProductToDailyConsumption(request));
+    }
 
     @GetMapping("/getDaily")
     ResponseEntity getDailyConsumption(@RequestParam String date) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        return responseResolver.resolve(dietFacade.getDailyConsumption(username, LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd")
-                .withLocale(Locale.UK))));
+        return responseResolver.resolve(dietFacade.getDailyConsumption(authHelper.getLoggedUserName(), DateUtils.today()));
+    }
+
+    private UpdateDailyConsumptionDto buildWithUsername(UpdateDailyConsumptionDto dto) {
+        return UpdateDailyConsumptionDto.builder()
+                .date(dto.getDate())
+                .username(authHelper.getLoggedUserName())
+                .product(dto.getProduct())
+                .build();
     }
 }

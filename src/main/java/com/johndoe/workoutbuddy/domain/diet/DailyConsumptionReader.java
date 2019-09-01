@@ -27,7 +27,8 @@ class DailyConsumptionReader {
     private List<Product> matchingProducts(List<Product> products, List<ConsumedProduct> consumedProducts) {
         return consumedProducts.stream()
                 .map(consumedProductDto -> products.stream()
-                        .filter(productDto -> productDto.getId().equals(consumedProductDto.getId()))
+                        .filter(productDto -> productDto.getId().equals(consumedProductDto.getId()) &&
+                                productDto.getWeight().equals(consumedProductDto.getWeight()))
                         .findAny().orElse(null))
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());

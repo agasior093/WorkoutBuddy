@@ -25,12 +25,12 @@ class UserCreator {
 
     Either<Error, Success> createUser(CreateUserDto userDto) {
         return userValidator.validate(userDto)
-                .flatMap(this::createAndSave)
+                .flatMap(this::save)
                 .flatMap(this::generateToken)
                 .flatMap(token -> sendEmail(userDto, token));
     }
 
-    private Either<Error, User> createAndSave(CreateUserDto createUserDto) {
+    private Either<Error, User> save(CreateUserDto createUserDto) {
         var newUser = buildNewUser(createUserDto);
         return Try.of(() -> userRepository.saveUser(newUser))
                 .onFailure(e -> log.severe(e.getMessage()))

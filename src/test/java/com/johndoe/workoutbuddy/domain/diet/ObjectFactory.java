@@ -5,19 +5,19 @@ import com.johndoe.workoutbuddy.domain.diet.dto.UpdateDailyConsumptionDto;
 import com.johndoe.workoutbuddy.domain.diet.model.ConsumedProduct;
 import com.johndoe.workoutbuddy.domain.product.model.Product;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 class ObjectFactory {
     static final String USERNAME_1 = "user1";
-    static final String USERNAME_2 = "user2";
 
     static List<Product> products() {
         return List.of(riceProduct(100d), chickenProduct(100d), appleProduct(100d), salmonProduct(100d));
     }
 
-    static Optional<Product> getProductById(String id) {
-        return products().stream().filter(p -> id.equals(p.getId())).findFirst();
+    static Product getProductById(String id) {
+        return products().stream().filter(p -> id.equals(p.getId())).findFirst().orElse(Product.builder().build());
     }
 
     static Product riceProduct(Double weight) {
@@ -36,24 +36,44 @@ class ObjectFactory {
         return Product.builder().id("4").productName("salmon").weight(weight).calories(300d).protein(18d).fat(18d).carbohydrates(4d).build();
     }
 
-    static UpdateDailyConsumptionDto rice(Double weight) {
+    static UpdateDailyConsumptionDto updateWithRice(Double weight) {
         var consumedProduct = ConsumedProduct.builder().id("1").weight(weight).build();
         return UpdateDailyConsumptionDto.builder().product(consumedProduct).date(DateUtils.today()).username(USERNAME_1).build();
     }
 
-    static UpdateDailyConsumptionDto chicken(Double weight) {
+    static UpdateDailyConsumptionDto updateWithChicken(Double weight) {
         var consumedProduct = ConsumedProduct.builder().id("2").weight(weight).build();
         return UpdateDailyConsumptionDto.builder().product(consumedProduct).date(DateUtils.today()).username(USERNAME_1).build();
     }
 
-    static UpdateDailyConsumptionDto apple(Double weight) {
+    static UpdateDailyConsumptionDto updateWithApple(Double weight) {
         var consumedProduct = ConsumedProduct.builder().id("3").weight(weight).build();
         return UpdateDailyConsumptionDto.builder().product(consumedProduct).date(DateUtils.today()).username(USERNAME_1).build();
     }
 
-    static UpdateDailyConsumptionDto salmon(Double weight) {
+    static UpdateDailyConsumptionDto updateWithSalmon(Double weight) {
         var consumedProduct = ConsumedProduct.builder().id("4").weight(weight).build();
         return UpdateDailyConsumptionDto.builder().product(consumedProduct).date(DateUtils.today()).username(USERNAME_1).build();
+    }
+
+    static UpdateDailyConsumptionDto updateWithRice(Double weight, LocalDate date, String username) {
+        var consumedProduct = ConsumedProduct.builder().id("1").weight(weight).build();
+        return UpdateDailyConsumptionDto.builder().product(consumedProduct).date(date).username(username).build();
+    }
+
+    static UpdateDailyConsumptionDto updateWithChicken(Double weight, LocalDate date, String username) {
+        var consumedProduct = ConsumedProduct.builder().id("2").weight(weight).build();
+        return UpdateDailyConsumptionDto.builder().product(consumedProduct).date(date).username(username).build();
+    }
+
+    static UpdateDailyConsumptionDto updateWithApple(Double weight, LocalDate date, String username) {
+        var consumedProduct = ConsumedProduct.builder().id("3").weight(weight).build();
+        return UpdateDailyConsumptionDto.builder().product(consumedProduct).date(date).username(username).build();
+    }
+
+    static UpdateDailyConsumptionDto updateWithSalmon(Double weight, LocalDate date, String username) {
+        var consumedProduct = ConsumedProduct.builder().id("4").weight(weight).build();
+        return UpdateDailyConsumptionDto.builder().product(consumedProduct).date(date).username(username).build();
     }
 
 }

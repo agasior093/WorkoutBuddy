@@ -5,6 +5,7 @@ import com.johndoe.workoutbuddy.domain.user.model.User;
 import com.johndoe.workoutbuddy.domain.user.port.UserRepository;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,17 +38,20 @@ public class InMemoryUserRepository implements UserRepository {
     }
 
     @Override
+    @Transactional
     public Optional<User> findByUsername(String username) {
         return Optional.ofNullable(users.get(username));
     }
 
     @Override
+    @Transactional
     public Optional<User> findByEmail(String email) {
         return users.values().stream().filter(user -> email.equals(user.getEmail())).findFirst();
     }
 
     @Override
-    public User saveUser(User user) {
+    @Transactional
+    public User saveUser(User user) throws Exception {
         users.put(user.getUsername(), user);
         return user;
     }

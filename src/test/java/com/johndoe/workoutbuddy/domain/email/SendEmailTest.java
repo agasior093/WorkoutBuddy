@@ -22,7 +22,7 @@ public class SendEmailTest {
 
     @Test
     public void shouldSendEmail() {
-        assertTrue(emailFacade.sendActivationEmail("", "", "").isRight());
+        assertTrue(emailFacade.sendActivationEmail(any(), any(), any()).isRight());
     }
 
     @Test

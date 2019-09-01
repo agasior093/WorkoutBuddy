@@ -2,6 +2,7 @@ package com.johndoe.workoutbuddy.infrastructure.controller;
 
 import com.johndoe.workoutbuddy.domain.user.UserFacade;
 import com.johndoe.workoutbuddy.domain.user.dto.CreateUserDto;
+import com.johndoe.workoutbuddy.infrastructure.controller.utils.ResponseResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

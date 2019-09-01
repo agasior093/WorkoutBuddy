@@ -13,4 +13,8 @@ class ProductReader {
     List<Product> getProducts() {
         return repository.getProducts();
     }
+
+    List<Product> getProducts(String... IDs) {
+        return repository.getProducts(IDs);
+    }
 }
