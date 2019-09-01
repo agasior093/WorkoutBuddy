@@ -10,7 +10,7 @@ import lombok.extern.java.Log;
 public class EmailFacade {
     private final EmailService emailService;
 
-    EmailFacade(EmailSender sender){
+    public EmailFacade(EmailSender sender){
         emailService = new EmailService(sender);
     }
 

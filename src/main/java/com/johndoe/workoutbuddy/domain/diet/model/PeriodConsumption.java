@@ -1,5 +1,6 @@
 package com.johndoe.workoutbuddy.domain.diet.model;
 
+import com.johndoe.workoutbuddy.domain.product.model.Product;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -12,5 +13,5 @@ public class PeriodConsumption {
     private final Double protein;
     private final Double fat;
     private final Double carbohydrates;
-    private final List<DailyConsumption> dailyConsumptions;
+    private final List<List<Product>> products;
 }

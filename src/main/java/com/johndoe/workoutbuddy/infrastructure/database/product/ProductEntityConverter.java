@@ -23,6 +23,7 @@ class ProductEntityConverter {
                 .protein(dto.getProtein())
                 .fat(dto.getFat())
                 .carbohydrates(dto.getCarbohydrates())
+                .weight(dto.getWeight())
                 .build();
         product.setId(dto.getId());
         return product;

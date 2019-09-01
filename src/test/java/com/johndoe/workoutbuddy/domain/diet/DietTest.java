@@ -1,12 +1,11 @@
 package com.johndoe.workoutbuddy.domain.diet;
 
 import com.johndoe.workoutbuddy.common.utils.DateUtils;
-import com.johndoe.workoutbuddy.domain.diet.dto.UpdateDailyConsumptionDto;
 import com.johndoe.workoutbuddy.domain.product.model.Product;
 import com.johndoe.workoutbuddy.infrastructure.database.diet.InMemoryDietRepository;
 import com.johndoe.workoutbuddy.domain.product.ProductFacade;
+import com.johndoe.workoutbuddy.infrastructure.database.product.InMemoryProductRepository;
 import lombok.extern.java.Log;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,21 +16,20 @@ import java.util.stream.Collectors;
 
 import static com.johndoe.workoutbuddy.domain.diet.ObjectFactory.*;
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
 import static org.hamcrest.Matchers.is;
 
 @RunWith(MockitoJUnitRunner.class)
 @Log
 public class DietTest {
-
-    private ProductFacade productFacade = mock(ProductFacade.class);
-    private InMemoryDietRepository repository = new InMemoryDietRepository();
-    private DietFacade dietFacade = new DietFacade(repository, productFacade);
+    private InMemoryProductRepository productRepository = new InMemoryProductRepository();
+    private InMemoryDietRepository dietRepository = new InMemoryDietRepository();
+    private ProductFacade productFacade = new ProductFacade(productRepository);
+    private DietFacade dietFacade = new DietFacade(dietRepository, productFacade);
 
     @Before
     public void setUp() {
-        when(productFacade.getProducts()).thenReturn(products());
-        this.repository = new InMemoryDietRepository();
+        this.productRepository.initializeWith(products());
+        this.dietRepository = new InMemoryDietRepository();
     }
 
     @Test
@@ -140,6 +138,9 @@ public class DietTest {
         assertThat(result.get().getProtein(), is(totalProtein));
         assertThat(result.get().getFat(), is(totalFat));
         assertThat(result.get().getCarbohydrates(), is(totalCarbohydrates));
+        var flatResult = result.get().getProducts().stream().flatMap(List::stream).collect(Collectors.toList());
+        var products = weeklyUpdates.stream().map(p -> getProductById(p.getProduct().getId())).collect(Collectors.toList());
+        assertTrue(flatResult.containsAll(products));
     }
 }
 

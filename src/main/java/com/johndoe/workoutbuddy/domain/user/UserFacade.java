@@ -17,7 +17,7 @@ public class UserFacade {
     private final UserCreator creator;
     private final UserActivator activator;
 
-    UserFacade(UserRepository userRepository, ActivationTokenRepository tokenRepository, EmailFacade emailFacade) {
+    public UserFacade(UserRepository userRepository, ActivationTokenRepository tokenRepository, EmailFacade emailFacade) {
         final UserValidator userValidator = new UserValidator(userRepository);
         this.reader = new UserReader(userRepository);
         this.creator = new UserCreator(userRepository, tokenRepository, emailFacade, userValidator);

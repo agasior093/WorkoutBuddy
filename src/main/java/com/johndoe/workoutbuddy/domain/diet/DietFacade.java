@@ -18,7 +18,7 @@ public class DietFacade {
     private final DailyConsumptionReader dailyConsumptionReader;
     private final PeriodConsumptionReader periodConsumptionReader;
 
-    DietFacade(DietRepository repository, ProductFacade productFacade) {
+    public DietFacade(DietRepository repository, ProductFacade productFacade) {
         this.dailyConsumptionUpdater = new DailyConsumptionUpdater(repository);
         this.dailyConsumptionReader = new DailyConsumptionReader(repository, productFacade);
         this.periodConsumptionReader = new PeriodConsumptionReader(repository, productFacade);

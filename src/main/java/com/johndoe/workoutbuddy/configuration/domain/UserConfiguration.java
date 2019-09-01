@@ -1,5 +1,6 @@
-package com.johndoe.workoutbuddy.domain.user;
+package com.johndoe.workoutbuddy.configuration.domain;
 
+import com.johndoe.workoutbuddy.domain.user.UserFacade;
 import com.johndoe.workoutbuddy.infrastructure.database.user.InMemoryActivationTokenRepository;
 import com.johndoe.workoutbuddy.infrastructure.database.user.InMemoryUserRepository;
 import com.johndoe.workoutbuddy.domain.email.EmailFacade;
@@ -9,9 +10,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-class UserConfiguration {
+public class UserConfiguration {
     @Bean
-    UserFacade userFacade(UserRepository userRepository, ActivationTokenRepository tokenRepository, EmailFacade emailFacade) {
+    public UserFacade userFacade(UserRepository userRepository, ActivationTokenRepository tokenRepository, EmailFacade emailFacade) {
         return new UserFacade(userRepository, tokenRepository, emailFacade);
     }
 

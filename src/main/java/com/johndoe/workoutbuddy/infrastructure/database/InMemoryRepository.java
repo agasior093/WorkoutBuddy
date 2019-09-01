@@ -1,14 +1,14 @@
 package com.johndoe.workoutbuddy.infrastructure.database;
 
+import com.johndoe.workoutbuddy.domain.product.model.Product;
+import lombok.NoArgsConstructor;
 import lombok.extern.java.Log;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Log
+@NoArgsConstructor
 public abstract class InMemoryRepository<T, U extends BaseEntity> {
     protected final Map<T, U> repository = new ConcurrentHashMap<>();
 

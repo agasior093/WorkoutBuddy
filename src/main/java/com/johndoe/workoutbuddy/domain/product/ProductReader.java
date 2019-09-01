@@ -5,6 +5,7 @@ import com.johndoe.workoutbuddy.domain.product.port.ProductRepository;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.Set;
 
 @RequiredArgsConstructor
 class ProductReader {
@@ -14,7 +15,7 @@ class ProductReader {
         return repository.getProducts();
     }
 
-    List<Product> getProducts(String... IDs) {
-        return repository.getProducts(IDs);
+    List<Product> getProducts(Set<String> IDs) {
+        return repository.getProductsByIDs(IDs);
     }
 }

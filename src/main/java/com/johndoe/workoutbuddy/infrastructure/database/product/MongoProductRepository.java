@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -21,5 +22,15 @@ public class MongoProductRepository implements ProductRepository {
     @Override
     public List<Product> getProducts() {
         return mongoTemplate.findAll(ProductEntity.class).stream().map(converter::toDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Product> getProductsByIDs(Set<String> IDs) {
+        return null;
+    }
+
+    @Override
+    public void addProducts(List<Product> products) {
+
     }
 }

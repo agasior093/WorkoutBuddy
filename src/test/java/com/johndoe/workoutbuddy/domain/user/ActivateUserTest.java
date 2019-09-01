@@ -1,5 +1,6 @@
 package com.johndoe.workoutbuddy.domain.user;
 
+import com.johndoe.workoutbuddy.configuration.domain.UserConfiguration;
 import com.johndoe.workoutbuddy.infrastructure.database.InMemoryRepository;
 import com.johndoe.workoutbuddy.infrastructure.database.user.InMemoryActivationTokenRepository;
 import com.johndoe.workoutbuddy.infrastructure.database.user.InMemoryUserRepository;
