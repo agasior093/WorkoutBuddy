@@ -19,7 +19,6 @@ import static org.junit.Assert.*;
 import static org.hamcrest.Matchers.is;
 
 @RunWith(MockitoJUnitRunner.class)
-@Log
 public class DietTest {
     private InMemoryProductRepository productRepository = new InMemoryProductRepository();
     private InMemoryDietRepository dietRepository = new InMemoryDietRepository();
@@ -123,13 +122,13 @@ public class DietTest {
         var update3 = updateWithChicken(200d, DateUtils.today().minusDays(3), USERNAME_1);
         var update4 = updateWithApple(80d, DateUtils.today(), USERNAME_1);
         var weeklyUpdates = List.of(update1, update2, update3, update4);
-        for(var update : weeklyUpdates) {
+        for (var update : weeklyUpdates) {
             dietFacade.addProductToDailyConsumption(update);
         }
         var totalCalories = weeklyUpdates.stream().map(day -> getProductById(day.getProduct().getId())).mapToDouble(Product::getCalories).sum();
-        var totalProtein =  weeklyUpdates.stream().map(day -> getProductById(day.getProduct().getId())).mapToDouble(Product::getProtein).sum();
-        var totalFat =  weeklyUpdates.stream().map(day -> getProductById(day.getProduct().getId())).mapToDouble(Product::getFat).sum();
-        var totalCarbohydrates =  weeklyUpdates.stream().map(day -> getProductById(day.getProduct().getId())).mapToDouble(Product::getCarbohydrates).sum();
+        var totalProtein = weeklyUpdates.stream().map(day -> getProductById(day.getProduct().getId())).mapToDouble(Product::getProtein).sum();
+        var totalFat = weeklyUpdates.stream().map(day -> getProductById(day.getProduct().getId())).mapToDouble(Product::getFat).sum();
+        var totalCarbohydrates = weeklyUpdates.stream().map(day -> getProductById(day.getProduct().getId())).mapToDouble(Product::getCarbohydrates).sum();
         //when
         var result = dietFacade.getWeeklyConsumption(USERNAME_1);
         //then
