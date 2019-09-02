@@ -16,8 +16,6 @@ class UserEntityConverter {
                 .lastName(user.getLastName())
                 .gender(genderToEntity(user.getGender()))
                 .birthDate(user.getBirthDate())
-                .weight(user.getWeight())
-                .height(user.getHeight())
                 .build();
         entity.setId(user.getId());
         return entity;
@@ -31,12 +29,10 @@ class UserEntityConverter {
                 .email(userEntity.getEmail())
                 .roles(userEntity.getRoles())
                 .active(userEntity.isActive())
-                .firstName("John")
-                .lastName("Doe")
+                .firstName(userEntity.getFirstName())
+                .lastName(userEntity.getLastName())
                 .gender(genderToDto(userEntity.getGender()))
                 .birthDate(userEntity.getBirthDate())
-                .weight(userEntity.getWeight())
-                .height(userEntity.getHeight())
                 .build();
     }
 

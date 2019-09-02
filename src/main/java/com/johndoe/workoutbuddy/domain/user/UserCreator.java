@@ -2,8 +2,10 @@ package com.johndoe.workoutbuddy.domain.user;
 
 import com.johndoe.workoutbuddy.common.messages.Error;
 import com.johndoe.workoutbuddy.common.messages.Success;
+import com.johndoe.workoutbuddy.common.utils.DateUtils;
 import com.johndoe.workoutbuddy.domain.email.EmailFacade;
 import com.johndoe.workoutbuddy.domain.user.dto.CreateUserDto;
+import com.johndoe.workoutbuddy.domain.user.model.Gender;
 import com.johndoe.workoutbuddy.domain.user.model.User;
 import com.johndoe.workoutbuddy.domain.user.dto.error.UserError;
 import com.johndoe.workoutbuddy.domain.user.port.ActivationTokenRepository;
@@ -45,6 +47,10 @@ class UserCreator {
                 .email(createUserDto.getEmail())
                 .active(false)
                 .roles(Set.of("USER"))
+                .firstName(createUserDto.getFirstName())
+                .lastName(createUserDto.getLastName())
+                .gender(Gender.fromString(createUserDto.getGender()))
+                .birthDate(DateUtils.fromString(createUserDto.getBirthDate()))
                 .build();
     }
 

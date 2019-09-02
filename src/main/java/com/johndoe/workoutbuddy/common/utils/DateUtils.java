@@ -17,7 +17,7 @@ public final class DateUtils {
             .withZone(ZONE_ID);
 
     public static LocalDate fromString(String dateString) {
-        return LocalDate.parse(dateString, DEFAULT_FORMATTER);
+        return dateString != null ?LocalDate.parse(dateString, DEFAULT_FORMATTER) : LocalDate.now();
     }
 
     public static String toString(LocalDate date) {

@@ -32,8 +32,6 @@ public class InMemoryUserRepository implements UserRepository {
                 .firstName("John")
                 .lastName("Doe")
                 .gender(Gender.MALE)
-                .weight(90d)
-                .height(183d)
                 .build());
     }
 

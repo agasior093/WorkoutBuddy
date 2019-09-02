@@ -1,6 +1,8 @@
 package com.johndoe.workoutbuddy.domain.user;
 
+import com.johndoe.workoutbuddy.common.utils.DateUtils;
 import com.johndoe.workoutbuddy.configuration.domain.UserConfiguration;
+import com.johndoe.workoutbuddy.domain.user.model.Gender;
 import com.johndoe.workoutbuddy.infrastructure.database.user.InMemoryActivationTokenRepository;
 import com.johndoe.workoutbuddy.infrastructure.database.user.InMemoryUserRepository;
 import com.johndoe.workoutbuddy.common.messages.Success;
@@ -14,6 +16,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
+
+import java.time.LocalDate;
 
 import static org.hamcrest.Matchers.is;
 import static com.johndoe.workoutbuddy.domain.user.ObjectFactory.*;
@@ -36,10 +40,10 @@ public class CreateUserTest {
     @Test
     public void shouldCreateInactiveUser() {
         //given
-        var user = (CreateUserDto.builder()
+        var user = CreateUserDto.builder()
                 .username(USERNAME_1)
                 .email(VALID_EMAIL_1)
-                .password(VALID_PASSWORD).build());
+                .password(VALID_PASSWORD).build();
         //when
         when(emailFacade.sendActivationEmail(anyString(), anyString(), anyString())).thenReturn(Either.right(new Success("")));
         var result = userFacade.createUser(user);
@@ -48,6 +52,30 @@ public class CreateUserTest {
         assertTrue(result.isRight());
         assertTrue(foundUser.isPresent());
         assertFalse(foundUser.get().isActive());
+    }
+
+    @Test
+    public void shouldCreateUserWithPersonalDetails() {
+        //given
+        final LocalDate birthDate = LocalDate.of(1990, 10, 10);
+        var user = CreateUserDto.builder()
+                .username(USERNAME_1)
+                .email(VALID_EMAIL_1)
+                .password(VALID_PASSWORD)
+                .firstName("John")
+                .lastName("Doe")
+                .gender("male")
+                .birthDate(DateUtils.toString(birthDate))
+                .build();
+        //when
+        userFacade.createUser(user);
+        var userDetails = userFacade.readUserPersonalData(USERNAME_1);
+        //then
+        assertTrue(userDetails.isPresent());
+        assertThat(userDetails.get().getFirstName(), is(user.getFirstName()));
+        assertThat(userDetails.get().getLastName(), is(user.getLastName()));
+        assertThat(userDetails.get().getGender(), is(Gender.MALE));
+        assertThat(userDetails.get().getBirthDate(), is(birthDate));
     }
 
     @Test

@@ -13,6 +13,4 @@ public class PersonalDetails {
     private final String lastName;
     private final Gender gender;
     private final LocalDate birthDate;
-    private final Double weight;
-    private final Double height;
 }

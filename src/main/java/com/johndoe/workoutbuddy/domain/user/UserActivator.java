@@ -99,8 +99,6 @@ class UserActivator {
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .birthDate(user.getBirthDate())
-                .weight(user.getWeight())
-                .height(user.getHeight())
                 .build();
     }
 }

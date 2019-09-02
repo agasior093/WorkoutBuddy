@@ -21,6 +21,4 @@ class UserEntity extends BaseEntity<String> {
     private final String lastName;
     private final GenderEntity gender;
     private final LocalDate birthDate;
-    private final Double weight;
-    private final Double height;
 }

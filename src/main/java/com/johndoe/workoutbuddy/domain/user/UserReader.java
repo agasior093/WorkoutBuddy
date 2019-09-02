@@ -26,8 +26,6 @@ class UserReader {
                 .lastName(user.getLastName())
                 .gender(user.getGender())
                 .birthDate(user.getBirthDate())
-                .weight(user.getWeight())
-                .height(user.getHeight())
                 .build();
     }
 }
