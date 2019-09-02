@@ -34,7 +34,7 @@ class DietController {
 
     @GetMapping("/daily")
     ResponseEntity getDailyConsumption(@RequestParam String date) {
-        return responseResolver.resolve(dietFacade.getDailyConsumption(authHelper.getLoggedUserName(), DateUtils.today()));
+        return responseResolver.resolve(dietFacade.getDailyConsumption(authHelper.getLoggedUserName(), DateUtils.fromString(date)));
     }
 
     private UpdateDailyConsumptionDto buildWithUsername(UpdateDailyConsumptionDto dto) {
