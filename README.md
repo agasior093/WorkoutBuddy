@@ -1,5 +1,5 @@
 
-# Workout Buddy
+# Workout Buddy [![Heroku CI Status](https://workout-buddy-backend.herokuapp.com/last.svg)](https://dashboard.heroku.com/pipelines/e1f7a3c0-0785-4724-a0ee-f70cc044c9e8/tests)
 Diet and training tracker backend application.
 
 ## Description
