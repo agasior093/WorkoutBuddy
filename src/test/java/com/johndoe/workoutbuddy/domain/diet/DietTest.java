@@ -79,7 +79,7 @@ public class DietTest {
         assertFalse(result.get().getConsumedProducts().contains(updateDto.getProduct()));
 
         assertThat(result.get().getConsumedProducts().size(), is(1));
-        assertTrue(dietFacade.getDailyConsumption(USERNAME_1, DateUtils.today()).contains(getProductById(updateDto.getProduct().getId())));
+        assertFalse(dietFacade.getDailyConsumption(USERNAME_1, DateUtils.today()).contains(getProductById(updateDto.getProduct().getId())));
     }
 
     @Test

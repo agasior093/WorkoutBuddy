@@ -12,6 +12,7 @@ import static junit.framework.TestCase.assertTrue;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doThrow;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -22,16 +23,12 @@ public class SendEmailTest {
 
     @Test
     public void shouldSendEmail() {
-        assertTrue(emailFacade.sendActivationEmail(any(), any(), any()).isRight());
+        assertTrue(emailFacade.sendActivationEmail(anyString(), anyString(), anyString()).isRight());
     }
 
     @Test
     public void shouldCatchExceptionAndReturnSendingFail() {
         doThrow(new RuntimeException("Email exception")).when(emailSender).sendEmail(any());
-        assertThat(emailFacade.sendActivationEmail(any(), any(), any()).getLeft(), is(EmailError.SENDING_FAILED));
-    }
-
-    private UserActivationEmail validMessage() {
-        return UserActivationEmail.builder().token("token").receiver("mail@gmail.com").username("username").build();
+        assertThat(emailFacade.sendActivationEmail(anyString(), anyString(), anyString()).getLeft(), is(EmailError.SENDING_FAILED));
     }
 }

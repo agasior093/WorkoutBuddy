@@ -20,13 +20,19 @@ class DietController {
     private final ResponseResolver responseResolver;
     private final AuthenticationHelper authHelper;
 
-    @PostMapping("/addToDaily")
-    ResponseEntity updateDailyConsumption(@RequestBody UpdateDailyConsumptionDto updateDailyConsumption) {
+    @PostMapping("/addDaily")
+    ResponseEntity addToDaily(@RequestBody UpdateDailyConsumptionDto updateDailyConsumption) {
         var request = buildWithUsername(updateDailyConsumption);
         return responseResolver.resolve(dietFacade.addProductToDailyConsumption(request));
     }
 
-    @GetMapping("/getDaily")
+    @PostMapping("/removeDaily")
+    ResponseEntity updateDailyConsumption(@RequestBody UpdateDailyConsumptionDto updateDailyConsumption) {
+        var request = buildWithUsername(updateDailyConsumption);
+        return responseResolver.resolve(dietFacade.removeProductFromDailyConsumption(request));
+    }
+
+    @GetMapping("/daily")
     ResponseEntity getDailyConsumption(@RequestParam String date) {
         return responseResolver.resolve(dietFacade.getDailyConsumption(authHelper.getLoggedUserName(), DateUtils.today()));
     }
