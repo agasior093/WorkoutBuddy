@@ -13,13 +13,14 @@ import io.vavr.control.Option;
 import io.vavr.control.Try;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 
 
 import java.time.LocalDateTime;
 
 import static com.johndoe.workoutbuddy.common.utils.EitherUtils.*;
 
-@Log
+@Slf4j
 @RequiredArgsConstructor
 class UserActivator {
     private final UserRepository userRepository;
@@ -50,7 +51,7 @@ class UserActivator {
 
     private Either<Error, Success> deactivateToken(ActivationToken tokenDto) {
         return Try.of(() -> deactivate(tokenDto))
-                .onFailure(e -> log.severe(e.getMessage()))
+                .onFailure(e -> log.error(e.getMessage()))
                 .toEither(UserError.PERSISTENCE_FAILED);
     }
 
@@ -76,7 +77,7 @@ class UserActivator {
     private Either<Error, Success> activateUser(User user) {
 
         return Try.of(() -> activate(user))
-                .onFailure(e -> log.severe(e.getMessage()))
+                .onFailure(e -> log.error(e.getMessage()))
                 .toEither(UserError.PERSISTENCE_FAILED);
     }
 

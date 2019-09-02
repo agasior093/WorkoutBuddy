@@ -12,10 +12,11 @@ import io.vavr.control.Either;
 import io.vavr.control.Try;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Set;
 
-@Log
+@Slf4j
 @RequiredArgsConstructor
 class UserCreator {
     private final UserRepository userRepository;
@@ -33,7 +34,7 @@ class UserCreator {
     private Either<Error, User> save(CreateUserDto createUserDto) {
         var newUser = buildNewUser(createUserDto);
         return Try.of(() -> userRepository.saveUser(newUser))
-                .onFailure(e -> log.severe(e.getMessage()))
+                .onFailure(e -> log.error(e.getMessage()))
                 .toEither(UserError.PERSISTENCE_FAILED);
     }
 
@@ -53,7 +54,7 @@ class UserCreator {
 
     private Either<Error, String> generateToken(User user) {
         return Try.of(() -> tokenRepository.generateToken(user.getUsername()))
-                .onFailure(e -> log.severe(e.getMessage()))
+                .onFailure(e -> log.error(e.getMessage()))
                 .toEither(UserError.PERSISTENCE_FAILED);
     }
 

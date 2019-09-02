@@ -6,7 +6,6 @@ import com.johndoe.workoutbuddy.domain.email.port.EmailSender;
 import io.vavr.control.Either;
 import lombok.extern.java.Log;
 
-@Log
 public class EmailFacade {
     private final EmailService emailService;
 

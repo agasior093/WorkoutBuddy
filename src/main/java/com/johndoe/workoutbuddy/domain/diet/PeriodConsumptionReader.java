@@ -8,14 +8,12 @@ import com.johndoe.workoutbuddy.domain.diet.port.DietRepository;
 import com.johndoe.workoutbuddy.domain.product.ProductFacade;
 import com.johndoe.workoutbuddy.domain.product.model.Product;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.java.Log;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-@Log
 class PeriodConsumptionReader {
     private final DietRepository repository;
     private final ProductFacade productFacade;
@@ -42,7 +40,7 @@ class PeriodConsumptionReader {
     }
 
     private Optional<PeriodConsumption> build(List<List<Product>> products) {
-        if(products.isEmpty()) return Optional.empty();
+        if (products.isEmpty()) return Optional.empty();
         return Optional.of(PeriodConsumption.builder()
                 .calories(calculateCalories(products))
                 .protein(calculateProtein(products))
@@ -58,7 +56,7 @@ class PeriodConsumptionReader {
 
     private Double calculateCalories(List<List<Product>> products) {
         return products.stream().flatMap(List::stream).collect(Collectors.toList())
-            .stream().mapToDouble(Product::getCalories).sum();
+                .stream().mapToDouble(Product::getCalories).sum();
     }
 
     private Double calculateProtein(List<List<Product>> products) {

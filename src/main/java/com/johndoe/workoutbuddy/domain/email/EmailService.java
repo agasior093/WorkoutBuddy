@@ -10,8 +10,9 @@ import io.vavr.control.Either;
 import io.vavr.control.Try;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 
-@Log
+@Slf4j
 @RequiredArgsConstructor
 class EmailService {
     private final EmailSender emailSender;
@@ -19,7 +20,7 @@ class EmailService {
     Either<Error, Success> sendEmail(String username, String receiver, String token) {
         var email = prepareEmail(username, receiver, token);
         return Try.of(() -> tryToSend(email))
-                .onFailure(e -> log.severe(e.getMessage()))
+                .onFailure(e -> log.error(e.getMessage()))
                 .toEither(EmailError.SENDING_FAILED);
     }
 
