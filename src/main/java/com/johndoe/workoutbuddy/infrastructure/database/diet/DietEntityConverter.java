@@ -1,6 +1,7 @@
 package com.johndoe.workoutbuddy.infrastructure.database.diet;
 
 import com.johndoe.workoutbuddy.common.converters.ListConverter;
+import com.johndoe.workoutbuddy.common.utils.DateUtils;
 import com.johndoe.workoutbuddy.domain.diet.model.ConsumedProduct;
 import com.johndoe.workoutbuddy.domain.diet.model.DailyConsumption;
 
@@ -10,7 +11,7 @@ class DietEntityConverter {
 
         var entity = DailyConsumptionEntity.builder()
                 .username(dto.getUsername())
-                .date(dto.getDate())
+                .date(DateUtils.toString(dto.getDate()))
                 .consumedProducts(new ListConverter<ConsumedProductEntity, ConsumedProduct>
                         (this::productToEntity).apply(dto.getConsumedProducts()))
                 .build();
@@ -29,7 +30,7 @@ class DietEntityConverter {
         return DailyConsumption.builder()
                 .id(entity.getId())
                 .username(entity.getUsername())
-                .date(entity.getDate())
+                .date(DateUtils.fromString(entity.getDate()))
                 .consumedProducts(new ListConverter<ConsumedProduct, ConsumedProductEntity>
                         (this::productToDto).apply(entity.getConsumedProducts()))
                 .build();

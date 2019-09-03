@@ -37,7 +37,7 @@ public class InMemoryDietRepository extends InMemoryRepository<String, DailyCons
 
     @Override
     public Optional<DailyConsumption> getDailyConsumption(String username, LocalDate date) {
-        return findAll().stream().filter(elem -> elem.getUsername().equals(username) && elem.getDate().equals(date))
+        return findAll().stream().filter(elem -> elem.getUsername().equals(username) && DateUtils.fromString(elem.getDate()).equals(date))
                 .findFirst().map(converter::toDto);
     }
 
@@ -49,7 +49,7 @@ public class InMemoryDietRepository extends InMemoryRepository<String, DailyCons
 
     private Predicate<DailyConsumptionEntity> isBetweenDate(String username, LocalDate date) {
         return elem -> elem.getUsername().equals(username) &&
-                (elem.getDate().isBefore(DateUtils.today()) || elem.getDate().equals(DateUtils.today())) &&
-                (elem.getDate().isAfter(date) || elem.getDate().equals(date));
+                (DateUtils.fromString(elem.getDate()).isBefore(DateUtils.today()) || DateUtils.fromString(elem.getDate()).equals(DateUtils.today())) &&
+                (DateUtils.fromString(elem.getDate()).isAfter(date) || DateUtils.fromString(elem.getDate()).equals(date));
     }
 }

@@ -34,6 +34,7 @@ public class MongoDietRepository implements DietRepository {
 
     @Override
     public List<DailyConsumption> getConsumptionFromDate(String username, LocalDate date) {
+        //TODO
         return null;
     }
 }

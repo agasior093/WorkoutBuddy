@@ -2,6 +2,7 @@ package com.johndoe.workoutbuddy.infrastructure.database.product;
 
 import com.johndoe.workoutbuddy.domain.product.model.Product;
 import com.johndoe.workoutbuddy.domain.product.port.ProductRepository;
+import com.johndoe.workoutbuddy.infrastructure.database.MongoQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -18,6 +19,7 @@ public class MongoProductRepository implements ProductRepository {
 
     private final MongoTemplate mongoTemplate;
     private final ProductEntityConverter converter = new ProductEntityConverter();
+    private final MongoQueryFactory queryFactory = new MongoQueryFactory();
 
     @Override
     public List<Product> getProducts() {
@@ -26,7 +28,7 @@ public class MongoProductRepository implements ProductRepository {
 
     @Override
     public List<Product> getProductsByIDs(Set<String> IDs) {
-        return null;
+        return mongoTemplate.find(queryFactory.idWithin(IDs), ProductEntity.class).stream().map(converter::toDto).collect(Collectors.toList());
     }
 
     @Override
