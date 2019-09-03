@@ -15,6 +15,6 @@ import java.util.List;
 @Document(collection = "dailyConsumption")
 class DailyConsumptionEntity extends BaseEntity<String> {
     private final String username;
-    private final String date;
+    private final LocalDate date;
     private final List<ConsumedProductEntity> consumedProducts;
 }

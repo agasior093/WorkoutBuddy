@@ -24,7 +24,7 @@ public class MongoQueryFactory {
     }
 
     public Query usernameDateQuery(String username, LocalDate date) {
-        return new Query(Criteria.where(USERNAME).is(username).and(DATE).is(DateUtils.toString(date)));
+        return new Query(Criteria.where(USERNAME).is(username).and(DATE).is(DateUtils.toJavaDate(date)));
     }
 
     public Query idWithin(Set<String> ids) {
@@ -32,11 +32,14 @@ public class MongoQueryFactory {
     }
 
     public Query usernameAndDateBetween(String username, LocalDate startDate, LocalDate endDate) {
-        return null;
-
+        return new Query(usernameCriteria(username).andOperator(dateBetween(startDate, endDate)));
     }
 
     private Criteria usernameCriteria(String username) {
         return Criteria.where(USERNAME).is(username);
+    }
+
+    private Criteria dateBetween(LocalDate startDate, LocalDate endDate) {
+        return  Criteria.where(DATE).gte(startDate).and(DATE).lte(endDate);
     }
 }

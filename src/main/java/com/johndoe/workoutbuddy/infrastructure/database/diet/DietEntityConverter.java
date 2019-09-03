@@ -11,7 +11,7 @@ class DietEntityConverter {
 
         var entity = DailyConsumptionEntity.builder()
                 .username(dto.getUsername())
-                .date(DateUtils.toString(dto.getDate()))
+                .date(dto.getDate())
                 .consumedProducts(new ListConverter<ConsumedProductEntity, ConsumedProduct>
                         (this::productToEntity).apply(dto.getConsumedProducts()))
                 .build();
@@ -30,7 +30,7 @@ class DietEntityConverter {
         return DailyConsumption.builder()
                 .id(entity.getId())
                 .username(entity.getUsername())
-                .date(DateUtils.fromString(entity.getDate()))
+                .date(entity.getDate())
                 .consumedProducts(new ListConverter<ConsumedProduct, ConsumedProductEntity>
                         (this::productToDto).apply(entity.getConsumedProducts()))
                 .build();
