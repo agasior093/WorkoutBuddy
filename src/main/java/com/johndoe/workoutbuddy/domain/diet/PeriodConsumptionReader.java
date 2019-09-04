@@ -36,7 +36,7 @@ class PeriodConsumptionReader {
     }
 
     private List<Product> matchDailyProducts(List<ConsumedProduct> consumedProducts, List<Product> products) {
-        return consumedProducts.stream().map(p -> toProduct(p, products)).map(Optional::get).collect(Collectors.toList());
+        return consumedProducts.stream().map(p -> toProduct(p, products)).filter(Optional::isPresent).map(Optional::get).collect(Collectors.toList());
     }
 
     private Optional<PeriodConsumption> build(List<List<Product>> products) {

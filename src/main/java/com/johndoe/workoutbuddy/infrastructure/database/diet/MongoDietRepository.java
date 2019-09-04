@@ -1,5 +1,6 @@
 package com.johndoe.workoutbuddy.infrastructure.database.diet;
 
+import com.johndoe.workoutbuddy.common.utils.DateUtils;
 import com.johndoe.workoutbuddy.infrastructure.database.MongoQueryFactory;
 import com.johndoe.workoutbuddy.domain.diet.model.DailyConsumption;
 import com.johndoe.workoutbuddy.domain.diet.port.DietRepository;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Repository
 @AllArgsConstructor
@@ -34,7 +36,7 @@ public class MongoDietRepository implements DietRepository {
 
     @Override
     public List<DailyConsumption> getConsumptionFromDate(String username, LocalDate date) {
-        //TODO
-        return null;
+        return mongoTemplate.find(queryFactory.usernameAndDateBetween(username, date, DateUtils.today()), DailyConsumptionEntity.class)
+                .stream().map(converter::toDto).collect(Collectors.toList());
     }
 }

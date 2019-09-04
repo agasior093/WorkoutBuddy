@@ -37,6 +37,11 @@ class DietController {
         return responseResolver.resolve(dietFacade.getDailyConsumption(authHelper.getLoggedUserName(), DateUtils.fromString(date)));
     }
 
+    @GetMapping("/weekly")
+    ResponseEntity getWeeklyConsumption() {
+        return responseResolver.resolve(dietFacade.getWeeklyConsumption(authHelper.getLoggedUserName()));
+    }
+
     private UpdateDailyConsumptionDto buildWithUsername(UpdateDailyConsumptionDto dto) {
         return UpdateDailyConsumptionDto.builder()
                 .date(dto.getDate())
