@@ -7,8 +7,6 @@ import com.johndoe.workoutbuddy.infrastructure.controller.utils.AuthenticationHe
 import com.johndoe.workoutbuddy.infrastructure.controller.utils.ResponseResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -34,7 +32,7 @@ class DietController {
 
     @GetMapping("/daily")
     ResponseEntity getDailyConsumption(@RequestParam String date) {
-        return responseResolver.resolve(dietFacade.getDailyConsumption(authHelper.getLoggedUserName(), DateUtils.today()));
+        return responseResolver.resolve(dietFacade.getDailyConsumption(authHelper.getLoggedUserName(), DateUtils.fromString(date)));
     }
 
     private UpdateDailyConsumptionDto buildWithUsername(UpdateDailyConsumptionDto dto) {
