@@ -7,11 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @RequiredArgsConstructor
 class UserDetailsServiceImpl implements UserDetailsService {
-    private final PasswordEncoder encoder;
     private UserRepository userRepository;
 
     @Override
@@ -23,7 +21,7 @@ class UserDetailsServiceImpl implements UserDetailsService {
     private UserDetails getUserDetails(User user) {
         org.springframework.security.core.userdetails.User.UserBuilder builder
                 = org.springframework.security.core.userdetails.User.withUsername(user.getUsername());
-        builder.password(encoder.encode(user.getPassword()));
+        builder.password(user.getPassword());
         builder.roles(user.getRoles().toArray(new String[user.getRoles().size()]));
         builder.disabled(!user.isActive());
         builder.build();
