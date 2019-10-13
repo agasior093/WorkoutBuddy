@@ -12,6 +12,7 @@ import io.vavr.control.Either;
 import io.vavr.control.Try;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Set;
 
@@ -40,7 +41,7 @@ class UserCreator {
     private User buildNewUser(CreateUserDto createUserDto) {
         return User.builder()
                 .username(createUserDto.getUsername())
-                .password(createUserDto.getPassword())
+                .password(new BCryptPasswordEncoder().encode(createUserDto.getPassword()))
                 .email(createUserDto.getEmail())
                 .active(false)
                 .roles(Set.of("USER"))
