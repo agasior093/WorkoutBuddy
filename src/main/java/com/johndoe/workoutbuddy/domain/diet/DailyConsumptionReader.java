@@ -18,10 +18,16 @@ class DailyConsumptionReader {
     private final DietRepository repository;
     private final ProductFacade productFacade;
 
-    List<Product> getDailyConsumption(String username, LocalDate date) {
-        return repository.getDailyConsumption(username, date).map(daily ->
-            matchingProducts(productFacade.getProducts(), daily.getConsumedProducts())
-        ).orElse(new ArrayList<>());
+    Double getDailyConsumption(String username, LocalDate date) {
+        return repository.getDailyConsumption(username, date)
+          .map(daily -> matchingProducts(productFacade.getProducts(), daily.getConsumedProducts()))
+          .map(products -> {
+              Double totalCalories = 0d;
+            for (Product product : products) {
+                totalCalories = totalCalories+product.getCalories();
+            }
+            return totalCalories;
+        }).orElse(Double.NaN);
     }
 
     private List<Product> matchingProducts(List<Product> products, List<ConsumedProduct> consumedProducts) {
